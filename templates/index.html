@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireAI - Intelligent Resume Matching</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+        }
+        .feature-card {
+            transition: transform 0.3s;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .ai-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- AI Status Indicator -->
+    <div class="ai-status">
+        <span id="ai-status" class="badge bg-warning">
+            <i class="fas fa-robot"></i> AI: Checking...
+        </span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-brain me-2"></i>HireAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/upload">Upload Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/search">Search Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics">Analytics</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">
+                <i class="fas fa-brain me-3"></i>HireAI
+            </h1>
+            <p class="lead mb-5">
+                Intelligent Resume Matching Powered by AI<br>
+                Find the perfect candidates faster than ever before
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="d-grid gap-3 d-md-flex justify-content-md-center">
+                        <a href="/upload" class="btn btn-light btn-lg">
+                            <i class="fas fa-upload me-2"></i>Upload Resume
+                        </a>
+                        <a href="/search" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-search me-2"></i>Search Candidates
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="fw-bold">Why Choose HireAI?</h2>
+                    <p class="text-muted">Streamline your recruitment process with intelligent automation</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card feature-card h-100 text-center p-4">
+                        <div class="card-body">
+                            <i class="fas fa-robot fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">AI-Powered Matching</h5>
+                            <p class="card-text">
+                                Advanced algorithms analyze resumes and match candidates based on skills, experience, and job requirements.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card feature-card h-100 text-center p-4">
+                        <div class="card-body">
+                            <i class="fas fa-file-pdf fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Smart Resume Parsing</h5>
+                            <p class="card-text">
+                                Automatically extract and structure information from PDF and DOCX resumes with high accuracy.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card feature-card h-100 text-center p-4">
+                        <div class="card-body">
+                            <i class="fas fa-chart-bar fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">Detailed Analytics</h5>
+                            <p class="card-text">
+                                Get insights into your candidate pool with comprehensive analytics and visualizations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row text-center" id="stats-section">
+                <div class="col-md-3">
+                    <h3 class="fw-bold text-primary" id="total-candidates">0</h3>
+                    <p class="text-muted">Candidates Processed</p>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="fw-bold text-success">95%</h3>
+                    <p class="text-muted">Parsing Accuracy</p>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="fw-bold text-info">80%</h3>
+                    <p class="text-muted">Time Saved</p>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="fw-bold text-warning" id="ai-status-stat">AI Ready</h3>
+                    <p class="text-muted">System Status</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="fw-bold">How It Works</h2>
+                    <p class="text-muted">Simple steps to find your ideal candidates</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-3 text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <span class="fw-bold">1</span>
+                    </div>
+                    <h5>Upload Resumes</h5>
+                    <p class="text-muted">Upload candidate resumes in PDF or DOCX format</p>
+                </div>
+                
+                <div class="col-md-3 text-center">
+                    <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <span class="fw-bold">2</span>
+                    </div>
+                    <h5>AI Processing</h5>
+                    <p class="text-muted">Our AI extracts and analyzes candidate information</p>
+                </div>
+                
+                <div class="col-md-3 text-center">
+                    <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <span class="fw-bold">3</span>
+                    </div>
+                    <h5>Job Matching</h5>
+                    <p class="text-muted">Enter job requirements and get matched candidates</p>
+                </div>
+                
+                <div class="col-md-3 text-center">
+                    <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <span class="fw-bold">4</span>
+                    </div>
+                    <h5>Make Decisions</h5>
+                    <p class="text-muted">Review ranked candidates and make informed hiring decisions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-brain me-2"></i>HireAI</h5>
+                    <p class="text-muted">Intelligent recruitment solutions powered by AI</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-muted mb-0">&copy; 2025 HireAI. Built with ❤️ by Pranamya</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check system health and update UI
+        async function checkSystemHealth() {
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                
+                const aiStatus = document.getElementById('ai-status');
+                const aiStatusStat = document.getElementById('ai-status-stat');
+                const totalCandidates = document.getElementById('total-candidates');
+                
+                if (data.ai_enabled) {
+                    aiStatus.className = 'badge bg-success';
+                    aiStatus.innerHTML = '<i class="fas fa-robot"></i> AI: Active';
+                    aiStatusStat.textContent = 'AI Active';
+                    aiStatusStat.className = 'fw-bold text-success';
+                } else {
+                    aiStatus.className = 'badge bg-warning';
+                    aiStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> AI: Limited';
+                    aiStatusStat.textContent = 'Basic Mode';
+                    aiStatusStat.className = 'fw-bold text-warning';
+                }
+                
+                totalCandidates.textContent = data.total_candidates || 0;
+                
+            } catch (error) {
+                console.error('Health check failed:', error);
+                const aiStatus = document.getElementById('ai-status');
+                aiStatus.className = 'badge bg-danger';
+                aiStatus.innerHTML = '<i class="fas fa-times"></i> AI: Error';
+            }
+        }
+        
+        // Load health check on page load
+        document.addEventListener('DOMContentLoaded', checkSystemHealth);
+    </script>
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Candidates - HireAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .search-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 30px;
+        }
+        .candidate-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .candidate-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .match-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .skill-tag {
+            display: inline-block;
+            background-color: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 8px;
+            margin: 2px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+        .matched-skill {
+            background-color: #c8e6c9;
+            color: #388e3c;
+        }
+        .score-excellent { color: #4caf50; }
+        .score-good { color: #ff9800; }
+        .score-fair { color: #f44336; }
+        .job-analysis {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 10px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-brain me-2"></i>HireAI
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/upload">Upload Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/search">Search Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics">Analytics</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="text-center mb-4">
+            <h1 class="fw-bold">
+                <i class="fas fa-search text-primary me-3"></i>Search Candidates
+            </h1>
+            <p class="text-muted">Find the perfect candidates using AI-powered matching</p>
+        </div>
+
+        <div class="row">
+            <!-- Search Form -->
+            <div class="col-lg-4 mb-4">
+                <div class="search-container">
+                    <h5 class="fw-bold mb-4">
+                        <i class="fas fa-sliders-h me-2"></i>Search Criteria
+                    </h5>
+                    
+                    <form id="search-form">
+                        <!-- Job Description -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Job Description *</label>
+                            <textarea id="job-description" class="form-control" rows="6" 
+                                placeholder="Paste the job description here...&#10;&#10;Example:&#10;We are looking for a Senior Python Developer with 5+ years of experience in Django, React, and AWS. The candidate should have strong problem-solving skills and experience with microservices architecture."></textarea>
+                        </div>
+
+                        <!-- Quick Analysis Button -->
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-outline-info btn-sm w-100" id="analyze-job-btn">
+                                <i class="fas fa-magic me-2"></i>Analyze Job Description
+                            </button>
+                        </div>
+
+                        <!-- Filters -->
+                        <h6 class="fw-bold mb-3">Filters</h6>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Minimum Experience (years)</label>
+                            <select id="min-experience" class="form-select">
+                                <option value="">Any</option>
+                                <option value="0">Entry Level (0-1)</option>
+                                <option value="2">2+ years</option>
+                                <option value="3">3+ years</option>
+                                <option value="5">5+ years</option>
+                                <option value="7">7+ years</option>
+                                <option value="10">10+ years</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Required Skills</label>
+                            <input type="text" id="required-skills" class="form-control" 
+                                placeholder="e.g. Python, React, AWS (comma separated)">
+                            <small class="text-muted">Candidates must have at least one of these skills</small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Location</label>
+                            <input type="text" id="location-filter" class="form-control" 
+                                placeholder="e.g. San Francisco, Remote">
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-search me-2"></i>Search Candidates
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Job Analysis Results -->
+                <div id="job-analysis-card" class="mt-4" style="display: none;">
+                    <div class="job-analysis">
+                        <h6 class="fw-bold mb-3">
+                            <i class="fas fa-lightbulb me-2"></i>Job Analysis
+                        </h6>
+                        <div id="job-analysis-content">
+                            <!-- Analysis will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="col-lg-8">
+                <!-- Loading State -->
+                <div id="loading-state" class="text-center" style="display: none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3 text-muted">Searching candidates...</p>
+                </div>
+
+                <!-- No Results State -->
+                <div id="no-results" class="text-center" style="display: none;">
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No candidates found</h5>
+                    <p class="text-muted">Try adjusting your search criteria or upload more resumes.</p>
+                    <a href="/upload" class="btn btn-primary">
+                        <i class="fas fa-upload me-2"></i>Upload Resumes
+                    </a>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="text-center">
+                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Ready to Search</h5>
+                    <p class="text-muted">Enter a job description to find matching candidates from your database.</p>
+                </div>
+
+                <!-- Results Header -->
+                <div id="results-header" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="mb-0">
+                            <span id="results-count">0</span> Candidates Found
+                        </h5>
+                        <div class="btn-group" role="group">
+                            <input type="radio" class="btn-check" name="sort-options" id="sort-score" checked>
+                            <label class="btn btn-outline-primary btn-sm" for="sort-score">
+                                <i class="fas fa-star me-1"></i>Best Match
+                            </label>
+                            
+                            <input type="radio" class="btn-check" name="sort-options" id="sort-experience">
+                            <label class="btn btn-outline-primary btn-sm" for="sort-experience">
+                                <i class="fas fa-calendar me-1"></i>Experience
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results List -->
+                <div id="results-list">
+                    <!-- Candidate cards will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Candidate Detail Modal -->
+    <div class="modal fade" id="candidateModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-candidate-name">Candidate Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-candidate-details">
+                        <!-- Detailed candidate info will be populated here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-envelope me-2"></i>Contact Candidate
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentCandidates = [];
+        let currentJobDescription = '';
+
+        const searchForm = document.getElementById('search-form');
+        const jobDescriptionInput = document.getElementById('job-description');
+        const analyzeJobBtn = document.getElementById('analyze-job-btn');
+        const loadingState = document.getElementById('loading-state');
+        const emptyState = document.getElementById('empty-state');
+        const noResults = document.getElementById('no-results');
+        const resultsHeader = document.getElementById('results-header');
+        const resultsList = document.getElementById('results-list');
+        const resultsCount = document.getElementById('results-count');
+
+        // Search form submission
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await searchCandidates();
+        });
+
+        // Job analysis
+        analyzeJobBtn.addEventListener('click', async () => {
+            const jobDescription = jobDescriptionInput.value.trim();
+            if (!jobDescription) {
+                alert('Please enter a job description first.');
+                return;
+            }
+            await analyzeJobDescription(jobDescription);
+        });
+
+        // Sort options
+        document.getElementById('sort-score').addEventListener('change', () => {
+            if (currentCandidates.length > 0) {
+                sortAndDisplayCandidates('score');
+            }
+        });
+
+        document.getElementById('sort-experience').addEventListener('change', () => {
+            if (currentCandidates.length > 0) {
+                sortAndDisplayCandidates('experience');
+            }
+        });
+
+        async function searchCandidates() {
+            const jobDescription = jobDescriptionInput.value.trim();
+            const minExperience = document.getElementById('min-experience').value;
+            const requiredSkills = document.getElementById('required-skills').value;
+            const location = document.getElementById('location-filter').value;
+
+            if (!jobDescription) {
+                alert('Please enter a job description.');
+                return;
+            }
+
+            currentJobDescription = jobDescription;
+            showLoading();
+
+            try {
+                const response = await fetch('/api/search_candidates', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        job_description: jobDescription,
+                        filters: {
+                            min_experience: minExperience,
+                            required_skills: requiredSkills ? requiredSkills.split(',').map(s => s.trim()) : [],
+                            location: location
+                        }
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentCandidates = data.candidates;
+                    displayResults(data.candidates);
+                    
+                    if (!data.ai_enabled) {
+                        showWarning('AI features are limited. Using basic matching.');
+                    }
+                } else {
+                    throw new Error(data.error || 'Search failed');
+                }
+
+            } catch (error) {
+                hideLoading();
+                alert('Search failed: ' + error.message);
+            }
+        }
+
+        async function analyzeJobDescription(jobDescription) {
+            analyzeJobBtn.disabled = true;
+            analyzeJobBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Analyzing...';
+
+            try {
+                const response = await fetch('/api/analyze_job', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        job_description: jobDescription
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayJobAnalysis(data.analysis);
+                } else {
+                    throw new Error(data.error || 'Analysis failed');
+                }
+
+            } catch (error) {
+                alert('Job analysis failed: ' + error.message);
+            } finally {
+                analyzeJobBtn.disabled = false;
+                analyzeJobBtn.innerHTML = '<i class="fas fa-magic me-2"></i>Analyze Job Description';
+            }
+        }
+
+        function displayJobAnalysis(analysis) {
+            const analysisCard = document.getElementById('job-analysis-card');
+            const analysisContent = document.getElementById('job-analysis-content');
+
+            let html = '';
+
+            if (analysis.requirements) {
+                html += '<div class="mb-3">';
+                html += '<strong>Required Skills:</strong><br>';
+                if (analysis.requirements.required_skills && analysis.requirements.required_skills.length > 0) {
+                    analysis.requirements.required_skills.forEach(skill => {
+                        html += `<span class="skill-tag">${skill}</span>`;
+                    });
+                } else {
+                    html += '<span class="text-muted">No specific skills identified</span>';
+                }
+                html += '</div>';
+
+                if (analysis.requirements.min_experience_years > 0) {
+                    html += `<div class="mb-3"><strong>Min Experience:</strong> ${analysis.requirements.min_experience_years} years</div>`;
+                }
+            }
+
+            if (analysis.analysis) {
+                if (analysis.analysis.job_level) {
+                    html += `<div class="mb-2"><strong>Job Level:</strong> ${analysis.analysis.job_level}</div>`;
+                }
+                if (analysis.analysis.job_type) {
+                    html += `<div class="mb-2"><strong>Job Type:</strong> ${analysis.analysis.job_type}</div>`;
+                }
+            }
+
+            analysisContent.innerHTML = html;
+            analysisCard.style.display = 'block';
+        }
+
+        function showLoading() {
+            emptyState.style.display = 'none';
+            noResults.style.display = 'none';
+            resultsHeader.style.display = 'none';
+            loadingState.style.display = 'block';
+        }
+
+        function hideLoading() {
+            loadingState.style.display = 'none';
+        }
+
+        function displayResults(candidates) {
+            hideLoading();
+
+            if (candidates.length === 0) {
+                emptyState.style.display = 'none';
+                noResults.style.display = 'block';
+                resultsHeader.style.display = 'none';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            noResults.style.display = 'none';
+            resultsHeader.style.display = 'block';
+
+            resultsCount.textContent = candidates.length;
+            sortAndDisplayCandidates('score');
+        }
+
+        function sortAndDisplayCandidates(sortBy) {
+            let sortedCandidates = [...currentCandidates];
+
+            if (sortBy === 'score') {
+                sortedCandidates.sort((a, b) => (b.match_score || 0) - (a.match_score || 0));
+            } else if (sortBy === 'experience') {
+                sortedCandidates.sort((a, b) => (b.experience_years || 0) - (a.experience_years || 0));
+            }
+
+            let html = '';
+            sortedCandidates.forEach(candidate => {
+                html += createCandidateCard(candidate);
+            });
+
+            resultsList.innerHTML = html;
+        }
+
+        function createCandidateCard(candidate) {
+            const matchScore = candidate.match_score || 0;
+            const scoreClass = matchScore >= 80 ? 'score-excellent' : matchScore >= 60 ? 'score-good' : 'score-fair';
+            
+            let skillsHtml = '';
+            if (candidate.skills && candidate.skills.length > 0) {
+                candidate.skills.slice(0, 5).forEach(skill => {
+                    skillsHtml += `<span class="skill-tag">${skill}</span>`;
+                });
+                if (candidate.skills.length > 5) {
+                    skillsHtml += `<span class="skill-tag">+${candidate.skills.length - 5} more</span>`;
+                }
+            }
+
+            let reasonsHtml = '';
+            if (candidate.match_reasons && candidate.match_reasons.length > 0) {
+                reasonsHtml = candidate.match_reasons.slice(0, 2).map(reason => 
+                    `<li class="small text-muted">${reason}</li>`
+                ).join('');
+            }
+
+            return `
+                <div class="card candidate-card mb-3" onclick="showCandidateDetails('${candidate.id}')">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title mb-2">
+                                    ${candidate.name || 'Unknown Name'}
+                                    <small class="text-muted">(${candidate.experience_years || 0} years exp.)</small>
+                                </h5>
+                                <p class="text-muted mb-2">
+                                    <i class="fas fa-envelope me-2"></i>${candidate.email || 'No email'}
+                                    <i class="fas fa-map-marker-alt ms-3 me-2"></i>${candidate.location || 'No location'}
+                                </p>
+                                <div class="mb-2">${skillsHtml}</div>
+                                ${reasonsHtml ? `<ul class="mb-0">${reasonsHtml}</ul>` : ''}
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="match-score ${scoreClass}">${matchScore}%</div>
+                                <small class="text-muted">Match Score</small>
+                                <div class="mt-2">
+                                    <small class="text-muted">
+                                        Skills: ${candidate.skill_match || 0}% | 
+                                        Experience: ${candidate.experience_match || 0}%
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCandidateDetails(candidateId) {
+            const candidate = currentCandidates.find(c => c.id === candidateId);
+            if (!candidate) return;
+
+            document.getElementById('modal-candidate-name').textContent = candidate.name || 'Unknown Name';
+            
+            let detailsHtml = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold">Contact Information</h6>
+                        <p><strong>Email:</strong> ${candidate.email || 'Not provided'}</p>
+                        <p><strong>Phone:</strong> ${candidate.phone || 'Not provided'}</p>
+                        <p><strong>Location:</strong> ${candidate.location || 'Not provided'}</p>
+                        <p><strong>Experience:</strong> ${candidate.experience_years || 0} years</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-bold">Match Analysis</h6>
+                        <p><strong>Overall Match:</strong> ${candidate.match_score || 0}%</p>
+                        <p><strong>Skill Match:</strong> ${candidate.skill_match || 0}%</p>
+                        <p><strong>Experience Match:</strong> ${candidate.experience_match || 0}%</p>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6 class="fw-bold">Skills</h6>
+                        <div class="mb-3">
+            `;
+
+            if (candidate.skills && candidate.skills.length > 0) {
+                candidate.skills.forEach(skill => {
+                    detailsHtml += `<span class="skill-tag">${skill}</span>`;
+                });
+            } else {
+                detailsHtml += '<span class="text-muted">No skills listed</span>';
+            }
+
+            detailsHtml += `
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h6 class="fw-bold">Why This Candidate Matches</h6>
+                        <ul>
+            `;
+
+            if (candidate.match_reasons && candidate.match_reasons.length > 0) {
+                candidate.match_reasons.forEach(reason => {
+                    detailsHtml += `<li>${reason}</li>`;
+                });
+            } else {
+                detailsHtml += '<li>No specific match reasons available</li>';
+            }
+
+            detailsHtml += `
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h6 class="fw-bold">Professional Summary</h6>
+                        <p class="text-muted">${candidate.summary || 'No summary available'}</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('modal-candidate-details').innerHTML = detailsHtml;
+            
+            const modal = new bootstrap.Modal(document.getElementById('candidateModal'));
+            modal.show();
+        }
+
+        function showWarning(message) {
+            // Create a temporary warning alert
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'alert alert-warning alert-dismissible fade show';
+            warningDiv.innerHTML = `
+                <i class="fas fa-exclamation-triangle me-2"></i>${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.querySelector('.container').insertBefore(warningDiv, document.querySelector('.row'));
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                warningDiv.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
