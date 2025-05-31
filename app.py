@@ -3,7 +3,11 @@ from flask_cors import CORS
 import os
 import json
 from datetime import datetime
+from dotenv import load_dotenv  # Add this import
 from config import Config
+
+# Force load environment variables at the very beginning
+load_dotenv()
 
 # Import our custom modules
 from utils.resume_parser import ResumeParser
@@ -20,21 +24,24 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 # Initialize our AI components with error handling
 resume_parser = ResumeParser()
 
-# Initialize AI components with API key check
+# Initialize AI components with both GROQ and Gemini API keys
 groq_api_key = app.config.get('GROQ_API_KEY')
-if not groq_api_key or groq_api_key == 'your_groq_api_key_here':
-    print("WARNING: GROQ_API_KEY not set properly. AI features will be limited.")
-    ai_matcher = None
-    job_analyzer = None
-else:
-    try:
-        ai_matcher = AIMatcher(groq_api_key)
-        job_analyzer = JobAnalyzer(groq_api_key)
-        print("✅ AI components initialized successfully")
-    except Exception as e:
-        print(f"❌ Error initializing AI components: {e}")
-        ai_matcher = None
-        job_analyzer = None
+gemini_api_key = os.getenv('GEMINI_API_KEY') or app.config.get('GEMINI_API_KEY')
+
+print(f"🔧 App: Gemini API key loaded: {gemini_api_key[:20] if gemini_api_key else 'None'}...")
+print(f"🔧 App: GROQ API key loaded: {groq_api_key[:20] if groq_api_key else 'None'}...")
+
+# Initialize AI components with proper API keys
+try:
+    # Use Gemini for our enhanced AI features
+    ai_matcher = AIMatcher(api_key=gemini_api_key)
+    job_analyzer = JobAnalyzer(api_key=gemini_api_key)
+    print("✅ AI components initialized successfully")
+except Exception as e:
+    print(f"❌ Error initializing AI components: {e}")
+    # Initialize with fallback (no API key)
+    ai_matcher = AIMatcher()
+    job_analyzer = JobAnalyzer()
 
 @app.route('/')
 def home():
@@ -113,22 +120,22 @@ def search_candidates():
                 'message': 'No candidates found in database'
             })
         
-        # Use AI to match candidates if available
-        if ai_matcher:
-            matched_candidates = ai_matcher.match_candidates(
-                job_description, 
-                candidates, 
-                filters
-            )
-        else:
-            # Fallback to basic matching
-            matched_candidates = basic_candidate_matching(job_description, candidates, filters)
+        # Use AI to match candidates - now with enhanced AI or fallback
+        matched_candidates = ai_matcher.match_candidates(
+            job_description, 
+            candidates, 
+            filters
+        )
+        
+        # Get parsed criteria for display
+        parsed_criteria = ai_matcher.parse_natural_language_query(job_description)
         
         return jsonify({
             'success': True,
             'candidates': matched_candidates,
             'total': len(matched_candidates),
-            'ai_enabled': ai_matcher is not None
+            'parsed_criteria': parsed_criteria,
+            'ai_enabled': ai_matcher.ai_available
         })
         
     except Exception as e:
@@ -143,16 +150,56 @@ def analyze_job():
         if not job_description.strip():
             return jsonify({'error': 'Job description is required'}), 400
         
-        if job_analyzer:
-            analysis = job_analyzer.analyze_job_description(job_description)
-        else:
-            # Fallback analysis
-            analysis = basic_job_analysis(job_description)
+        # Use our enhanced job analyzer
+        analysis = job_analyzer.analyze_job_description(job_description)
         
         return jsonify({
             'success': True,
             'analysis': analysis,
-            'ai_enabled': job_analyzer is not None
+            'ai_enabled': job_analyzer.ai_available
+        })
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/get_candidates')
+def get_candidates():
+    """Get all candidates for the search interface"""
+    try:
+        candidates = load_candidates()
+        return jsonify({
+            'success': True,
+            'candidates': candidates,
+            'total': len(candidates)
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/generate_questions', methods=['POST'])
+def generate_questions():
+    """Generate screening questions for a candidate"""
+    try:
+        data = request.get_json()
+        job_description = data.get('job_description', '')
+        candidate_id = data.get('candidate_id', '')
+        
+        if not job_description.strip():
+            return jsonify({'error': 'Job description is required'}), 400
+        
+        # Find the candidate
+        candidates = load_candidates()
+        candidate = next((c for c in candidates if c.get('id') == candidate_id), None)
+        
+        if not candidate:
+            return jsonify({'error': 'Candidate not found'}), 404
+        
+        # Generate questions using AI matcher
+        questions = ai_matcher.generate_screening_questions(job_description, candidate)
+        
+        return jsonify({
+            'success': True,
+            'questions': questions,
+            'ai_enabled': ai_matcher.ai_available
         })
         
     except Exception as e:
@@ -177,73 +224,10 @@ def health_check():
     """Health check endpoint"""
     return jsonify({
         'status': 'healthy',
-        'ai_enabled': ai_matcher is not None and job_analyzer is not None,
+        'ai_enabled': ai_matcher.ai_available if ai_matcher else False,
+        'gemini_available': ai_matcher.ai_available if ai_matcher else False,
         'total_candidates': len(load_candidates())
     })
-
-def basic_candidate_matching(job_description, candidates, filters):
-    """Basic candidate matching when AI is not available"""
-    job_desc_lower = job_description.lower()
-    
-    scored_candidates = []
-    for candidate in candidates:
-        score = 0
-        reasons = []
-        
-        # Basic skill matching
-        candidate_skills = [skill.lower() for skill in candidate.get('skills', [])]
-        matching_skills = [skill for skill in candidate_skills if any(skill in job_desc_lower for skill in candidate_skills)]
-        
-        if matching_skills:
-            score += len(matching_skills) * 10
-            reasons.append(f"Has relevant skills: {', '.join(matching_skills[:3])}")
-        
-        # Experience matching
-        exp_years = candidate.get('experience_years', 0)
-        if exp_years > 0:
-            score += min(exp_years * 5, 30)
-            reasons.append(f"Has {exp_years} years of experience")
-        
-        candidate_with_score = candidate.copy()
-        candidate_with_score.update({
-            'match_score': min(score, 100),
-            'match_reasons': reasons or ['Basic profile match'],
-            'skill_match': len(matching_skills) * 20,
-            'experience_match': min(exp_years * 20, 100)
-        })
-        scored_candidates.append(candidate_with_score)
-    
-    return sorted(scored_candidates, key=lambda x: x.get('match_score', 0), reverse=True)
-
-def basic_job_analysis(job_description):
-    """Basic job analysis when AI is not available"""
-    import re
-    
-    text_lower = job_description.lower()
-    
-    # Extract basic requirements
-    tech_skills = []
-    common_skills = ['python', 'java', 'javascript', 'react', 'sql', 'aws', 'docker']
-    for skill in common_skills:
-        if skill in text_lower:
-            tech_skills.append(skill.title())
-    
-    # Extract experience requirement
-    exp_match = re.search(r'(\d+)\+?\s*years?\s*(?:of\s*)?experience', text_lower)
-    min_experience = int(exp_match.group(1)) if exp_match else 0
-    
-    return {
-        'requirements': {
-            'required_skills': tech_skills,
-            'min_experience_years': min_experience,
-            'technical_skills': tech_skills
-        },
-        'analysis': {
-            'job_level': 'mid',
-            'job_type': 'full-time'
-        },
-        'note': 'Basic analysis - AI features disabled'
-    }
 
 def save_candidate(parsed_data, filename):
     """Save candidate to our simple JSON database"""
@@ -333,5 +317,5 @@ def generate_analytics(candidates):
 if __name__ == '__main__':
     print("🚀 Starting HireAI Application...")
     print(f"📁 Upload folder: {app.config['UPLOAD_FOLDER']}")
-    print(f"🤖 AI enabled: {ai_matcher is not None}")
-    app.run(debug=True, port=5000)
+    print(f"🤖 AI enabled: {ai_matcher.ai_available if ai_matcher else False}")
+    app.run(debug=True, port=5001)  # Changed to port 5001 to avoid conflict

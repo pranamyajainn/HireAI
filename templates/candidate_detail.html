@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Details - HireAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .candidate-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+        }
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+        }
+        .skill-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            margin: 0.2rem;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        .match-score-big {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+        .action-btn {
+            border-radius: 25px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            margin: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-brain me-2"></i>HireAI
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/upload">Upload Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/search">Search Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics">Analytics</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Candidate Header -->
+    <div class="candidate-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 id="candidateName">Loading...</h1>
+                    <p class="lead" id="candidateTitle">Loading...</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="match-score-big" id="matchScore">
+                        --
+                    </div>
+                    <p class="mt-2">Match Score</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Profile Card -->
+        <div class="profile-card p-4 mb-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3><i class="fas fa-user me-2"></i>Profile Summary</h3>
+                    <p id="candidateSummary" class="text-muted">Loading...</p>
+                    
+                    <h4 class="mt-4"><i class="fas fa-briefcase me-2"></i>Experience</h4>
+                    <p><strong><span id="experienceYears">--</span> years</strong> of professional experience</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i><span id="candidateLocation">Loading...</span></p>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <button class="btn btn-primary action-btn" onclick="generateQuestions()">
+                            <i class="fas fa-question-circle me-2"></i>Generate Questions
+                        </button>
+                        <button class="btn btn-success action-btn" onclick="downloadResume()">
+                            <i class="fas fa-download me-2"></i>Download Resume
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5><i class="fas fa-code me-2"></i>Technical Skills</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="skillsList">Loading...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Match Analysis -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-line me-2"></i>Match Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="matchAnalysis">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Perform a search first to see match analysis
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screening Questions Modal -->
+        <div class="modal fade" id="questionsModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-question-circle me-2"></i>Screening Questions
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="questionsList">
+                            <!-- Questions will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="exportQuestions()">
+                            <i class="fas fa-download me-2"></i>Export Questions
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentCandidate = null;
+        let currentQuestions = [];
+
+        // Get candidate ID from URL
+        function getCandidateId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Load candidate details
+        async function loadCandidate() {
+            const candidateId = getCandidateId();
+            if (!candidateId) {
+                alert('No candidate ID provided');
+                window.location.href = '/search';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/get_candidates');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const candidate = data.candidates.find(c => c.id === candidateId);
+                    if (candidate) {
+                        currentCandidate = candidate;
+                        displayCandidate(candidate);
+                    } else {
+                        alert('Candidate not found');
+                        window.location.href = '/search';
+                    }
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert('Error loading candidate: ' + error.message);
+            }
+        }
+
+        // Display candidate information
+        function displayCandidate(candidate) {
+            document.getElementById('candidateName').textContent = candidate.name || 'Unknown';
+            document.getElementById('candidateTitle').textContent = 
+                `${candidate.experience_years || 0} years experience in ${candidate.skills[0] || 'Technology'}`;
+            document.getElementById('candidateSummary').textContent = 
+                candidate.summary || 'No summary available';
+            document.getElementById('experienceYears').textContent = candidate.experience_years || 0;
+            document.getElementById('candidateLocation').textContent = candidate.location || 'Not specified';
+            
+            // Display match score if available
+            const matchScore = candidate.match_score || 0;
+            document.getElementById('matchScore').textContent = matchScore + '%';
+            
+            // Display skills
+            const skillsHtml = candidate.skills.map(skill => 
+                `<span class="skill-badge">${skill}</span>`
+            ).join('');
+            document.getElementById('skillsList').innerHTML = skillsHtml;
+            
+            // Display match analysis if available
+            if (candidate.match_reasons || candidate.concerns) {
+                let analysisHtml = '';
+                
+                if (candidate.match_reasons && candidate.match_reasons.length > 0) {
+                    analysisHtml += `
+                        <div class="alert alert-success">
+                            <h6><i class="fas fa-check-circle me-2"></i>Strengths:</h6>
+                            ${candidate.match_reasons.map(reason => `<li>${reason}</li>`).join('')}
+                        </div>
+                    `;
+                }
+                
+                if (candidate.concerns && candidate.concerns.length > 0) {
+                    analysisHtml += `
+                        <div class="alert alert-warning">
+                            <h6><i class="fas fa-exclamation-triangle me-2"></i>Areas to Explore:</h6>
+                            ${candidate.concerns.map(concern => `<li>${concern}</li>`).join('')}
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('matchAnalysis').innerHTML = analysisHtml;
+            }
+        }
+
+        // Generate screening questions
+        async function generateQuestions() {
+            if (!currentCandidate) return;
+            
+            const jobDescription = prompt('Enter job description for screening questions:');
+            if (!jobDescription) return;
+            
+            try {
+                const response = await fetch('/api/generate_questions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        job_description: jobDescription,
+                        candidate_id: currentCandidate.id
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentQuestions = data.questions;
+                    displayQuestions(data.questions);
+                    new bootstrap.Modal(document.getElementById('questionsModal')).show();
+                } else {
+                    alert('Error generating questions: ' + data.error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Display questions in modal
+        function displayQuestions(questions) {
+            const questionsHtml = questions.map((q, index) => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">Question ${index + 1} 
+                            <span class="badge bg-secondary">${q.type}</span>
+                            <span class="badge bg-info">${q.difficulty}</span>
+                        </h6>
+                        <p class="card-text">${q.question}</p>
+                        ${q.expected_keywords ? `
+                            <small class="text-muted">
+                                <strong>Key points to listen for:</strong> ${q.expected_keywords.join(', ')}
+                            </small>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('questionsList').innerHTML = questionsHtml;
+        }
+
+        // Export questions
+        function exportQuestions() {
+            if (currentQuestions.length === 0) return;
+            
+            const content = currentQuestions.map((q, index) => 
+                `Question ${index + 1} (${q.type} - ${q.difficulty}):\n${q.question}\n\nKey points: ${q.expected_keywords ? q.expected_keywords.join(', ') : 'None'}\n\n`
+            ).join('---\n\n');
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `screening_questions_${currentCandidate.name.replace(/\s+/g, '_')}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Download resume
+        function downloadResume() {
+            if (!currentCandidate || !currentCandidate.filename) {
+                alert('Resume file not available');
+                return;
+            }
+            
+            // Create download link (you'll need to implement the download endpoint)
+            window.open(`/api/download_resume/${currentCandidate.id}`, '_blank');
+        }
+
+        // Load candidate on page load
+        document.addEventListener('DOMContentLoaded', loadCandidate);
+    </script>
+</body>
+</html>
