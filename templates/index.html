@@ -22,6 +22,7 @@
                 <ul class="navbar-nav">
                     <li><a href="/" class="nav-link active">Home</a></li>
                     <li><a href="/upload" class="nav-link">Upload Resume</a></li>
+                    <li><a href="/candidates" class="nav-link">View Candidates</a></li>
                     <li><a href="/search" class="nav-link">Search Candidates</a></li>
                     <li><a href="/analytics" class="nav-link">Analytics</a></li>
                 </ul>
@@ -45,31 +46,12 @@
                         <a href="/upload" class="btn btn-primary btn-large animate-fadeInLeft">
                             <i class="fas fa-upload icon"></i> Upload Resumes
                         </a>
+                        <a href="/candidates" class="btn btn-large animate-fadeInLeft">
+                            <i class="fas fa-users icon"></i> View Candidates
+                        </a>
                         <a href="/search" class="btn btn-large animate-fadeInLeft">
                             <i class="fas fa-search icon"></i> Search Candidates
                         </a>
-                    </div>
-
-                    <!-- Live Stats Section -->
-                    <div class="grid grid-3 animate-fadeInUp" style="max-width: 800px; margin: 0 auto;">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <div class="text-success" style="font-size: 2rem; font-weight: 700;">500+</div>
-                                <div class="text-secondary">Resumes Processed</div>
-                            </div>
-                        </div>
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <div class="text-success" style="font-size: 2rem; font-weight: 700;">95%</div>
-                                <div class="text-secondary">Accuracy Rate</div>
-                            </div>
-                        </div>
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <div class="text-success" style="font-size: 2rem; font-weight: 700;">50+</div>
-                                <div class="text-secondary">Companies Trust Us</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -90,6 +72,19 @@
                             <p class="text-secondary">
                                 Advanced AI extracts key information from resumes including skills, 
                                 experience, education, and contact details with 95% accuracy.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card animate-fadeInUp">
+                        <div class="card-body text-center">
+                            <div class="flex-center-column mb-3">
+                                <i class="fas fa-users text-success" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                                <h3>Candidate Management</h3>
+                            </div>
+                            <p class="text-secondary">
+                                Browse, filter, and manage all your candidates in one place. 
+                                View detailed profiles with AI screening and match analysis.
                             </p>
                         </div>
                     </div>
@@ -145,19 +140,6 @@
                             </p>
                         </div>
                     </div>
-
-                    <div class="card animate-fadeInUp">
-                        <div class="card-body text-center">
-                            <div class="flex-center-column mb-3">
-                                <i class="fas fa-clock text-success" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                                <h3>Real-time Processing</h3>
-                            </div>
-                            <p class="text-secondary">
-                                Lightning-fast resume processing and instant search results 
-                                to accelerate your recruitment workflow.
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -183,10 +165,10 @@
                         <div class="flex-center" style="width: 80px; height: 80px; background: var(--accent-green); border-radius: 50%; margin-bottom: 1.5rem;">
                             <span style="font-size: 2rem; font-weight: 700; color: var(--bg-primary);">2</span>
                         </div>
-                        <h3 class="text-center">AI Processing</h3>
+                        <h3 class="text-center">AI Processing & Management</h3>
                         <p class="text-secondary text-center">
-                            Our AI extracts and structures candidate information, 
-                            identifying skills, experience, and qualifications.
+                            Our AI extracts and structures candidate information. 
+                            View all candidates in an organized dashboard with detailed profiles.
                         </p>
                     </div>
 
@@ -197,7 +179,7 @@
                         <h3 class="text-center">Smart Matching</h3>
                         <p class="text-secondary text-center">
                             Search with job descriptions to get AI-powered candidate 
-                            recommendations with detailed match analysis.
+                            recommendations with detailed match analysis and screening.
                         </p>
                     </div>
                 </div>
@@ -216,6 +198,9 @@
                     <div class="flex-center" style="gap: 1rem;">
                         <a href="/upload" class="btn btn-primary btn-large">
                             <i class="fas fa-rocket icon"></i> Get Started Now
+                        </a>
+                        <a href="/candidates" class="btn btn-large">
+                            <i class="fas fa-users icon"></i> Browse Candidates
                         </a>
                         <a href="/analytics" class="btn btn-large">
                             <i class="fas fa-chart-line icon"></i> View Demo
@@ -237,21 +222,18 @@
                 </p>
                 <div class="footer-timestamp">
                     <i class="fas fa-clock icon-only"></i>
-                    <span id="currentDateTime">2025-05-31 23:17:23</span> IST
+                    <span id="currentDateTime">2025-06-01 06:22:00</span> UTC
                 </div>
             </div>
         </footer>
     </div>
 
     <script>
-        // Update live datetime to IST
+        // Update live datetime to UTC
         function updateDateTime() {
             const now = new Date();
-            // Convert UTC to IST (UTC + 5:30)
-            const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-            const istTime = new Date(now.getTime() + istOffset);
-            const istString = istTime.toISOString().slice(0, 19).replace('T', ' ');
-            document.getElementById('currentDateTime').textContent = istString;
+            const utcString = now.toISOString().slice(0, 19).replace('T', ' ');
+            document.getElementById('currentDateTime').textContent = utcString;
         }
 
         // Add smooth animations on scroll

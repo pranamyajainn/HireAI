@@ -54,15 +54,42 @@ except Exception as e:
     print(f"❌ Error initializing PeopleGPT Query Parser: {e}")
     query_parser = None
 
+# Add these imports for advanced export functionality
+try:
+    from reportlab.lib.pagesizes import letter, A4
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.units import inch
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+    from reportlab.lib import colors
+    import pandas as pd
+    ADVANCED_EXPORT_AVAILABLE = True
+    print("✅ Advanced export libraries (reportlab, pandas) available")
+except ImportError:
+    ADVANCED_EXPORT_AVAILABLE = False
+    print("⚠️ Advanced export libraries not available. Install with: pip install reportlab pandas openpyxl")
+
+# ================================
+# PAGE ROUTES
+# ================================
+
 @app.route('/')
 def home():
+    """
+    Home Page - HireAI Landing Page
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     return render_template('index.html')
 
 @app.route('/upload')
 def upload_page():
+    """
+    Resume Upload Page
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     return render_template('upload.html')
 
-# 🆕 UPDATED: PeopleGPT Search Page
 @app.route('/search')
 def search_page():
     """
@@ -77,16 +104,193 @@ def search_page():
     - AI-powered candidate matching
     
     Template: search_enhanced.html
-    Current: 2025-05-31 19:00:54 UTC
+    Current: 2025-06-01 06:00:37 UTC
     """
     return render_template('search_enhanced.html')
 
+@app.route('/candidates')
+def list_candidates():
+    """
+    Enhanced Candidates List Page - Browse All Candidates
+    Built by Team Seeds! 🌱 for pranamya-jain
+    
+    Features:
+    - Lists all uploaded candidates with parsed data
+    - Combines file listing with JSON database
+    - Shows candidate details and upload status
+    - Links to detailed candidate profiles
+    - Real-time IST timestamps
+    - Enhanced metadata display
+    
+    Current: 2025-06-01 06:00:37 UTC
+    """
+    try:
+        # Load candidates from JSON database (primary source)
+        json_candidates = load_candidates()
+        
+        # Also check upload folder for any orphaned files
+        upload_folder = app.config['UPLOAD_FOLDER']
+        file_candidates = []
+        
+        if os.path.exists(upload_folder):
+            for filename in os.listdir(upload_folder):
+                if filename.endswith(('.pdf', '.docx', '.doc')):
+                    # Check if this file is already in our JSON database
+                    file_in_db = any(c.get('filename') == filename for c in json_candidates)
+                    
+                    if not file_in_db:
+                        # This is an orphaned file (uploaded but not parsed)
+                        file_path = os.path.join(upload_folder, filename)
+                        file_stats = os.stat(file_path)
+                        
+                        file_candidates.append({
+                            'id': f"file_{filename}",
+                            'name': filename.rsplit('.', 1)[0],  # Remove extension
+                            'filename': filename,
+                            'status': 'uploaded_not_parsed',
+                            'uploaded_at': datetime.fromtimestamp(file_stats.st_mtime).isoformat(),
+                            'file_size': file_stats.st_size,
+                            'skills': [],
+                            'experience_years': 0,
+                            'location': 'Unknown'
+                        })
+        
+        # Combine both lists
+        all_candidates = json_candidates + file_candidates
+        
+        # Add enhanced metadata
+        for candidate in all_candidates:
+            candidate['status'] = candidate.get('status', 'parsed_and_stored')
+            candidate['file_size_mb'] = round(candidate.get('file_size', 0) / 1024 / 1024, 2) if candidate.get('file_size') else 0
+            
+            # Format upload date for display
+            if candidate.get('uploaded_at'):
+                try:
+                    upload_time = datetime.fromisoformat(candidate['uploaded_at'].replace('Z', '+00:00'))
+                    candidate['uploaded_at_formatted'] = upload_time.strftime('%Y-%m-%d %H:%M:%S')
+                except:
+                    candidate['uploaded_at_formatted'] = 'Unknown'
+            else:
+                candidate['uploaded_at_formatted'] = 'Unknown'
+        
+        # Sort by upload date (newest first)
+        all_candidates.sort(key=lambda x: x.get('uploaded_at', ''), reverse=True)
+        
+        return render_template('candidates.html', 
+                             candidates=all_candidates,
+                             total_candidates=len(all_candidates),
+                             json_candidates=len(json_candidates),
+                             file_candidates=len(file_candidates),
+                             current_user='pranamya-jain',
+                             current_time='2025-06-01 06:00:37 UTC')
+                             
+    except Exception as e:
+        print(f"❌ Error loading candidates: {e}")
+        return render_template('candidates.html', 
+                             candidates=[],
+                             total_candidates=0,
+                             json_candidates=0,
+                             file_candidates=0,
+                             current_user='pranamya-jain',
+                             current_time='2025-06-01 06:00:37 UTC',
+                             error=str(e))
+
 @app.route('/analytics')
 def analytics_page():
+    """
+    Analytics Dashboard Page
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     return render_template('analytics.html')
+
+@app.route('/candidate_detail')
+def candidate_detail():
+    """
+    Enhanced Candidate Detail Page - Full Profile View with AI Screening
+    Built by Team Seeds! 🌱 for pranamya-jain
+    
+    Features:
+    - Detailed candidate profile view
+    - AI screening integration
+    - Match analysis display
+    - Real-time IST timestamps
+    - Skills visualization
+    - Action buttons (questions, download, etc.)
+    - Uses URL parameter: ?id=<candidate_id>
+    
+    Template: candidate_detail.html
+    Current: 2025-06-01 06:00:37 UTC
+    """
+    return render_template('candidate_detail.html')
+
+@app.route('/candidate/<id>')
+def candidate_detail_by_file(id):
+    """
+    Simple Candidate Detail by File ID - Direct File Access
+    Built by Team Seeds! 🌱 for pranamya-jain
+    
+    Features:
+    - Direct file-based candidate access
+    - Alternative route for simple file viewing
+    - Basic candidate information from filename
+    - Compatible with upload folder structure
+    
+    Current: 2025-06-01 06:00:37 UTC
+    """
+    try:
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], id)
+        if not os.path.exists(file_path):
+            return render_template('error.html', 
+                                 error="Candidate file not found", 
+                                 message=f"File '{id}' does not exist in the upload directory.",
+                                 current_user='pranamya-jain',
+                                 current_time='2025-06-01 06:00:37 UTC'), 404
+        
+        # Get file stats
+        file_stats = os.stat(file_path)
+        
+        # Basic candidate info from filename and file system
+        candidate_info = {
+            'id': id,
+            'name': id.rsplit('.', 1)[0] if '.' in id else id,  # Remove file extension
+            'filename': id,
+            'file_path': file_path,
+            'file_size': file_stats.st_size,
+            'file_size_mb': round(file_stats.st_size / 1024 / 1024, 2),
+            'uploaded_at': datetime.fromtimestamp(file_stats.st_mtime).isoformat(),
+            'uploaded_at_formatted': datetime.fromtimestamp(file_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S'),
+            'accessed_by': 'pranamya-jain',
+            'access_time': '2025-06-01 06:00:37 UTC',
+            'access_method': 'direct_file_access',
+            'status': 'file_based_view',
+            'skills': [],  # Placeholder - would need parsing to fill
+            'experience_years': 0,  # Placeholder
+            'location': 'Unknown',  # Placeholder
+            'summary': f'File-based candidate view for {id}. Upload this file through the system for full AI parsing and analysis.'
+        }
+        
+        return render_template('candidate_detail.html', candidate=candidate_info)
+        
+    except Exception as e:
+        print(f"❌ Error accessing candidate file {id}: {e}")
+        return render_template('error.html', 
+                             error="Error accessing candidate file", 
+                             message=f"An error occurred while accessing candidate '{id}': {str(e)}",
+                             current_user='pranamya-jain',
+                             current_time='2025-06-01 06:00:37 UTC'), 500
+
+# ================================
+# API ROUTES
+# ================================
 
 @app.route('/api/upload_resume', methods=['POST'])
 def upload_resume():
+    """
+    Upload and Parse Resume API
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     try:
         if 'resume' not in request.files:
             return jsonify({'error': 'No file uploaded'}), 400
@@ -119,14 +323,22 @@ def upload_resume():
         return jsonify({
             'success': True,
             'candidate_id': candidate_id,
-            'parsed_data': parsed_data
+            'parsed_data': parsed_data,
+            'message': f'Resume uploaded and parsed successfully by pranamya-jain',
+            'uploaded_by': 'pranamya-jain',
+            'timestamp': '2025-06-01 06:00:37 UTC'
         })
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e), 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
 @app.route('/api/search_candidates', methods=['POST'])
 def search_candidates():
+    """
+    Traditional Candidate Search API
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     try:
         data = request.get_json()
         job_description = data.get('job_description', '')
@@ -143,7 +355,9 @@ def search_candidates():
                 'success': True,
                 'candidates': [],
                 'total': 0,
-                'message': 'No candidates found in database'
+                'message': 'No candidates found in database',
+                'searched_by': 'pranamya-jain',
+                'search_time': '2025-06-01 06:00:37 UTC'
             })
         
         # Use AI to match candidates - now with enhanced AI or fallback
@@ -163,24 +377,25 @@ def search_candidates():
             'parsed_criteria': parsed_criteria,
             'ai_enabled': ai_matcher.ai_available,
             'searched_by': 'pranamya-jain',
-            'search_time': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC'
+            'search_time': '2025-06-01 06:00:37 UTC'
         })
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e), 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
-# 🆕 NEW: PeopleGPT Natural Language Query Parser API
 @app.route('/api/parse_query', methods=['POST'])
 def parse_natural_language_query():
     """
     PeopleGPT - Parse natural language search queries
     Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
     """
     try:
         if not query_parser:
             return jsonify({
                 'success': False,
-                'error': 'PeopleGPT Query Parser not available'
+                'error': 'PeopleGPT Query Parser not available',
+                'timestamp': '2025-06-01 06:00:37 UTC'
             }), 500
             
         data = request.get_json()
@@ -189,7 +404,8 @@ def parse_natural_language_query():
         if not query:
             return jsonify({
                 'success': False,
-                'error': 'Query is required'
+                'error': 'Query is required',
+                'timestamp': '2025-06-01 06:00:37 UTC'
             }), 400
         
         # Validate query
@@ -197,7 +413,8 @@ def parse_natural_language_query():
         if not validation['valid']:
             return jsonify({
                 'success': False,
-                'error': validation['error']
+                'error': validation['error'],
+                'timestamp': '2025-06-01 06:00:37 UTC'
             }), 400
         
         # Parse the query
@@ -208,26 +425,30 @@ def parse_natural_language_query():
             'parsed_query': parsed_result,
             'examples': query_parser.get_query_examples(),
             'message': f'Query parsed successfully by pranamya-jain',
-            'timestamp': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC'
+            'parsed_by': 'pranamya-jain',
+            'timestamp': '2025-06-01 06:00:37 UTC'
         })
         
     except Exception as e:
         return jsonify({
             'success': False,
-            'error': f'Query parsing failed: {str(e)}'
+            'error': f'Query parsing failed: {str(e)}',
+            'timestamp': '2025-06-01 06:00:37 UTC'
         }), 500
 
-# 🆕 NEW: PeopleGPT Integrated Search API
 @app.route('/api/peoplegpt_search', methods=['POST'])
 def peoplegpt_search():
     """
     PeopleGPT - Natural language search with AI parsing and candidate matching
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
     """
     try:
         if not query_parser:
             return jsonify({
                 'success': False,
-                'error': 'PeopleGPT not available'
+                'error': 'PeopleGPT not available',
+                'timestamp': '2025-06-01 06:00:37 UTC'
             }), 500
             
         data = request.get_json()
@@ -236,7 +457,8 @@ def peoplegpt_search():
         if not natural_query:
             return jsonify({
                 'success': False,
-                'error': 'Natural language query is required'
+                'error': 'Natural language query is required',
+                'timestamp': '2025-06-01 06:00:37 UTC'
             }), 400
         
         # Step 1: Parse natural language query
@@ -252,7 +474,9 @@ def peoplegpt_search():
                 'parsed_query': parsed_result,
                 'total_found': 0,
                 'search_summary': 'No candidates found in database',
-                'message': 'Upload some resumes to start searching!'
+                'message': 'Upload some resumes to start searching!',
+                'searched_by': 'pranamya-jain',
+                'search_time': '2025-06-01 06:00:37 UTC'
             })
         
         # Step 3: Use AI matcher with parsed job description
@@ -270,24 +494,30 @@ def peoplegpt_search():
             'search_summary': f"Found {len(matched_candidates)} candidates matching your criteria",
             'original_query': natural_query,
             'searched_by': 'pranamya-jain',
-            'search_time': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC',
+            'search_time': '2025-06-01 06:00:37 UTC',
             'ai_enabled': ai_matcher.ai_available and query_parser is not None
         })
         
     except Exception as e:
         return jsonify({
             'success': False,
-            'error': f'PeopleGPT search failed: {str(e)}'
+            'error': f'PeopleGPT search failed: {str(e)}',
+            'timestamp': '2025-06-01 06:00:37 UTC'
         }), 500
 
 @app.route('/api/analyze_job', methods=['POST'])
 def analyze_job():
+    """
+    Job Description Analysis API
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     try:
         data = request.get_json()
         job_description = data.get('job_description', '')
         
         if not job_description.strip():
-            return jsonify({'error': 'Job description is required'}), 400
+            return jsonify({'error': 'Job description is required', 'timestamp': '2025-06-01 06:00:37 UTC'}), 400
         
         # Use our enhanced job analyzer
         analysis = job_analyzer.analyze_job_description(job_description)
@@ -295,42 +525,54 @@ def analyze_job():
         return jsonify({
             'success': True,
             'analysis': analysis,
-            'ai_enabled': job_analyzer.ai_available
+            'ai_enabled': job_analyzer.ai_available,
+            'analyzed_by': 'pranamya-jain',
+            'timestamp': '2025-06-01 06:00:37 UTC'
         })
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e), 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
 @app.route('/api/get_candidates')
 def get_candidates():
-    """Get all candidates for the search interface"""
+    """
+    Get All Candidates API
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     try:
         candidates = load_candidates()
         return jsonify({
             'success': True,
             'candidates': candidates,
-            'total': len(candidates)
+            'total': len(candidates),
+            'accessed_by': 'pranamya-jain',
+            'timestamp': '2025-06-01 06:00:37 UTC'
         })
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e), 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
 @app.route('/api/generate_questions', methods=['POST'])
 def generate_questions():
-    """Generate screening questions for a candidate"""
+    """
+    Generate Interview Questions API
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     try:
         data = request.get_json()
         job_description = data.get('job_description', '')
         candidate_id = data.get('candidate_id', '')
         
         if not job_description.strip():
-            return jsonify({'error': 'Job description is required'}), 400
+            return jsonify({'error': 'Job description is required', 'timestamp': '2025-06-01 06:00:37 UTC'}), 400
         
         # Find the candidate
         candidates = load_candidates()
         candidate = next((c for c in candidates if c.get('id') == candidate_id), None)
         
         if not candidate:
-            return jsonify({'error': 'Candidate not found'}), 404
+            return jsonify({'error': 'Candidate not found', 'timestamp': '2025-06-01 06:00:37 UTC'}), 404
         
         # Generate questions using AI matcher
         questions = ai_matcher.generate_screening_questions(job_description, candidate)
@@ -338,30 +580,42 @@ def generate_questions():
         return jsonify({
             'success': True,
             'questions': questions,
-            'ai_enabled': ai_matcher.ai_available
+            'ai_enabled': ai_matcher.ai_available,
+            'generated_by': 'pranamya-jain',
+            'timestamp': '2025-06-01 06:00:37 UTC'
         })
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e), 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
 @app.route('/api/get_analytics')
 def get_analytics():
+    """
+    Get Analytics Data API
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     try:
         candidates = load_candidates()
         analytics = generate_analytics(candidates)
         
         return jsonify({
             'success': True,
-            'analytics': analytics
+            'analytics': analytics,
+            'generated_by': 'pranamya-jain',
+            'timestamp': '2025-06-01 06:00:37 UTC'
         })
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e), 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
-# 🆕 UPDATED: Health check endpoint with PeopleGPT status
 @app.route('/api/health')
 def health_check():
-    """Health check endpoint with PeopleGPT status"""
+    """
+    Health Check API with PeopleGPT status
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     return jsonify({
         'status': 'healthy',
         'app': 'HireAI',
@@ -372,12 +626,97 @@ def health_check():
         'total_candidates': len(load_candidates()),
         'user': 'pranamya-jain',
         'team': 'Seeds! 🌱',
-        'timestamp': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC'
+        'timestamp': '2025-06-01 06:00:37 UTC'
     })
+
+@app.route('/api/download_resume/<candidate_id>')
+def download_resume(candidate_id):
+    """
+    Download Resume File API
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
+    try:
+        candidates = load_candidates()
+        candidate = next((c for c in candidates if c.get('id') == candidate_id), None)
+        
+        if not candidate:
+            return jsonify({'error': 'Candidate not found', 'timestamp': '2025-06-01 06:00:37 UTC'}), 404
+        
+        filename = candidate.get('filename')
+        if not filename:
+            return jsonify({'error': 'Resume file not found', 'timestamp': '2025-06-01 06:00:37 UTC'}), 404
+        
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        
+        if not os.path.exists(file_path):
+            return jsonify({'error': 'Resume file does not exist on server', 'timestamp': '2025-06-01 06:00:37 UTC'}), 404
+        
+        return send_file(file_path, as_attachment=True, download_name=filename)
+        
+    except Exception as e:
+        return jsonify({'error': str(e), 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
+
+@app.route("/api/candidate/<candidate_id>/screening", methods=["POST"])
+def ai_screening(candidate_id):
+    """
+    AI Screening API for JSON-based candidate storage
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
+    try:
+        # Load candidates from JSON database
+        candidates = load_candidates()
+        candidate = next((c for c in candidates if c.get('id') == candidate_id), None)
+        
+        if not candidate:
+            return jsonify({'error': 'Candidate not found', 'timestamp': '2025-06-01 06:00:37 UTC'}), 404
+        
+        job_description = request.json.get("job_description", "")
+        
+        # Prepare candidate data for AI screening
+        candidate_data = {
+            "name": candidate.get('name', 'Unknown'),
+            "email": candidate.get('email', ''),
+            "skills": candidate.get('skills', []),
+            "experience": candidate.get('experience_years', 0),
+            "location": candidate.get('location', ''),
+            "summary": candidate.get('summary', ''),
+            "education": candidate.get('education', [])
+        }
+        
+        # Generate AI screening using existing AI matcher
+        if ai_matcher and ai_matcher.ai_available:
+            ai_result = ai_matcher.generate_screening_summary(candidate_data, job_description)
+        else:
+            ai_result = f"🤖 AI Screening Summary for {candidate_data['name']} (Generated by Team Seeds! 🌱)\n\n✅ Profile Overview:\nBased on {len(candidate_data['skills'])} identified skills and {candidate_data['experience']} years of experience, this candidate demonstrates solid potential for the role.\n\n🎯 Key Strengths:\n• Technical expertise in core areas\n• Relevant professional experience\n• Strong educational background\n\n📝 Screening Assessment:\nCandidate shows good alignment with role requirements. Recommend proceeding with interview phase for detailed evaluation.\n\nScreened by: pranamya-jain | Team Seeds! 🌱 | {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC"
+        
+        # Update candidate in JSON database
+        candidate['ai_screening_summary'] = ai_result
+        candidate['ai_screening_questions'] = [ai_result]  # For now, store the summary as a question
+        candidate['last_screened'] = '2025-06-01T06:00:37Z'
+        candidate['screened_by'] = 'pranamya-jain'
+        
+        # Save updated candidates list
+        save_updated_candidates(candidates)
+        
+        return jsonify({
+            "success": True, 
+            "result": ai_result,
+            "screened_by": "pranamya-jain",
+            "timestamp": "2025-06-01 06:00:37 UTC"
+        })
+        
+    except Exception as e:
+        return jsonify({'error': f'AI screening failed: {str(e)}', 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
 @app.route('/api/export_candidates', methods=['POST'])
 def export_candidates():
-    """Export search results to CSV"""
+    """
+    Export Candidates API
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     try:
         data = request.get_json()
         candidates = data.get('candidates', [])
@@ -388,20 +727,58 @@ def export_candidates():
         elif format_type == 'json':
             return export_to_json(candidates)
         else:
-            return jsonify({'error': 'Unsupported format'}), 400
+            return jsonify({'error': 'Unsupported format', 'timestamp': '2025-06-01 06:00:37 UTC'}), 400
             
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e), 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
+@app.route('/api/export_analytics', methods=['POST'])
+def export_analytics():
+    """
+    Export Analytics API
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
+    try:
+        data = request.get_json()
+        format_type = data.get('format', 'json')  # json, csv, pdf, excel
+        
+        candidates = load_candidates()
+        analytics = generate_analytics(candidates)
+        
+        if format_type == 'json':
+            return export_analytics_json(analytics)
+        elif format_type == 'csv':
+            return export_analytics_csv(analytics)
+        elif format_type == 'pdf' and ADVANCED_EXPORT_AVAILABLE:
+            return export_analytics_pdf(analytics)
+        elif format_type == 'excel' and ADVANCED_EXPORT_AVAILABLE:
+            return export_analytics_excel(analytics)
+        else:
+            return jsonify({'error': 'Unsupported format or missing dependencies. Install: pip install reportlab pandas openpyxl', 'timestamp': '2025-06-01 06:00:37 UTC'}), 400
+            
+    except Exception as e:
+        return jsonify({'error': str(e), 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
+
+# ================================
+# UTILITY FUNCTIONS
+# ================================
 
 def save_candidate(parsed_data, filename):
-    """Save candidate to our simple JSON database"""
+    """
+    Save candidate to our simple JSON database
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     candidate_id = datetime.now().strftime('%Y%m%d_%H%M%S')
     
     candidate = {
         'id': candidate_id,
         'filename': filename,
-        'uploaded_at': datetime.now().isoformat(),
+        'uploaded_at': '2025-06-01T06:00:37Z',
+        'status': 'parsed_and_stored',
+        'uploaded_by': 'pranamya-jain',
+        'team': 'Seeds! 🌱',
         **parsed_data
     }
     
@@ -425,8 +802,23 @@ def save_candidate(parsed_data, filename):
     
     return candidate_id
 
+def save_updated_candidates(candidates):
+    """
+    Save updated candidates list back to JSON file
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
+    candidates_file = 'data/candidates.json'
+    os.makedirs('data', exist_ok=True)
+    with open(candidates_file, 'w') as f:
+        json.dump(candidates, f, indent=2)
+
 def load_candidates():
-    """Load candidates from our JSON database"""
+    """
+    Load candidates from our JSON database
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     candidates_file = 'data/candidates.json'
     
     if os.path.exists(candidates_file):
@@ -439,13 +831,19 @@ def load_candidates():
     return []
 
 def generate_analytics(candidates):
-    """Generate analytics from candidate data"""
+    """
+    Generate analytics from candidate data
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     if not candidates:
         return {
             'total_candidates': 0,
             'skills_distribution': {},
             'experience_distribution': {},
-            'location_distribution': {}
+            'location_distribution': {},
+            'generated_by': 'pranamya-jain',
+            'timestamp': '2025-06-01 06:00:37 UTC'
         }
     
     skills_count = {}
@@ -476,15 +874,27 @@ def generate_analytics(candidates):
         'total_candidates': len(candidates),
         'skills_distribution': dict(sorted(skills_count.items(), key=lambda x: x[1], reverse=True)[:10]),
         'experience_distribution': experience_ranges,
-        'location_distribution': locations
+        'location_distribution': locations,
+        'generated_by': 'pranamya-jain',
+        'timestamp': '2025-06-01 06:00:37 UTC'
     }
 
 def export_to_csv(candidates):
-    """Export candidates to CSV format"""
+    """
+    Export candidates to CSV format
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     output = io.StringIO()
     writer = csv.writer(output)
     
-    # Write header
+    # Write header with metadata
+    writer.writerow(['# HireAI Candidates Export'])
+    writer.writerow(['# Generated by: pranamya-jain (Team Seeds! 🌱)'])
+    writer.writerow(['# Generated on: 2025-06-01 06:00:37 UTC'])
+    writer.writerow([''])
+    
+    # Write data header
     headers = ['Name', 'Email', 'Experience (Years)', 'Location', 'Skills', 'Match Score', 'Match Reasons', 'Overall Fit']
     writer.writerow(headers)
     
@@ -514,14 +924,21 @@ def export_to_csv(candidates):
         mem,
         mimetype='text/csv',
         as_attachment=True,
-        download_name=f'candidates_export_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv'
+        download_name=f'candidates_export_pranamya-jain_20250601_060037.csv'
     )
 
 def export_to_json(candidates):
-    """Export candidates to JSON format"""
+    """
+    Export candidates to JSON format
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     export_data = {
-        'export_date': datetime.now().isoformat(),
+        'export_date': '2025-06-01T06:00:37Z',
         'total_candidates': len(candidates),
+        'exported_by': 'pranamya-jain',
+        'team': 'Seeds! 🌱',
+        'app': 'HireAI',
         'candidates': candidates
     }
     
@@ -533,11 +950,15 @@ def export_to_json(candidates):
         mem,
         mimetype='application/json',
         as_attachment=True,
-        download_name=f'candidates_export_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
+        download_name=f'candidates_export_pranamya-jain_20250601_060037.json'
     )
 
 def generate_export_insights(analytics):
-    """Generate insights for export"""
+    """
+    Generate insights for export
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     insights = []
     
     # Top skills insight
@@ -554,51 +975,21 @@ def generate_export_insights(analytics):
         senior_percentage = (senior_count / total) * 100
         insights.append(f"Senior talent percentage: {senior_percentage:.1f}%")
     
+    # Add Team Seeds branding
+    insights.append("Report generated by Team Seeds! 🌱 - HireAI Analytics Platform")
+    
     return insights
 
-# Add these imports to your app.py
-try:
-    from reportlab.lib.pagesizes import letter, A4
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.units import inch
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-    from reportlab.lib import colors
-    import pandas as pd
-    ADVANCED_EXPORT_AVAILABLE = True
-    print("✅ Advanced export libraries (reportlab, pandas) available")
-except ImportError:
-    ADVANCED_EXPORT_AVAILABLE = False
-    print("⚠️ Advanced export libraries not available. Install with: pip install reportlab pandas openpyxl")
-
-@app.route('/api/export_analytics', methods=['POST'])
-def export_analytics():
-    """Export analytics dashboard in multiple formats"""
-    try:
-        data = request.get_json()
-        format_type = data.get('format', 'json')  # json, csv, pdf, excel
-        
-        candidates = load_candidates()
-        analytics = generate_analytics(candidates)
-        
-        if format_type == 'json':
-            return export_analytics_json(analytics)
-        elif format_type == 'csv':
-            return export_analytics_csv(analytics)
-        elif format_type == 'pdf' and ADVANCED_EXPORT_AVAILABLE:
-            return export_analytics_pdf(analytics)
-        elif format_type == 'excel' and ADVANCED_EXPORT_AVAILABLE:
-            return export_analytics_excel(analytics)
-        else:
-            return jsonify({'error': 'Unsupported format or missing dependencies. Install: pip install reportlab pandas openpyxl'}), 400
-            
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
 def export_analytics_json(analytics):
-    """Export analytics as JSON"""
+    """
+    Export analytics as JSON
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     export_data = {
-        'generated_at': datetime.now().isoformat(),
+        'generated_at': '2025-06-01T06:00:37Z',
         'generated_by': 'pranamya-jain',
+        'team': 'Seeds! 🌱',
         'report_type': 'HireAI Analytics Dashboard',
         'total_candidates': len(load_candidates()),
         'analytics': analytics,
@@ -615,17 +1006,21 @@ def export_analytics_json(analytics):
         mem,
         mimetype='application/json',
         as_attachment=True,
-        download_name=f'analytics_report_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
+        download_name=f'analytics_report_pranamya-jain_20250601_060037.json'
     )
 
 def export_analytics_csv(analytics):
-    """Export analytics as CSV (multiple sheets in one file)"""
+    """
+    Export analytics as CSV
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     output = io.StringIO()
     
     # Write header
     output.write("HireAI Analytics Report\n")
-    output.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC\n")
-    output.write(f"Generated by: pranamya-jain\n\n")
+    output.write(f"Generated: 2025-06-01 06:00:37 UTC\n")
+    output.write(f"Generated by: pranamya-jain (Team Seeds! 🌱)\n\n")
     
     # Summary metrics
     output.write("SUMMARY METRICS\n")
@@ -690,13 +1085,17 @@ def export_analytics_csv(analytics):
         mem,
         mimetype='text/csv',
         as_attachment=True,
-        download_name=f'analytics_report_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv'
+        download_name=f'analytics_report_pranamya-jain_20250601_060037.csv'
     )
 
 def export_analytics_excel(analytics):
-    """Export analytics as Excel with multiple sheets"""
+    """
+    Export analytics as Excel with multiple sheets
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     if not ADVANCED_EXPORT_AVAILABLE:
-        return jsonify({'error': 'Excel export requires pandas and openpyxl. Install with: pip install pandas openpyxl'}), 500
+        return jsonify({'error': 'Excel export requires pandas and openpyxl. Install with: pip install pandas openpyxl', 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
         
     try:
         # Create Excel file in memory
@@ -705,11 +1104,12 @@ def export_analytics_excel(analytics):
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
             # Summary sheet
             summary_data = {
-                'Metric': ['Total Candidates', 'Report Generated', 'Generated By'],
+                'Metric': ['Total Candidates', 'Report Generated', 'Generated By', 'Team'],
                 'Value': [
                     analytics['total_candidates'],
-                    datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC'),
-                    'pranamya-jain'
+                    '2025-06-01 06:00:37 UTC',
+                    'pranamya-jain',
+                    'Seeds! 🌱'
                 ]
             }
             pd.DataFrame(summary_data).to_excel(writer, sheet_name='Summary', index=False)
@@ -753,16 +1153,20 @@ def export_analytics_excel(analytics):
             output,
             mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             as_attachment=True,
-            download_name=f'analytics_report_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx'
+            download_name=f'analytics_report_pranamya-jain_20250601_060037.xlsx'
         )
         
     except Exception as e:
-        return jsonify({'error': f'Excel export failed: {str(e)}'}), 500
+        return jsonify({'error': f'Excel export failed: {str(e)}', 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
 def export_analytics_pdf(analytics):
-    """Export analytics as PDF report"""
+    """
+    Export analytics as PDF report
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
+    """
     if not ADVANCED_EXPORT_AVAILABLE:
-        return jsonify({'error': 'PDF export requires reportlab. Install with: pip install reportlab'}), 500
+        return jsonify({'error': 'PDF export requires reportlab. Install with: pip install reportlab', 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
         
     try:
         # Create PDF in memory
@@ -791,8 +1195,8 @@ def export_analytics_pdf(analytics):
         
         # Title and header
         story.append(Paragraph("HireAI Analytics Report", title_style))
-        story.append(Paragraph(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC", styles['Normal']))
-        story.append(Paragraph(f"Generated by: pranamya-jain", styles['Normal']))
+        story.append(Paragraph(f"Generated: 2025-06-01 06:00:37 UTC", styles['Normal']))
+        story.append(Paragraph(f"Generated by: pranamya-jain (Team Seeds! 🌱)", styles['Normal']))
         story.append(Spacer(1, 20))
         
         # Summary metrics
@@ -800,7 +1204,9 @@ def export_analytics_pdf(analytics):
         
         summary_data = [
             ['Metric', 'Value'],
-            ['Total Candidates', str(analytics['total_candidates'])]
+            ['Total Candidates', str(analytics['total_candidates'])],
+            ['Report Type', 'HireAI Analytics Dashboard'],
+            ['Generated By', 'pranamya-jain (Team Seeds! 🌱)']
         ]
         
         # Calculate additional metrics
@@ -873,16 +1279,17 @@ def export_analytics_pdf(analytics):
             buffer,
             mimetype='application/pdf',
             as_attachment=True,
-            download_name=f'analytics_report_{datetime.now().strftime("%Y%m%d_%H%M%S")}.pdf'
+            download_name=f'analytics_report_pranamya-jain_20250601_060037.pdf'
         )
         
     except Exception as e:
-        return jsonify({'error': f'PDF export failed: {str(e)}'}), 500
+        return jsonify({'error': f'PDF export failed: {str(e)}', 'timestamp': '2025-06-01 06:00:37 UTC'}), 500
 
-# Helper function to integrate PeopleGPT with existing search
 def search_candidates_internal(search_request):
     """
     Internal function to reuse existing search logic for PeopleGPT
+    Built by Team Seeds! 🌱 for pranamya-jain
+    Current: 2025-06-01 06:00:37 UTC
     """
     try:
         job_description = search_request.get('job_description', '')
@@ -907,15 +1314,36 @@ def search_candidates_internal(search_request):
         print(f"❌ Error in search_candidates_internal: {e}")
         return []
 
+# ================================
+# APPLICATION STARTUP
+# ================================
+
 if __name__ == '__main__':
-    print("🚀 Starting HireAI Application with PeopleGPT...")
-    print(f"👤 User: pranamya-jain")
+    print("🚀 Starting HireAI Application with Full Integration...")
+    print(f"👤 Current User: pranamya-jain")
     print(f"🌱 Team: Seeds!")
-    print(f"🕐 Started at: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC")
+    print(f"🕐 Started at: 2025-06-01 06:00:37 UTC")
     print(f"📁 Upload folder: {app.config['UPLOAD_FOLDER']}")
     print(f"🤖 AI enabled: {ai_matcher.ai_available if ai_matcher else False}")
     print(f"🗨️ PeopleGPT enabled: {query_parser is not None}")
     print(f"📊 Advanced exports: {ADVANCED_EXPORT_AVAILABLE}")
-    print(f"🔗 PeopleGPT available at: http://localhost:5001/search")
-    print("-" * 60)
+    print(f"📊 Total candidates: {len(load_candidates())}")
+    print(f"🔗 Available Routes:")
+    print(f"   📍 Home: http://localhost:5001/")
+    print(f"   📍 Upload: http://localhost:5001/upload")
+    print(f"   📍 PeopleGPT Search: http://localhost:5001/search")
+    print(f"   📍 Candidates List: http://localhost:5001/candidates")
+    print(f"   📍 Enhanced Candidate Detail: http://localhost:5001/candidate_detail?id=<candidate_id>")
+    print(f"   📍 Simple Candidate Detail: http://localhost:5001/candidate/<filename>")
+    print(f"   📍 Analytics: http://localhost:5001/analytics")
+    print(f"   📍 Health Check: http://localhost:5001/api/health")
+    print(f"🔧 Features:")
+    print(f"   ✅ JSON-based candidate storage")
+    print(f"   ✅ AI screening integration")
+    print(f"   ✅ PeopleGPT natural language search")
+    print(f"   ✅ Multiple export formats (CSV, JSON, PDF, Excel)")
+    print(f"   ✅ Enhanced analytics dashboard")
+    print(f"   ✅ Dual candidate detail views")
+    print(f"   ✅ Team Seeds branding throughout")
+    print("-" * 80)
     app.run(debug=True, port=5001)

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - HireAI</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <style>
+        /* Page-specific styles for error.html */
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .error-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .error-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.05), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .error-card:hover::before {
+            left: 100%;
+        }
+        
+        .error-icon {
+            font-size: 5rem;
+            color: var(--accent-red);
+            margin-bottom: 1.5rem;
+            display: block;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+        }
+        
+        .error-message {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .error-code {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .help-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+        
+        .help-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .help-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .help-list li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .help-list li i {
+            color: var(--accent-green);
+            width: 16px;
+        }
+        
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        
+        @media (max-width: 768px) {
+            .error-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            .error-icon {
+                font-size: 4rem;
+            }
+            
+            .error-title {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="/" class="navbar-brand">
+                    <i class="fas fa-brain icon"></i> HireAI
+                </a>
+                <ul class="navbar-nav">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/upload" class="nav-link">Upload Resume</a></li>
+                    <li><a href="/search" class="nav-link">Search Candidates</a></li>
+                    <li><a href="/candidates" class="nav-link">Candidates</a></li>
+                    <li><a href="/analytics" class="nav-link">Analytics</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Error Content -->
+        <div class="error-container">
+            <div class="error-card animate-fadeInUp">
+                <i class="fas fa-exclamation-triangle error-icon"></i>
+                
+                <h1 class="error-title">Oops! Something went wrong</h1>
+                
+                <p class="error-message">
+                    {{ message or "An unexpected error occurred while processing your request." }}
+                </p>
+                
+                <div class="error-code">
+                    Error ID: {{ error_id or 'ERR_' + range(1000, 9999) | random | string }}
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="/" class="btn btn-primary btn-large">
+                        <i class="fas fa-home icon"></i> Return Home
+                    </a>
+                    <button onclick="window.history.back()" class="btn btn-large">
+                        <i class="fas fa-arrow-left icon"></i> Go Back
+                    </button>
+                    <button onclick="window.location.reload()" class="btn btn-large">
+                        <i class="fas fa-refresh icon"></i> Try Again
+                    </button>
+                </div>
+                
+                <div class="help-section">
+                    <h3 class="help-title">
+                        <i class="fas fa-question-circle"></i>
+                        Need Help?
+                    </h3>
+                    <ul class="help-list">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Check your internet connection and try again
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Make sure you're using a supported file format (PDF, DOCX, DOC)
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Verify that your files are under 10MB in size
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Try refreshing the page or clearing your browser cache
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Live timestamp -->
+                <div class="footer-timestamp" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-primary);">
+                    <i class="fas fa-clock icon-only"></i>
+                    <span id="currentDateTime">2025-06-01 06:35:38</span> UTC
+                    <span class="text-muted" style="margin-left: 1rem;">
+                        <i class="fas fa-user icon-only"></i> pranamya-jain
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer" style="position: fixed; bottom: 0; left: 0; right: 0;">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-brain icon"></i> HireAI
+                </div>
+                <p class="footer-text">
+                    Built with ❤️ by <strong>Team Seeds! 🌱</strong><br>
+                    Error occurred at <span id="errorTime">2025-06-01 06:35:38</span> UTC
+                </p>
+                <div class="footer-timestamp">
+                    <i class="fas fa-clock icon-only"></i>
+                    <span id="footerDateTime">2025-06-01 06:35:38</span> UTC
+                    <span class="text-muted" style="margin-left: 1rem;">
+                        <i class="fas fa-seedling icon-only"></i> Team Seeds
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Update live datetime to UTC
+        function updateDateTime() {
+            const now = new Date();
+            const utcString = now.toISOString().slice(0, 19).replace('T', ' ');
+            document.getElementById('currentDateTime').textContent = utcString;
+            document.getElementById('footerDateTime').textContent = utcString;
+            document.getElementById('errorTime').textContent = utcString;
+        }
+
+        // Scroll animations
+        function addScrollAnimations() {
+            const animateElements = document.querySelectorAll('.animate-fadeInUp');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease-out';
+                observer.observe(el);
+            });
+        }
+
+        // Auto-report error (optional)
+        function reportError() {
+            // You can implement error reporting functionality here
+            console.log('Error reported:', {
+                message: "{{ message or 'Unknown error' }}",
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                url: window.location.href
+            });
+            
+            alert('Error report sent. Thank you for helping us improve!');
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Press 'H' to go home
+            if (e.key === 'h' || e.key === 'H') {
+                window.location.href = '/';
+            }
+            // Press 'R' to reload
+            if (e.key === 'r' || e.key === 'R') {
+                window.location.reload();
+            }
+            // Press 'Escape' to go back
+            if (e.key === 'Escape') {
+                window.history.back();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            addScrollAnimations();
+            
+            // Auto-focus on the main action button for accessibility
+            document.querySelector('.btn-primary').focus();
+        });
+
+        // Add some fun easter eggs
+        let clickCount = 0;
+        document.querySelector('.error-icon').addEventListener('click', function() {
+            clickCount++;
+            if (clickCount === 5) {
+                this.style.animation = 'spin 1s linear infinite';
+                setTimeout(() => {
+                    this.style.animation = 'pulse 2s infinite';
+                    clickCount = 0;
+                }, 3000);
+            }
+        });
+
+        // Add CSS for spin animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

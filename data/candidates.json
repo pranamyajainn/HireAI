@@ -1,58 +1,101 @@
 [
   {
-    "id": "20250531_121243",
-    "filename": "20250531_121243_Pranamya Jain.pdf",
-    "uploaded_at": "2025-05-31T12:12:43.685268",
-    "name": "Name not found",
-    "email": "pranamyajeet@gmail.com",
-    "phone": "9887521332",
-    "location": "\n \nincluding\n \nKNN\n,\n \nSV",
+    "id": "20250601_192602",
+    "filename": "20250601_192557_Chirantana_resume (1) - Chirantana P.pdf",
+    "uploaded_at": "2025-06-01T06:00:37Z",
+    "status": "parsed_and_stored",
+    "uploaded_by": "pranamya-jain",
+    "team": "Seeds! \ud83c\udf31",
+    "name": "Chirantana P",
+    "email": "chirantanofficial28@gmail.com",
+    "phone": "+91 8105832218",
+    "location": "Bangalore",
     "skills": [
-      "Machine Learning",
-      "Git",
-      "Github",
       "Python",
-      "Seaborn",
-      "Go",
-      "Matplotlib",
-      "Pandas",
-      "Flask",
-      "Scala",
-      "R"
+      "Java",
+      "C",
+      "Dart",
+      "C++",
+      "HTML",
+      "CSS",
+      "JAVASCRIPT",
+      "MySQL Database Management",
+      "MongoDB",
+      "Data Structures and Algorithms",
+      "Mobile application development using Flutter",
+      "Angular Web Developer Certification",
+      "Advance Java Programming(Servelet,JDBC,JSP)",
+      "Operating Systems",
+      "Digital Design and Computer Architecture",
+      "MicroControllers and Internet of Things",
+      "Airtificial Intelligence and Machine Learning",
+      "Deep Learning",
+      "Digital Communications and Networking",
+      "Cryptography and Network Security",
+      "Dockers and Containers"
     ],
     "experience": [],
-    "education": [],
-    "experience_years": 0,
-    "summary": "s\n.\n \nEmplo ys",
-    "raw_text": "\u0950\n \n\u0928\u092e\u0903\n \n\u0000\u0938\u0926\u094d\u0927\u092e \u094d\n \n \n \n \n \n \n  \nPranamya\n \nJain\n            \n \n \n+91\n \n9887521332\n  \n pranamyajeet@gmail.com      LinkedIn  \n Github \nEducation \nRamaiah\n \nInstitut e\n \nof\n \nTechnology\n \n2022\n \n-\n \n2026\n \nB.E\n \nin\n \nArtificial\n \nIntelligenc e\n  \nand\n \nData\n \nScienc e\n \n8.22/10\n \nCGPA\n Work Experience \nInfosys\n \nSpringboar d\n \nNovember\n \n2024\n \n\u2013\n \nJanuar y\n \n2025\n \nProject\n \nAI\n \nIntern\n \nRemot e\n \n\u2022\n \nBuilt\n \na\n \nmedic al\n \nimag e\n \nprocessing\n \npipeline\n \nfor\n \ndisease\n \ndiagnosis,\n \nusing\n \nOpenCV\n \nfor\n \npreprocessing\n \nand\n \nGaussian\n \nfilters\n \nfor\n \nimag e\n \nenhancemen t.\n \nFeature\n \nextraction\n \ninvolved\n \nGLCM\n \nfor\n \ntexture,\n \ncontour\n \nanaly sis\n \nfor\n \nshape,\n \nand\n \ncolor\n \nhistograms\n \nfor\n \ncolor\n \nfeatures,\n \nall\n \nvisualiz ed\n \nwith\n \nmatplotlib\n \nand\n \nskimag e\n.\n \nA\n \nRandomF orestClassifier\n \ntrained\n \non\n \nthese\n \nfeatures\n \nachie ved\n \nhigh\n \nclassific ation\n \naccur acy,\n \nevalua ted\n \nvia\n \na\n \nsplit -test\n \nappr oach.\n \nThe\n \npipeline,\n \nbuilt\n \nin\n \nPython\n,\n \nutiliz ed\n \nsklearn\n \nfor\n \nmachine\n \nlearning\n \nand\n \njoblib\n \nfor\n \nmodel\n \nserializ ation,\n \nenhancing\n \ndiagnos tic\n \naccur acy\n \nand\n \nefficiency\n \nin\n \nmedic al\n \nimaging.\n \nAnuy og\n \nSoftw ares\n \nand\n \nSolutions\n \n \n \n           \nMar ch\n \n2025\n \n\u2013\n \nPresen t\n  \n \nMachine\n \nLearning\n \nIntern\n \nRemot e\n \n\u2022\n Applying machine learning algorithms to classif y tree species based on leaf imag e analy sis. Utilizing Python libraries OpenCV , Scikit -learn, \nTensorFlo w\n \nfor\n \nimag e\n \npreprocessing\n \nand\n \nfeature\n \nextraction.\n \nImplemen ting\n \nand\n \nassessing\n \nthe\n \nperformance\n \nof\n \nmultiple\n \nML\n \nmodels\n,\n \nincluding\n \nKNN\n,\n \nSVM\n,\n \nand\n \nCNN\n.\n \nCurr ently\n \nachie ving\n \na\n \nhigh\n \naccur acy\n \nof\n \n8.678\n \nin\n \nimag e\n \nclassific ation\n \ntasks.\n \nOptionally\n \ncontributing\n \nto\n \nthe\n \ndevelopmen t\n \nof\n \na\n \nFlask\n \nweb\n \ninterface\n \nfor\n \nuser\n \ninteraction. \nProjects \n \n   \nFull\n \nStack\n \nAI\n \nReport\n \nGener ating\n \nAgent\n \n-\n \nFlask,\n \nPandas,\n \nPyTesser act,\n \nOpenAI,\n \nPyPDF2,\n \nMatplotlib,\n \nReportLab\n               \n \n Sour ce Code \n\u2022\n \nDeveloped\n \nan\n \nAI-po wered\n \nFlask\n \napplic ation\n \nautoma tes\n \ncompr ehensiv e\n \nreport\n \ngener ation\n \nacross\n \ndiverse\n \ndomains\n \n(financial,\n \nstock,\n \nresear ch,\n \netc.).\n \nIt\n \nhandles\n \nfile\n \nuploads,\n \nextracts\n \ntext\n \n(OCR\n \nand\n \nPDF),\n \nand\n \nprocesses\n \ndata\n \nfor\n \ninsigh tful\n \nvisualiz ations.\n \nLeveraging\n \nOpenAI\n \nand\n \na\n \ncustom\n \nLlama\n \nInde x\n,\n \nit\n \nperforms\n \nintelligent\n \ntext\n \nanaly sis\n \nand\n \ninforma tion\n \nretrieval.\n \nFinally ,\n \nit\n \ncompiles\n \nstructur ed\n \nPDF\n \nreports\n \nwith\n \nAI-driv en\n \nRetrieval-Augmen ted\n \nGener ation\n \ncontent\n \nand\n \ndata\n \nvisualiz ations,\n \nstreamlining\n \nthe\n \nreporting\n \nprocess.\n  \n    \n  \nIntellig ent\n \nBook\n \nRecommenda tion\n \nSystem\n \nwith\n \nEmotion\n \nbased\n \nMatching\n \n-\n \nNLP,\n \nTransformer s,\n \nKeyBER T\n \n \n \n \n  Sour ce Code \n\u2022\n \nDeveloped\n \nan\n \nintelligent\n \nbook\n \nrecommenda tion\n \nsystem\n \nleveraging\n \nNatural\n \nLanguag e\n \nProcessing\n \n(NLP)\n \nand\n \nadvanced\n \nsimilarity\n \nmetrics.\n \nAnaly zes\n \nthe\n \nemotional\n \ntone\n \nof\n \nuser -read\n \nbook s\n \nusing\n \nTransformer\n \nmodels\n \nand\n \niden tifies\n \nnew\n \nbook s\n \nwith\n \nsimilar\n \nemotional\n \nprofiles\n.\n \nEmplo ys\n \nKeyBER T\n \nfor\n \nkeyword\n \nand\n \ncontent\n \nrelevance\n \nscoring\n \nacross\n \ndiverse\n \ncategories:\n \nself-help,\n \npsychology ,\n \nphilosoph y,\n \nand\n \npersonal\n \ndevelopmen t.\n \nImplemen ts\n \na\n \nsmart\n \nfallback\n \nmechanism\n \nto\n \nrecommend\n \nbook s\n \nby\n \nthe\n \nsame\n \nauthor\n \nwhen\n \nstrong\n \nmatches\n \nare\n \nunavailable,\n \nenhancing\n \npersonaliz ation.\n \nPotentially\n \nbuilding\n \na\n \nuser -friendly\n \nweb\n \ninterface\n \nusing\n \nFlask\n \nto\n \nprovide\n \ninteractiv e\n \nbook\n \nrecommenda tions.\n  \nPersonaliz ed\n \nInvestmen t\n \nPortfolio\n \nAdvisor -\n \nFlask,\n \nyfinance,\n \nNumP y,\n \nPandas,\n \nMatplotlib,\n \nSeaborn,\n \nsklearn,\n \nGroq\n \n    Sour ce Code \n\u2022\n \nImplemen ted\n  \u201cEnhanced Portfolio Analy sis,\u201d a web applic ation for optimizing investmen t portf olios using real-time stock data from yfinance \nand\n \nstatistical\n \nmodels.\n \nThis\n \napplic ation\n \nprocesses\n \ndata\n \nwith\n \nNumP y\n \nand\n \nPandas\n,\n \napplies\n \nstatistical\n \nanaly ses\n \nwith\n \nscipy,\n \nand\n \nscales\n \ninputs\n \nusing\n \nsklearn\u2019 s\n \nMinMa xScaler\n.\n \nIt\n \nfeatures\n \nGroq\u2019s\n \nLLM\n \nfor\n \nadvanced\n \nportf olio\n \nanaly sis,\n \nproviding\n \nrisk\n \nassessmen ts\n \nand\n \ninvestmen t\n \nrecommenda tions\n \ntailor ed\n \nto\n \nuser -defined\n \nparame ters.\n \nVisualiz ations\n \nare\n \ngener ated\n \nusing\n \nMatplotlib\n \nand\n \nSeaborn\n,\n \naiding\n \nin\n \nthe\n \ninterpr etation\n \nof\n \ncomple x\n \ndata\n \nthrough\n \ngraphic al\n \nrepresen tations.\n \nBuilt\n \non\n \nthe\n \nFlask\n \nframe work\n,\n \nit\n \noffers\n \na\n \nsecur e,\n \nscalable,\n \nand\n \nuser -friendly\n \ninterface\n \nfor\n \ninteractiv e\n \nfinancial\n \nanaly sis\n \nand\n \ndecision-making\n \nsupport.\n \n \nTechnic al Skills \nCour sework: Data Structur es Algorithms , Oper ating Systems, Database Storage Systems, Data Science, Machine Learning , Gener ative AI  Languag es: Python, C , R, CUD A (GPU Programming)            Data Analy sis: Pandas, NumP y, Matplotlib, Seaborn Developer Tools: VS Code, Pycharm, Jupyter Notebook, Google Colab, GitHub  Soft Skills: Communic ation, Problem Solving , Proactiv e Attitude, Critic al Thinking , \nLeader ship,\n \nTime\n \nManag emen t,\n \nCreativity ,\n \nAdap tability\n \nActivities and Extracurricular \n\u2022\n \nE-cell\n \n-\n \nCore\n \nTeam\n \nMember\n \n-\n \nOfficial\n \nEntrepreneurship\n \nClub\n \nin\n \nCollege\n \nMember\n in Upstarters at the Entrepreneur ship Cell, responsible for \noverseeing\n \nthe\n \nincuba tion\n \nof\n \nstartup s\n \nand\n \npromoting\n \nentrepreneurial\n \ngrowth\n \nthrough\n \nmen torship\n \nand\n \nresour ce\n \nalloc ation.\n \n\u2022\n \nIEEE -\n \nCore\n \nTeam\n \nMember\n \n-\n \nOfficial\n \nTechnic al\n \nProf essional\n \nOrganiz ation\u2019 s\n \nClub\n \nin\n \nCollege\n \nMember\n \nin\n CIS, responsible for driving initia tives \nin\n \ncomput ational\n \nintelligence,\n \noverseeing\n \nprojects,\n \nand\n \nenhancing\n \nmember\n \nengagemen t\n \nthrough\n \nworkshop s\n \nand\n \nseminar s.\n \n\n \n",
-    "file_path": "data/uploads/20250531_121243_Pranamya Jain.pdf"
-  },
-  {
-    "id": "20250531_184930",
-    "filename": "20250531_184929_Pranamya Jain.pdf",
-    "uploaded_at": "2025-05-31T18:49:30.062475",
-    "name": "Name not found",
-    "email": "pranamyajeet@gmail.com",
-    "phone": "9887521332",
-    "location": "\n \nincluding\n \nKNN\n,\n \nSV",
-    "skills": [
-      "Machine Learning",
-      "Flask",
-      "Python",
-      "Scala",
-      "Matplotlib",
-      "Pandas",
-      "Seaborn",
-      "Github",
-      "Go",
-      "R",
-      "Git"
+    "education": [
+      {
+        "degree": "Bachelor of Engineering",
+        "institution": "Ramaiah Institute of Technology",
+        "year": "2022 \u2013 Aug 2026 (expected)",
+        "field": "Computer Science and Engineering"
+      },
+      {
+        "degree": "AISSE",
+        "institution": "KLE Society\u2019s School,Bangalore",
+        "year": "2007 \u2013 March 2020",
+        "field": null
+      },
+      {
+        "degree": "2nd PU Board Examination",
+        "institution": "Oxford Independent PU College,Bangalore",
+        "year": "March 2020 \u2013 March 2022",
+        "field": null
+      }
     ],
-    "experience": [],
-    "education": [],
     "experience_years": 0,
-    "summary": "s\n.\n \nEmplo ys",
-    "raw_text": "\u0950\n \n\u0928\u092e\u0903\n \n\u0000\u0938\u0926\u094d\u0927\u092e \u094d\n \n \n \n \n \n \n  \nPranamya\n \nJain\n            \n \n \n+91\n \n9887521332\n  \n pranamyajeet@gmail.com      LinkedIn  \n Github \nEducation \nRamaiah\n \nInstitut e\n \nof\n \nTechnology\n \n2022\n \n-\n \n2026\n \nB.E\n \nin\n \nArtificial\n \nIntelligenc e\n  \nand\n \nData\n \nScienc e\n \n8.22/10\n \nCGPA\n Work Experience \nInfosys\n \nSpringboar d\n \nNovember\n \n2024\n \n\u2013\n \nJanuar y\n \n2025\n \nProject\n \nAI\n \nIntern\n \nRemot e\n \n\u2022\n \nBuilt\n \na\n \nmedic al\n \nimag e\n \nprocessing\n \npipeline\n \nfor\n \ndisease\n \ndiagnosis,\n \nusing\n \nOpenCV\n \nfor\n \npreprocessing\n \nand\n \nGaussian\n \nfilters\n \nfor\n \nimag e\n \nenhancemen t.\n \nFeature\n \nextraction\n \ninvolved\n \nGLCM\n \nfor\n \ntexture,\n \ncontour\n \nanaly sis\n \nfor\n \nshape,\n \nand\n \ncolor\n \nhistograms\n \nfor\n \ncolor\n \nfeatures,\n \nall\n \nvisualiz ed\n \nwith\n \nmatplotlib\n \nand\n \nskimag e\n.\n \nA\n \nRandomF orestClassifier\n \ntrained\n \non\n \nthese\n \nfeatures\n \nachie ved\n \nhigh\n \nclassific ation\n \naccur acy,\n \nevalua ted\n \nvia\n \na\n \nsplit -test\n \nappr oach.\n \nThe\n \npipeline,\n \nbuilt\n \nin\n \nPython\n,\n \nutiliz ed\n \nsklearn\n \nfor\n \nmachine\n \nlearning\n \nand\n \njoblib\n \nfor\n \nmodel\n \nserializ ation,\n \nenhancing\n \ndiagnos tic\n \naccur acy\n \nand\n \nefficiency\n \nin\n \nmedic al\n \nimaging.\n \nAnuy og\n \nSoftw ares\n \nand\n \nSolutions\n \n \n \n           \nMar ch\n \n2025\n \n\u2013\n \nPresen t\n  \n \nMachine\n \nLearning\n \nIntern\n \nRemot e\n \n\u2022\n Applying machine learning algorithms to classif y tree species based on leaf imag e analy sis. Utilizing Python libraries OpenCV , Scikit -learn, \nTensorFlo w\n \nfor\n \nimag e\n \npreprocessing\n \nand\n \nfeature\n \nextraction.\n \nImplemen ting\n \nand\n \nassessing\n \nthe\n \nperformance\n \nof\n \nmultiple\n \nML\n \nmodels\n,\n \nincluding\n \nKNN\n,\n \nSVM\n,\n \nand\n \nCNN\n.\n \nCurr ently\n \nachie ving\n \na\n \nhigh\n \naccur acy\n \nof\n \n8.678\n \nin\n \nimag e\n \nclassific ation\n \ntasks.\n \nOptionally\n \ncontributing\n \nto\n \nthe\n \ndevelopmen t\n \nof\n \na\n \nFlask\n \nweb\n \ninterface\n \nfor\n \nuser\n \ninteraction. \nProjects \n \n   \nFull\n \nStack\n \nAI\n \nReport\n \nGener ating\n \nAgent\n \n-\n \nFlask,\n \nPandas,\n \nPyTesser act,\n \nOpenAI,\n \nPyPDF2,\n \nMatplotlib,\n \nReportLab\n               \n \n Sour ce Code \n\u2022\n \nDeveloped\n \nan\n \nAI-po wered\n \nFlask\n \napplic ation\n \nautoma tes\n \ncompr ehensiv e\n \nreport\n \ngener ation\n \nacross\n \ndiverse\n \ndomains\n \n(financial,\n \nstock,\n \nresear ch,\n \netc.).\n \nIt\n \nhandles\n \nfile\n \nuploads,\n \nextracts\n \ntext\n \n(OCR\n \nand\n \nPDF),\n \nand\n \nprocesses\n \ndata\n \nfor\n \ninsigh tful\n \nvisualiz ations.\n \nLeveraging\n \nOpenAI\n \nand\n \na\n \ncustom\n \nLlama\n \nInde x\n,\n \nit\n \nperforms\n \nintelligent\n \ntext\n \nanaly sis\n \nand\n \ninforma tion\n \nretrieval.\n \nFinally ,\n \nit\n \ncompiles\n \nstructur ed\n \nPDF\n \nreports\n \nwith\n \nAI-driv en\n \nRetrieval-Augmen ted\n \nGener ation\n \ncontent\n \nand\n \ndata\n \nvisualiz ations,\n \nstreamlining\n \nthe\n \nreporting\n \nprocess.\n  \n    \n  \nIntellig ent\n \nBook\n \nRecommenda tion\n \nSystem\n \nwith\n \nEmotion\n \nbased\n \nMatching\n \n-\n \nNLP,\n \nTransformer s,\n \nKeyBER T\n \n \n \n \n  Sour ce Code \n\u2022\n \nDeveloped\n \nan\n \nintelligent\n \nbook\n \nrecommenda tion\n \nsystem\n \nleveraging\n \nNatural\n \nLanguag e\n \nProcessing\n \n(NLP)\n \nand\n \nadvanced\n \nsimilarity\n \nmetrics.\n \nAnaly zes\n \nthe\n \nemotional\n \ntone\n \nof\n \nuser -read\n \nbook s\n \nusing\n \nTransformer\n \nmodels\n \nand\n \niden tifies\n \nnew\n \nbook s\n \nwith\n \nsimilar\n \nemotional\n \nprofiles\n.\n \nEmplo ys\n \nKeyBER T\n \nfor\n \nkeyword\n \nand\n \ncontent\n \nrelevance\n \nscoring\n \nacross\n \ndiverse\n \ncategories:\n \nself-help,\n \npsychology ,\n \nphilosoph y,\n \nand\n \npersonal\n \ndevelopmen t.\n \nImplemen ts\n \na\n \nsmart\n \nfallback\n \nmechanism\n \nto\n \nrecommend\n \nbook s\n \nby\n \nthe\n \nsame\n \nauthor\n \nwhen\n \nstrong\n \nmatches\n \nare\n \nunavailable,\n \nenhancing\n \npersonaliz ation.\n \nPotentially\n \nbuilding\n \na\n \nuser -friendly\n \nweb\n \ninterface\n \nusing\n \nFlask\n \nto\n \nprovide\n \ninteractiv e\n \nbook\n \nrecommenda tions.\n  \nPersonaliz ed\n \nInvestmen t\n \nPortfolio\n \nAdvisor -\n \nFlask,\n \nyfinance,\n \nNumP y,\n \nPandas,\n \nMatplotlib,\n \nSeaborn,\n \nsklearn,\n \nGroq\n \n    Sour ce Code \n\u2022\n \nImplemen ted\n  \u201cEnhanced Portfolio Analy sis,\u201d a web applic ation for optimizing investmen t portf olios using real-time stock data from yfinance \nand\n \nstatistical\n \nmodels.\n \nThis\n \napplic ation\n \nprocesses\n \ndata\n \nwith\n \nNumP y\n \nand\n \nPandas\n,\n \napplies\n \nstatistical\n \nanaly ses\n \nwith\n \nscipy,\n \nand\n \nscales\n \ninputs\n \nusing\n \nsklearn\u2019 s\n \nMinMa xScaler\n.\n \nIt\n \nfeatures\n \nGroq\u2019s\n \nLLM\n \nfor\n \nadvanced\n \nportf olio\n \nanaly sis,\n \nproviding\n \nrisk\n \nassessmen ts\n \nand\n \ninvestmen t\n \nrecommenda tions\n \ntailor ed\n \nto\n \nuser -defined\n \nparame ters.\n \nVisualiz ations\n \nare\n \ngener ated\n \nusing\n \nMatplotlib\n \nand\n \nSeaborn\n,\n \naiding\n \nin\n \nthe\n \ninterpr etation\n \nof\n \ncomple x\n \ndata\n \nthrough\n \ngraphic al\n \nrepresen tations.\n \nBuilt\n \non\n \nthe\n \nFlask\n \nframe work\n,\n \nit\n \noffers\n \na\n \nsecur e,\n \nscalable,\n \nand\n \nuser -friendly\n \ninterface\n \nfor\n \ninteractiv e\n \nfinancial\n \nanaly sis\n \nand\n \ndecision-making\n \nsupport.\n \n \nTechnic al Skills \nCour sework: Data Structur es Algorithms , Oper ating Systems, Database Storage Systems, Data Science, Machine Learning , Gener ative AI  Languag es: Python, C , R, CUD A (GPU Programming)            Data Analy sis: Pandas, NumP y, Matplotlib, Seaborn Developer Tools: VS Code, Pycharm, Jupyter Notebook, Google Colab, GitHub  Soft Skills: Communic ation, Problem Solving , Proactiv e Attitude, Critic al Thinking , \nLeader ship,\n \nTime\n \nManag emen t,\n \nCreativity ,\n \nAdap tability\n \nActivities and Extracurricular \n\u2022\n \nE-cell\n \n-\n \nCore\n \nTeam\n \nMember\n \n-\n \nOfficial\n \nEntrepreneurship\n \nClub\n \nin\n \nCollege\n \nMember\n in Upstarters at the Entrepreneur ship Cell, responsible for \noverseeing\n \nthe\n \nincuba tion\n \nof\n \nstartup s\n \nand\n \npromoting\n \nentrepreneurial\n \ngrowth\n \nthrough\n \nmen torship\n \nand\n \nresour ce\n \nalloc ation.\n \n\u2022\n \nIEEE -\n \nCore\n \nTeam\n \nMember\n \n-\n \nOfficial\n \nTechnic al\n \nProf essional\n \nOrganiz ation\u2019 s\n \nClub\n \nin\n \nCollege\n \nMember\n \nin\n CIS, responsible for driving initia tives \nin\n \ncomput ational\n \nintelligence,\n \noverseeing\n \nprojects,\n \nand\n \nenhancing\n \nmember\n \nengagemen t\n \nthrough\n \nworkshop s\n \nand\n \nseminar s.\n \n\n \n",
-    "file_path": "data/uploads/20250531_184929_Pranamya Jain.pdf"
+    "summary": "3rd year Computer Science Engineering student at Ramaiah Institute of Technology,looking forward to leverage programming skills, strong communication, and effective team management abilities. Enthusiastically looking forward to contributing to innovative projects, learning from industry experts, and embracing challenges with a genuine interest in continuous learning and unwavering dedication to personal and professional development.",
+    "certifications": [
+      "Angular Web Developer Certification"
+    ],
+    "languages": [],
+    "projects": [
+      {
+        "name": "RoadPatch",
+        "description": "Incorporation of YOLOv5 models for depth and risk analysis of potholes.\nScalable application supported by MySQL for secure and efficient data management.\nIntegrated Google Maps API for real time detection of pothole\u2019s location",
+        "technologies": [
+          "YOLOv5",
+          "MySQL",
+          "Google Maps API"
+        ]
+      },
+      {
+        "name": "Studvery(Whackiest Hackathon 2024)",
+        "description": "Developed a Flutter based on campus quick commerce platform enabling students to seamlessly switch between Orderer\nand Deliverer modes for service exchange.\nIntegrated Firebase authentication, dark/light theme toggle, and real-time order management.\nDesigned a modern brand identity, including a custom logo and tagline to enhance user engagement.",
+        "technologies": [
+          "Flutter",
+          "Firebase"
+        ]
+      },
+      {
+        "name": "LiveFace (Smart India Hackathon 2024)",
+        "description": "Edge computing models (4MB size, 350ms response time) for secure authentication.\nMultiphase testing and edge cases to improve system efficiency.",
+        "technologies": []
+      },
+      {
+        "name": "Car-Go",
+        "description": "Built a Flutter based platform for facilitating carpooling among users with similar travel routes. Aimed at reducing\nenvironmental impact and providing cost-effective travel options.\nIntegrated Firebase authentication",
+        "technologies": [
+          "Flutter",
+          "Firebase"
+        ]
+      }
+    ],
+    "raw_text": "Chirantana P\n                \u0083 +91 8105832218 # chirantanofficial28@gmail.com\n                    \u00ef linkedin.com/in/chirantana-p-18388a236/\n\nCareer Objective\n\n3rd year Computer Science Engineering student at Ramaiah Institute of Technology,looking forward to leverage\nprogramming skills, strong communication, and effective team management abilities. Enthusiastically looking\nforward to contributing to innovative projects, learning from industry experts, and embracing challenges with a\ngenuine interest in continuous learning and unwavering dedication to personal and professional development.\n\nEducation\n\nRamaiah Institute of Technology                                 Dec 2022 \u2013 Aug 2026 (expected)\nBachelor of Engineering, Computer Science and Engineering                         CGPA: 9.56 (Semesters I-IV)\n\nKLE Society\u2019s School,Bangalore                                          Jun 2007 \u2013 March 2020\nAISSE: 92%\n\nOxford Independent PU College,Bangalore                             March 2020 \u2013 March 2022\n2nd PU Board Examination:95%\n\nSkills\n\nProgramming\n\n     \u2022 Python, Java, C, Dart, C++\n\n     \u2022 HTML,CSS,JAVASCRIPT\n\n     \u2022 MySQL Database Management\n\n     \u2022 MongoDB\n\n     \u2022 Data Structures and Algorithms\n\n     \u2022 Mobile application development using Flutter\n\n     \u2022 Completed Angular Web Developer Certification\n\n     \u2022 Advance Java Programming(Servelet,JDBC,JSP)\n\nOther Technical Skills\n\n     \u2022 Operating Systems, Digital Design and Computer Architecture\n\n     \u2022 MicroControllers and Internet of Things\n\n     \u2022 Airtificial Intelligence and Machine Learning,Deep Learning\n\n     \u2022 Digital Communications and Networking,Cryptography and Network Security\n\n     \u2022 Dockers and Containers\n\nProjects\n\nRoadPatch                                                                              Jan 2025\n    \u2022 Incorporation of YOLOv5 models for depth and risk analysis of potholes.\n    \u2022 Scalable application supported by MySQL for secure and efficient data management.\n    \u2022 Integrated Google Maps API for real time detection of pothole\u2019s location\n\nStudvery(Whackiest Hackathon 2024)                                                      Dec 2024\n    \u2022 Developed a Flutter based on campus quick commerce platform enabling students to seamlessly switch between Orderer\n    and Deliverer modes for service exchange.\n    \u2022 Integrated Firebase authentication, dark/light theme toggle, and real-time order management.\n    \u2022 Designed a modern brand identity, including a custom logo and tagline to enhance user engagement.\nChirantana P\n\u0083 +91 8105832218\n# chirantanofficial28@gmail.com\n\u00ef linkedin.com/in/chirantana-p-18388a236/\n\nCareer Objective\n\n3rd year Computer Science Engineering student at Ramaiah Institute of Technology,looking forward to leverage\nprogramming skills, strong communication, and effective team management abilities. Enthusiastically looking\nforward to contributing to innovative projects, learning from industry experts, and embracing challenges with a\ngenuine interest in continuous learning and unwavering dedication to personal and professional development.\n\nEducation\n\nRamaiah Institute of Technology\nDec 2022 \u2013 Aug 2026 (expected)\nBachelor of Engineering, Computer Science and Engineering\nCGPA: 9.56 (Semesters I-IV)\n\nKLE Society\u2019s School,Bangalore\nJun 2007 \u2013 March 2020\nAISSE: 92%\n\nOxford Independent PU College,Bangalore\nMarch 2020 \u2013 March 2022\n2nd PU Board Examination:95%\n\nSkills\n\nProgramming\n\n\u2022 Python, Java, C, Dart, C++\n\n\u2022 HTML,CSS,JAVASCRIPT\n\n\u2022 MySQL Database Management\n\n\u2022 MongoDB\n\n\u2022 Data Structures and Algorithms\n\n\u2022 Mobile application development using Flutter\n\n\u2022 Completed Angular Web Developer Certification\n\n\u2022 Advance Java Programming(Servelet,JDBC,JSP)\n\nOther Technical Skills\n\n\u2022 Operating Systems, Digital Design and Computer Architecture\n\n\u2022 MicroControllers and Internet of Things\n\n\u2022 Airtificial Intelligence and Machine Learning,Deep Learning\n\n\u2022 Digital Communications and Networking,Cryptography and Network Security\n\n\u2022 Dockers and Containers\n\nProjects\n\nRoadPatch\nJan 2025\n\n\u2022 Incorporation of YOLOv5 models for depth and risk analysis of potholes.\n\n\u2022 Scalable application supported by MySQL for secure and efficient data management.\n\n\u2022 Integrated Google Maps API for real time detection of pothole\u2019s location\n\nStudvery(Whackiest Hackathon 2024)\nDec 2024\n\n\u2022 Developed a Flutter based on campus quick commerce platform enabling students to seamlessly switch between Orderer\nand Deliverer modes for service exchange.\n\n\u2022 Integrated Firebase authentication, dark/light theme toggle, and real-time order management.\n\n\u2022 Designed a modern brand identity, including a custom logo and tagline to enhance user engagement.\n\nLiveFace (Smart India Hackathon 2024)                                                Aug 2024\n    \u2022 Edge computing models (4MB size, 350ms response time) for secure authentication.\n    \u2022 Multiphase testing and edge cases to improve system efficiency.\n\nCar-Go                                                                      Nov 2023\n    \u2022 Built a Flutter based platform for facilitating carpooling among users with similar travel routes. Aimed at reducing\n     environmental impact and providing cost-effective travel options.\n    \u2022 Integrated Firebase authentication\nLiveFace (Smart India Hackathon 2024)\nAug 2024\n\n\u2022 Edge computing models (4MB size, 350ms response time) for secure authentication.\n\n\u2022 Multiphase testing and edge cases to improve system efficiency.\n\nCar-Go\nNov 2023\n\n\u2022 Built a Flutter based platform for facilitating carpooling among users with similar travel routes. Aimed at reducing\nenvironmental impact and providing cost-effective travel options.\n\n\u2022 Integrated Firebase authentication",
+    "file_path": "data/uploads/20250601_192557_Chirantana_resume (1) - Chirantana P.pdf",
+    "parsed_at": "2025-06-01T19:26:02.805117",
+    "parser_type": "OCR+AI"
   }
 ]

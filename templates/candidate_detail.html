@@ -283,6 +283,89 @@
             color: #40c057;
             text-decoration: underline;
         }
+
+        /* AI Screening specific styles */
+        .ai-screening-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: 8px;
+            margin-top: 2rem;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .ai-screening-section:hover {
+            box-shadow: var(--shadow-elevated);
+        }
+
+        #run-ai-screening {
+            background: linear-gradient(45deg, #51cf66, #40c057);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        #run-ai-screening:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        #run-ai-screening:disabled {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #ai-screening-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            border: 1px solid var(--border-primary);
+        }
+
+        .ai-screening-questions {
+            margin-top: 1rem;
+        }
+
+        .ai-screening-questions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ai-screening-questions li {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            transition: var(--transition-fast);
+        }
+
+        .ai-screening-questions li:hover {
+            background: var(--bg-secondary);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
         
         @media (max-width: 768px) {
             .candidate-info-grid {
@@ -419,6 +502,21 @@
                     </div>
                 </div>
             </div>
+
+            <!-- AI Screening Section - NEW -->
+            <section class="ai-screening-section animate-fadeInUp">
+                <div class="card-header">
+                    <h4><i class="fas fa-robot icon"></i> AI Screening</h4>
+                </div>
+                <div class="card-body">
+                    <button id="run-ai-screening" class="action-btn">
+                        <i class="fas fa-magic icon"></i> Run AI Screening
+                    </button>
+                    <div id="ai-screening-result" style="display: none;">
+                        <!-- AI screening results will be populated here -->
+                    </div>
+                </div>
+            </section>
 
             <!-- Skills and Analysis Section with Flexbox -->
             <div class="section-cards animate-fadeInUp">
@@ -622,6 +720,7 @@
                     if (candidate) {
                         currentCandidate = candidate;
                         displayCandidate(candidate);
+                        displayAIScreeningResults(candidate);
                     } else {
                         alert('Candidate not found');
                         window.location.href = '/search';
@@ -686,6 +785,104 @@
                 }
                 
                 document.getElementById('matchAnalysis').innerHTML = analysisHtml;
+            }
+        }
+
+        // NEW: Display AI Screening Results
+        function displayAIScreeningResults(candidate) {
+            const resultDiv = document.getElementById('ai-screening-result');
+            
+            if (candidate.ai_screening_summary || candidate.ai_screening_questions) {
+                let resultHtml = '';
+                
+                if (candidate.ai_screening_summary) {
+                    resultHtml += `
+                        <div class="alert alert-success">
+                            <h5><i class="fas fa-robot icon"></i> AI Screening Summary:</h5>
+                            <p class="mb-0">${candidate.ai_screening_summary}</p>
+                        </div>
+                    `;
+                }
+                
+                if (candidate.ai_screening_questions && candidate.ai_screening_questions.length > 0) {
+                    resultHtml += `
+                        <div class="ai-screening-questions">
+                            <h5><i class="fas fa-question-circle icon"></i> Pre-screen Q&A</h5>
+                            <ul>
+                                ${candidate.ai_screening_questions.map(q => `<li>${q}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                resultDiv.innerHTML = resultHtml;
+                resultDiv.style.display = 'block';
+            }
+        }
+
+        // NEW: Run AI Screening Function
+        async function runAIScreening() {
+            if (!currentCandidate) {
+                alert('No candidate selected');
+                return;
+            }
+
+            const button = document.getElementById('run-ai-screening');
+            const resultDiv = document.getElementById('ai-screening-result');
+            
+            // Show loading state
+            button.disabled = true;
+            button.innerHTML = '<span class="loading-spinner"></span> Running AI Screening...';
+            
+            try {
+                const response = await fetch(`/api/candidate/${currentCandidate.id}/screening`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.result) {
+                    // Display the screening result
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <h5><i class="fas fa-robot icon"></i> AI Screening Summary:</h5>
+                            <p class="mb-0">${data.result}</p>
+                        </div>
+                        <div class="mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-clock icon"></i> Generated: ${new Date().toLocaleString()} IST
+                            </small>
+                        </div>
+                    `;
+                    resultDiv.style.display = 'block';
+                    
+                    // Update current candidate data if additional fields are returned
+                    if (data.questions) {
+                        currentCandidate.ai_screening_questions = data.questions;
+                        // You could display Q&A here if structured data is returned
+                    }
+                } else {
+                    throw new Error(data.error || 'Failed to run AI screening');
+                }
+                
+            } catch (error) {
+                console.error('AI Screening Error:', error);
+                resultDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle icon"></i> Error</h5>
+                        <p class="mb-0">Failed to run AI screening: ${error.message}</p>
+                        <small class="text-muted">Please try again later or contact support.</small>
+                    </div>
+                `;
+                resultDiv.style.display = 'block';
+            } finally {
+                // Reset button state
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-magic icon"></i> Run AI Screening';
             }
         }
 
@@ -884,6 +1081,9 @@ Report generated by HireAI - Team Seeds! 🌱`;
             loadCandidate();
             updateDateTime();
             addScrollAnimations();
+            
+            // Attach AI screening event listener
+            document.getElementById('run-ai-screening').addEventListener('click', runAIScreening);
             
             // Update datetime every second
             setInterval(updateDateTime, 1000);

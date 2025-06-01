@@ -97,6 +97,7 @@
             display: none;
         }
         
+        /* Enhanced Skills Display - Added from new code */
         .skill-tag {
             display: inline-block;
             background: var(--bg-secondary);
@@ -106,6 +107,38 @@
             margin: 0.25rem;
             border-radius: 20px;
             font-size: 0.85rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .skill-tag:hover {
+            background: var(--accent-green);
+            color: white;
+            border-color: var(--accent-green);
+            transform: translateY(-1px);
+        }
+        
+        .skills-container {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 6px;
+            min-height: 60px;
+            border: 1px solid var(--border-primary);
+        }
+        
+        .skills-empty {
+            color: var(--text-secondary);
+            font-style: italic;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .skills-count {
+            background: var(--accent-green);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
         
         .error-message {
@@ -131,6 +164,52 @@
         .upload-content-wrapper {
             max-width: 800px;
             margin: 0 auto;
+        }
+
+        /* Enhanced candidate result styling */
+        .candidate-result {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .candidate-result:hover {
+            box-shadow: var(--shadow-card);
+        }
+        
+        .info-section {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-primary);
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .debug-info {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
         }
         
         @media (max-width: 768px) {
@@ -175,6 +254,15 @@
                             Upload candidate resumes for AI-powered parsing and analysis. 
                             Supports PDF, DOCX, and DOC formats up to 10MB.
                         </p>
+                        
+                        <!-- Live timestamp -->
+                        <div class="footer-timestamp" style="margin-top: 1rem;">
+                            <i class="fas fa-clock icon-only"></i>
+                            <span id="currentDateTime">2025-06-01 12:49:19</span> UTC
+                            <span class="text-muted" style="margin-left: 1rem;">
+                                <i class="fas fa-user icon-only"></i> pranamya-jain
+                            </span>
+                        </div>
                     </div>
 
                     <!-- Upload Zone -->
@@ -222,6 +310,7 @@
                         <div class="error-message" id="errorMessage">
                             <i class="fas fa-exclamation-triangle icon"></i>
                             <span id="errorText"></span>
+                            <div id="debugInfo" class="debug-info"></div>
                         </div>
 
                         <div class="success-message" id="successMessage">
@@ -232,7 +321,9 @@
 
                     <!-- Results Section -->
                     <div class="results-section animate-fadeInUp" id="resultsSection">
-                        <h2 class="section-title">Processing Results</h2>
+                        <h2 class="section-title">
+                            <i class="fas fa-check-circle icon"></i> Extracted Resume Data
+                        </h2>
                         <div id="resultsContainer"></div>
                     </div>
 
@@ -264,7 +355,7 @@
                 </p>
                 <div class="footer-timestamp">
                     <i class="fas fa-clock icon-only"></i>
-                    <span id="currentDateTime">2025-05-31 23:18:43</span> IST
+                    <span id="footerDateTime">2025-06-01 12:49:19</span> UTC
                     <span class="text-muted" style="margin-left: 1rem;">
                         <i class="fas fa-user icon-only"></i> pranamya-jain
                     </span>
@@ -276,6 +367,7 @@
     <script>
         let selectedFiles = [];
         let uploadInProgress = false;
+        let uploadResults = [];
 
         // DOM Elements (PRESERVED)
         const uploadZone = document.getElementById('uploadZone');
@@ -292,15 +384,17 @@
         const successText = document.getElementById('successText');
         const resultsSection = document.getElementById('resultsSection');
         const resultsContainer = document.getElementById('resultsContainer');
+        const debugInfo = document.getElementById('debugInfo');
 
-        // Update live datetime to IST (ENHANCED)
+        // Update live datetime to UTC
         function updateDateTime() {
             const now = new Date();
-            // Convert to IST (UTC + 5:30)
-            const istOffset = 5.5 * 60 * 60 * 1000;
-            const istTime = new Date(now.getTime() + istOffset);
-            const istString = istTime.toISOString().slice(0, 19).replace('T', ' ');
-            document.getElementById('currentDateTime').textContent = istString;
+            const utcString = now.toISOString().slice(0, 19).replace('T', ' ');
+            const currentElement = document.getElementById('currentDateTime');
+            const footerElement = document.getElementById('footerDateTime');
+            
+            if (currentElement) currentElement.textContent = utcString;
+            if (footerElement) footerElement.textContent = utcString;
         }
 
         // Drag and drop functionality (PRESERVED)
@@ -344,11 +438,12 @@
             let html = '';
             selectedFiles.forEach((file, index) => {
                 const size = (file.size / 1024 / 1024).toFixed(2);
+                const extension = file.name.split('.').pop().toUpperCase();
                 html += `
                     <div class="flex-between p-2 border-primary mb-2" style="border-radius: 6px; background: var(--bg-secondary);">
                         <div>
                             <strong>${file.name}</strong>
-                            <small class="text-muted d-block">${size} MB • ${file.type}</small>
+                            <small class="text-muted d-block">${size} MB • ${extension} • ${file.type}</small>
                         </div>
                         <button onclick="removeFile(${index})" class="btn btn-small" style="color: var(--accent-red);">
                             <i class="fas fa-times"></i>
@@ -364,11 +459,15 @@
         function removeFile(index) {
             selectedFiles.splice(index, 1);
             displayFileInfo();
+            if (selectedFiles.length === 0) {
+                hideResults();
+            }
         }
 
-        // Validation and upload (PRESERVED)
+        // Validation and upload (ENHANCED)
         function validateAndUpload() {
             hideMessages();
+            hideResults();
 
             if (selectedFiles.length === 0) {
                 showError('Please select at least one file.');
@@ -382,9 +481,11 @@
                     return;
                 }
 
-                const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword'];
-                if (!allowedTypes.includes(file.type)) {
-                    showError(`File "${file.name}" has an unsupported format. Please use PDF, DOCX, or DOC.`);
+                const fileExtension = file.name.toLowerCase().split('.').pop();
+                const allowedExtensions = ['pdf', 'docx', 'doc'];
+                
+                if (!allowedExtensions.includes(fileExtension)) {
+                    showError(`File "${file.name}" has an unsupported format. Please use PDF, DOCX, or DOC files only.`);
                     return;
                 }
             }
@@ -396,62 +497,86 @@
             if (uploadInProgress) return;
             
             uploadInProgress = true;
+            uploadResults = [];
             progressContainer.style.display = 'block';
+            hideMessages();
             
             try {
                 for (let i = 0; i < selectedFiles.length; i++) {
                     const file = selectedFiles[i];
-                    await uploadSingleFile(file, i + 1, selectedFiles.length);
+                    console.log(`Processing file ${i + 1}/${selectedFiles.length}: ${file.name}`);
+                    const result = await uploadSingleFile(file, i + 1, selectedFiles.length);
+                    uploadResults.push({ file: file.name, result });
                 }
                 
-                showSuccess(`Successfully uploaded ${selectedFiles.length} file(s)!`);
-                selectedFiles = [];
-                displayFileInfo();
+                const successCount = uploadResults.filter(r => r.result && !r.result.error).length;
+                const errorCount = uploadResults.length - successCount;
+                
+                if (successCount > 0) {
+                    showSuccess(`Successfully processed ${successCount} file(s)!`);
+                    displayAllResults();
+                } else {
+                    showError(`Failed to process ${errorCount} file(s). Check results below for details.`);
+                    displayAllResults();
+                }
                 
             } catch (error) {
+                console.error('Upload error:', error);
                 showError('Upload failed: ' + error.message);
+                hideResults();
             } finally {
                 uploadInProgress = false;
                 setTimeout(() => {
                     progressContainer.style.display = 'none';
-                }, 2000);
+                }, 1000);
             }
         }
 
+        // Enhanced upload function with better response handling
         async function uploadSingleFile(file, current, total) {
             const formData = new FormData();
             formData.append('resume', file);
 
-            progressText.textContent = `Uploading ${file.name} (${current}/${total})...`;
+            progressText.textContent = `Processing ${file.name} (${current}/${total})...`;
             
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
                 
                 xhr.upload.addEventListener('progress', (e) => {
                     if (e.lengthComputable) {
-                        const percent = Math.round((e.loaded / e.total) * 100);
-                        updateProgress(percent);
+                        const fileProgress = (e.loaded / e.total) * 100;
+                        const totalProgress = ((current - 1) / total * 100) + (fileProgress / total);
+                        updateProgress(Math.round(totalProgress));
                     }
                 });
                 
                 xhr.addEventListener('load', () => {
+                    console.log(`Upload completed for ${file.name}, status: ${xhr.status}`);
+                    console.log('Raw response:', xhr.responseText);
+                    
                     if (xhr.status === 200) {
-                        const response = JSON.parse(xhr.responseText);
-                        if (response.success) {
-                            displayResult(response.candidate, file.name);
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            console.log('Parsed response:', response);
                             resolve(response);
-                        } else {
-                            reject(new Error(response.error));
+                        } catch (e) {
+                            console.error('JSON parse error:', e, 'Raw response:', xhr.responseText);
+                            resolve({ error: 'Invalid response format from server', raw_response: xhr.responseText });
                         }
                     } else {
-                        reject(new Error('Upload failed'));
+                        resolve({ error: `HTTP ${xhr.status}: ${xhr.statusText}`, status: xhr.status });
                     }
                 });
                 
                 xhr.addEventListener('error', () => {
-                    reject(new Error('Network error'));
+                    resolve({ error: 'Network error. Check your connection and server status.' });
                 });
                 
+                xhr.addEventListener('timeout', () => {
+                    resolve({ error: 'Upload timeout (30s). File processing took too long.' });
+                });
+                
+                xhr.timeout = 30000; // 30 second timeout
                 xhr.open('POST', '/api/upload_resume');
                 xhr.send(formData);
             });
@@ -462,47 +587,219 @@
             progressPercent.textContent = percent + '%';
         }
 
-        function displayResult(candidate, filename) {
-            const resultHtml = `
-                <div class="card mb-3 animate-fadeInUp">
-                    <div class="card-header">
-                        <h4><i class="fas fa-user icon"></i> ${candidate.name || 'Unknown Name'}</h4>
-                        <small class="text-muted">From: ${filename}</small>
-                    </div>
-                    <div class="card-body">
-                        <div class="grid grid-2">
-                            <div>
-                                <h5 class="mb-3">Contact Information</h5>
-                                <p><strong>Email:</strong> ${candidate.email || 'Not provided'}</p>
-                                <p><strong>Phone:</strong> ${candidate.phone || 'Not provided'}</p>
-                                <p><strong>Location:</strong> ${candidate.location || 'Not provided'}</p>
-                                <p><strong>Experience:</strong> ${candidate.experience_years || 0} years</p>
-                            </div>
-                            <div>
-                                <h5 class="mb-3">Skills Extracted</h5>
-                                <div>
-                                    ${candidate.skills && candidate.skills.length > 0 
-                                        ? candidate.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('') 
-                                        : '<span class="text-muted">No skills detected</span>'
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        ${candidate.summary ? `
-                            <div class="mt-3">
-                                <h5>Professional Summary</h5>
-                                <p class="text-secondary">${candidate.summary}</p>
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
+        // Enhanced function to display all results
+        function displayAllResults() {
+            let html = '';
             
-            resultsContainer.innerHTML += resultHtml;
+            uploadResults.forEach(({ file, result }) => {
+                console.log(`Displaying result for ${file}:`, result);
+                
+                // Check if the result contains an error
+                if (result && result.error) {
+                    html += createErrorResultCard(file, result.error, result);
+                } else if (result && (result.success || result.name || result.email || result.skills || result.candidate || result.parsed_data)) {
+                    // Successful parsing - handle different response formats
+                    let candidate;
+                    
+                    if (result.candidate) {
+                        candidate = result.candidate;
+                    } else if (result.parsed_data) {
+                        candidate = result.parsed_data;
+                    } else {
+                        candidate = result;
+                    }
+                    
+                    html += createCandidateResultCard(candidate, file);
+                } else {
+                    // Unknown response format - show debug info
+                    html += createErrorResultCard(file, 'Unexpected response format from server', result);
+                }
+            });
+            
+            resultsContainer.innerHTML = html;
             resultsSection.style.display = 'block';
         }
 
-        // Message functions (PRESERVED)
+        // Enhanced function to create candidate result card
+        function createCandidateResultCard(candidate, filename) {
+            // Safely extract data with fallbacks
+            const safeCandidate = {
+                name: candidate.name || 'Name not detected',
+                email: candidate.email || 'Email not found',
+                phone: candidate.phone || 'Phone not found',
+                location: candidate.location || 'Location not found',
+                experience_years: candidate.experience_years || 0,
+                skills: candidate.skills || [],
+                education: candidate.education || [],
+                summary: candidate.summary || null,
+                id: candidate.id || 'new'
+            };
+
+            return `
+                <div class="candidate-result animate-fadeInUp">
+                    <div class="flex-between mb-3">
+                        <h4 class="mb-0">
+                            <i class="fas fa-user-check icon"></i> 
+                            ${safeCandidate.name}
+                        </h4>
+                        <div style="background: rgba(81, 207, 102, 0.1); border: 1px solid var(--accent-green); border-radius: 6px; padding: 0.5rem 1rem;">
+                            <i class="fas fa-check-circle" style="color: var(--accent-green); margin-right: 0.5rem;"></i>
+                            <small style="color: var(--accent-green); font-weight: 600;">Successfully Processed</small>
+                        </div>
+                    </div>
+                    
+                    <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="info-section">
+                            <h5 style="margin-bottom: 1rem; color: var(--text-primary);">
+                                <i class="fas fa-address-card icon"></i> Contact Information
+                            </h5>
+                            <div class="info-item">
+                                <span style="font-weight: 600; color: var(--text-primary);">Email:</span>
+                                <span style="color: var(--text-secondary);">${safeCandidate.email}</span>
+                            </div>
+                            <div class="info-item">
+                                <span style="font-weight: 600; color: var(--text-primary);">Phone:</span>
+                                <span style="color: var(--text-secondary);">${safeCandidate.phone}</span>
+                            </div>
+                            <div class="info-item">
+                                <span style="font-weight: 600; color: var(--text-primary);">Location:</span>
+                                <span style="color: var(--text-secondary);">${safeCandidate.location}</span>
+                            </div>
+                            <div class="info-item">
+                                <span style="font-weight: 600; color: var(--text-primary);">Experience:</span>
+                                <span style="color: var(--text-secondary);">${safeCandidate.experience_years} years</span>
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h5 style="margin-bottom: 1rem; color: var(--text-primary);">
+                                <i class="fas fa-cogs icon"></i> Skills Extracted 
+                                <span class="skills-count">${safeCandidate.skills.length}</span>
+                            </h5>
+                            <div class="skills-container">
+                                ${displaySkills(safeCandidate.skills)}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${safeCandidate.education && safeCandidate.education.length > 0 ? `
+                        <div class="info-section">
+                            <h5 style="margin-bottom: 1rem; color: var(--text-primary);">
+                                <i class="fas fa-graduation-cap icon"></i> Education
+                            </h5>
+                            ${displayEducation(safeCandidate.education)}
+                        </div>
+                    ` : ''}
+                    
+                    ${safeCandidate.summary && safeCandidate.summary !== 'No summary available' ? `
+                        <div class="info-section">
+                            <h5 style="margin-bottom: 1rem; color: var(--text-primary);">
+                                <i class="fas fa-file-alt icon"></i> Professional Summary
+                            </h5>
+                            <p style="color: var(--text-secondary); margin: 0;">${safeCandidate.summary}</p>
+                        </div>
+                    ` : ''}
+                    
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-primary);">
+                        <small style="color: var(--text-secondary);">
+                            <i class="fas fa-file icon"></i> Source: ${filename} • 
+                            <i class="fas fa-clock icon"></i> Processed: ${new Date().toLocaleString()}
+                        </small>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createErrorResultCard(filename, error, fullResult = null) {
+            return `
+                <div class="candidate-result animate-fadeInUp">
+                    <div class="flex-between mb-3">
+                        <h4 class="mb-0">
+                            <i class="fas fa-file-times icon"></i> 
+                            ${filename}
+                        </h4>
+                        <div style="background: rgba(255, 107, 107, 0.1); border: 1px solid var(--accent-red); border-radius: 6px; padding: 0.5rem 1rem;">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--accent-red); margin-right: 0.5rem;"></i>
+                            <small style="color: var(--accent-red); font-weight: 600;">Processing Failed</small>
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                            <strong>Error:</strong> ${error}
+                        </p>
+                        <button onclick="showDebugInfo('${filename}', '${error}', ${JSON.stringify(fullResult || {}).replace(/'/g, '\\\'').replace(/"/g, '&quot;')})" 
+                                class="btn btn-small" style="margin-right: 0.5rem;">
+                            <i class="fas fa-bug icon"></i> Show Debug Info
+                        </button>
+                        <button onclick="uploadAnother()" class="btn btn-small">
+                            <i class="fas fa-redo icon"></i> Try Again
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Enhanced Skills Display Function
+        function displaySkills(skills) {
+            if (!skills || skills.length === 0) {
+                return '<div class="skills-empty"><i class="fas fa-info-circle"></i> No technical skills detected. This may be due to resume format or OCR limitations.</div>';
+            }
+            
+            return skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('');
+        }
+
+        // Education Display Function
+        function displayEducation(education) {
+            if (!education || education.length === 0) {
+                return '<div style="color: var(--text-secondary);">No education information extracted</div>';
+            }
+            
+            return education.map(edu => `
+                <div style="background: var(--bg-card); padding: 1rem; border-radius: 6px; margin-bottom: 0.5rem; border: 1px solid var(--border-primary);">
+                    <strong>${edu.degree || 'Degree'}</strong><br>
+                    <small style="color: var(--text-secondary);">${edu.institution || 'Institution'}</small>
+                    ${edu.year ? `<small style="color: var(--text-secondary);"> • ${edu.year}</small>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Global helper functions
+        window.showDebugInfo = function(filename, error, fullResult) {
+            const info = `
+=== DEBUG INFORMATION ===
+File: ${filename}
+Error: ${error}
+Timestamp: ${new Date().toISOString()}
+User: pranamya-jain
+
+=== FULL SERVER RESPONSE ===
+${JSON.stringify(fullResult, null, 2)}
+
+=== TROUBLESHOOTING ===
+1. Check server logs for detailed error messages
+2. Verify API endpoint is working: /api/upload_resume
+3. Ensure file is not corrupted or password-protected
+4. Check if backend dependencies are installed
+5. Verify file size is under 10MB
+            `;
+            
+            debugInfo.textContent = info;
+            debugInfo.style.display = 'block';
+            debugInfo.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.uploadAnother = function() {
+            selectedFiles = [];
+            uploadResults = [];
+            fileInput.value = '';
+            hideMessages();
+            hideResults();
+            displayFileInfo();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Message functions
         function showError(message) {
             errorText.textContent = message;
             errorMessage.style.display = 'block';
@@ -518,9 +815,15 @@
         function hideMessages() {
             errorMessage.style.display = 'none';
             successMessage.style.display = 'none';
+            debugInfo.style.display = 'none';
         }
 
-        // Scroll animations (ENHANCED)
+        function hideResults() {
+            resultsSection.style.display = 'none';
+            resultsContainer.innerHTML = '';
+        }
+
+        // Scroll animations
         function addScrollAnimations() {
             const animateElements = document.querySelectorAll('.animate-fadeInUp');
             
@@ -541,11 +844,22 @@
             });
         }
 
-        // Initialize (PRESERVED + ENHANCED)
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            // Set the specific time as requested
+            const currentElement = document.getElementById('currentDateTime');
+            const footerElement = document.getElementById('footerDateTime');
+            
+            if (currentElement) currentElement.textContent = '2025-06-01 12:49:19';
+            if (footerElement) footerElement.textContent = '2025-06-01 12:49:19';
+            
+            // Start live updates
             updateDateTime();
             setInterval(updateDateTime, 1000);
             addScrollAnimations();
+            
+            console.log('HireAI Upload Page initialized for user: pranamya-jain');
+            console.log('Current time: 2025-06-01 12:49:19 UTC');
         });
     </script>
 </body>
