@@ -832,18 +832,23 @@ def load_candidates():
 
 def generate_analytics(candidates):
     """
-    Generate analytics from candidate data
+    Generate analytics from candidate data - Fixed version
     Built by Team Seeds! 🌱 for pranamya-jain
-    Current: 2025-06-01 06:00:37 UTC
+    Current: 2025-06-01 19:00:01 UTC
     """
+    print(f"🔍 Generating analytics for {len(candidates)} candidates...")
+    
     if not candidates:
+        print("⚠️ No candidates data found for analytics")
         return {
             'total_candidates': 0,
+            'avg_match_score': 0,
             'skills_distribution': {},
-            'experience_distribution': {},
+            'experience_distribution': {'0-2': 0, '3-5': 0, '6-10': 0, '10+': 0},
             'location_distribution': {},
+            'upload_trend': {'monthly': [0, 0, 0, 0, 0, 0]},
             'generated_by': 'pranamya-jain',
-            'timestamp': '2025-06-01 06:00:37 UTC'
+            'timestamp': '2025-06-01 19:00:01 UTC'
         }
     
     skills_count = {}
@@ -851,12 +856,30 @@ def generate_analytics(candidates):
     locations = {}
     
     for candidate in candidates:
-        # Count skills
-        for skill in candidate.get('skills', []):
-            skills_count[skill] = skills_count.get(skill, 0) + 1
+        # Count skills safely
+        skills = candidate.get('skills', [])
+        if isinstance(skills, str):
+            skills = [s.strip() for s in skills.split(',') if s.strip()]
+        elif skills is None:
+            skills = []
         
-        # Experience distribution
-        exp = candidate.get('experience_years', 0)
+        for skill in skills:
+            if skill and isinstance(skill, str):
+                skill_clean = skill.strip()
+                if skill_clean:
+                    skills_count[skill_clean] = skills_count.get(skill_clean, 0) + 1
+        
+        # FIXED: Handle experience_years safely (this was causing the error)
+        exp = candidate.get('experience_years')
+        if exp is None or exp == '' or exp == 'None':
+            exp = 0
+        else:
+            try:
+                exp = int(float(exp))
+            except (ValueError, TypeError):
+                exp = 0
+        
+        # Now safely categorize experience
         if exp <= 2:
             experience_ranges['0-2'] += 1
         elif exp <= 5:
@@ -868,17 +891,26 @@ def generate_analytics(candidates):
         
         # Location distribution
         location = candidate.get('location', 'Unknown')
-        locations[location] = locations.get(location, 0) + 1
+        if location is None:
+            location = 'Unknown'
+        elif isinstance(location, str):
+            location = location.strip()
+        else:
+            location = 'Unknown'
+            
+        if location and location != 'Unknown':
+            locations[location] = locations.get(location, 0) + 1
     
     return {
         'total_candidates': len(candidates),
-        'skills_distribution': dict(sorted(skills_count.items(), key=lambda x: x[1], reverse=True)[:10]),
+        'avg_match_score': 75,  # Default score
+        'skills_distribution': dict(sorted(skills_count.items(), key=lambda x: x[1], reverse=True)[:15]),
         'experience_distribution': experience_ranges,
         'location_distribution': locations,
+        'upload_trend': {'monthly': [0, 0, 0, 0, 0, len(candidates)]},
         'generated_by': 'pranamya-jain',
-        'timestamp': '2025-06-01 06:00:37 UTC'
+        'timestamp': '2025-06-01 19:00:01 UTC'
     }
-
 def export_to_csv(candidates):
     """
     Export candidates to CSV format
@@ -1313,6 +1345,108 @@ def search_candidates_internal(search_request):
     except Exception as e:
         print(f"❌ Error in search_candidates_internal: {e}")
         return []
+    
+# Add this import at the top with your other imports
+from utils.outreach_manager import OutreachManager
+
+# Add these routes to your existing app.py file (paste them before the final if __name__ == '__main__' block)
+
+@app.route('/outreach')
+def outreach_dashboard():
+    """Outreach management dashboard"""
+    try:
+        # Load candidates
+        with open('data/candidates.json', 'r') as f:
+            candidates = json.load(f)
+        
+        # Load outreach logs
+        try:
+            with open('data/outreach_log.json', 'r') as f:
+                outreach_logs = json.load(f)
+        except FileNotFoundError:
+            outreach_logs = []
+        
+        return render_template('outreach.html', 
+                             candidates=candidates, 
+                             outreach_logs=outreach_logs)
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+
+@app.route('/outreach/preview', methods=['POST'])
+def preview_outreach():
+    """Preview personalized email before sending"""
+    try:
+        data = request.get_json()
+        candidate_id = data.get('candidate_id')
+        template_type = data.get('template_type', 'initial_contact')
+        
+        # Load candidate data
+        with open('data/candidates.json', 'r') as f:
+            candidates = json.load(f)
+        
+        candidate = next((c for c in candidates if c.get('id') == candidate_id), None)
+        if not candidate:
+            return jsonify({"error": "Candidate not found"}), 404
+        
+        # Sample job and recruiter data (you can make this dynamic)
+        job_data = {
+            "title": data.get('job_title', 'Software Developer'),
+            "company": data.get('company', 'TechCorp'),
+            "summary": data.get('job_summary', 'building innovative solutions'),
+            "benefits": data.get('benefits', 'competitive salary and remote work options')
+        }
+        
+        recruiter_data = {
+            "name": data.get('recruiter_name', 'Hiring Team'),
+            "email": data.get('recruiter_email', 'hiring@company.com')
+        }
+        
+        # Generate personalized email
+        outreach_manager = OutreachManager()
+        subject, body = outreach_manager.personalize_email(
+            template_type, candidate, job_data, recruiter_data
+        )
+        
+        return jsonify({
+            "subject": subject,
+            "body": body,
+            "candidate_email": candidate.get('email', 'No email available')
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/outreach/send', methods=['POST'])
+def send_outreach():
+    """Send personalized outreach email"""
+    try:
+        data = request.get_json()
+        candidate_id = data.get('candidate_id')
+        subject = data.get('subject')
+        body = data.get('body')
+        candidate_email = data.get('candidate_email')
+        
+        # Email configuration (you should move this to config.py)
+        from_email = os.getenv('SMTP_EMAIL')
+        from_password = os.getenv('SMTP_PASSWORD')
+        
+        if not from_email or not from_password:
+            return jsonify({"error": "Email configuration not found"}), 500
+        
+        # Send email
+        outreach_manager = OutreachManager()
+        result = outreach_manager.send_email(
+            candidate_email, subject, body, from_email, from_password
+        )
+        
+        # Log the outreach
+        template_type = data.get('template_type', 'initial_contact')
+        outreach_manager.log_outreach(candidate_id, template_type, result['status'])
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # ================================
 # APPLICATION STARTUP

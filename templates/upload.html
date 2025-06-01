@@ -11,17 +11,59 @@
     <!-- Custom Styles -->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <style>
-        /* Page-specific styles for upload.html */
+        /* Enhanced aesthetic styles for upload.html */
+        .upload-section {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+        
+        .upload-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(81, 207, 102, 0.08) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 70%, rgba(81, 207, 102, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .upload-content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+        
+        .hero-title {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-green) 50%, var(--text-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
         .upload-zone {
-            border: 2px dashed var(--border-primary);
-            border-radius: 12px;
-            padding: 3rem;
+            border: 3px dashed transparent;
+            background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+                       linear-gradient(135deg, var(--border-primary), var(--accent-green), var(--border-primary)) border-box;
+            border-radius: 16px;
+            padding: 3.5rem 2rem;
             text-align: center;
             transition: var(--transition-smooth);
-            background: var(--bg-secondary);
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
         .upload-zone::before {
@@ -40,303 +82,487 @@
         }
         
         .upload-zone:hover {
-            border-color: var(--accent-green);
-            background: var(--bg-card);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-card);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(81, 207, 102, 0.2);
+            background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
+                       linear-gradient(135deg, var(--accent-green), #40c057, var(--accent-green)) border-box;
         }
         
         .upload-zone.dragover {
-            border-color: var(--accent-green);
-            background: rgba(81, 207, 102, 0.1);
             transform: scale(1.02);
+            background: linear-gradient(rgba(81, 207, 102, 0.1), rgba(81, 207, 102, 0.1)) padding-box,
+                       linear-gradient(135deg, var(--accent-green), #40c057, var(--accent-green)) border-box;
+            box-shadow: 0 16px 48px rgba(81, 207, 102, 0.3);
         }
         
         .upload-icon {
-            font-size: 4rem;
-            color: var(--accent-green);
+            font-size: 4.5rem;
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1.5rem;
             display: block;
+            filter: drop-shadow(0 4px 8px rgba(81, 207, 102, 0.3));
+            transition: var(--transition-smooth);
+        }
+        
+        .upload-zone:hover .upload-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .file-format-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .format-badge {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            border: 1px solid var(--border-primary);
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .format-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .format-badge:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-green);
+            box-shadow: 0 4px 16px rgba(81, 207, 102, 0.2);
+        }
+        
+        .format-badge:hover::before {
+            opacity: 1;
         }
         
         .progress-container {
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            padding: 2rem;
             margin-top: 2rem;
             display: none;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
         
         .progress-bar {
-            background: var(--bg-card);
-            height: 8px;
-            border-radius: 4px;
+            background: var(--bg-primary);
+            height: 10px;
+            border-radius: 8px;
             overflow: hidden;
             margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.1) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.1) 75%);
+            background-size: 20px 20px;
+            animation: progress-stripes 1s linear infinite;
+        }
+        
+        @keyframes progress-stripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-green), #40c057);
+            background: linear-gradient(90deg, var(--accent-green), #40c057, var(--accent-green));
             width: 0%;
             transition: var(--transition-smooth);
-            border-radius: 4px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progress-shine 2s ease-in-out infinite;
+        }
+        
+        @keyframes progress-shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         
         .file-info {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            display: none;
-        }
-        
-        .results-section {
-            margin-top: 3rem;
-            display: none;
-        }
-        
-        /* Enhanced Skills Display - Added from new code */
-        .skill-tag {
-            display: inline-block;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-primary);
-            padding: 0.4rem 0.8rem;
-            margin: 0.25rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            transition: var(--transition-smooth);
-        }
-        
-        .skill-tag:hover {
-            background: var(--accent-green);
-            color: white;
-            border-color: var(--accent-green);
-            transform: translateY(-1px);
-        }
-        
-        .skills-container {
-            background: var(--bg-secondary);
-            padding: 1rem;
-            border-radius: 6px;
-            min-height: 60px;
-            border: 1px solid var(--border-primary);
-        }
-        
-        .skills-empty {
-            color: var(--text-secondary);
-            font-style: italic;
-            text-align: center;
-            padding: 1rem;
-        }
-        
-        .skills-count {
-            background: var(--accent-green);
-            color: white;
-            padding: 0.2rem 0.6rem;
             border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .error-message {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid var(--accent-red);
-            color: var(--accent-red);
-            padding: 1rem;
-            border-radius: 6px;
-            margin-top: 1rem;
-            display: none;
-        }
-        
-        .success-message {
-            background: rgba(81, 207, 102, 0.1);
-            border: 1px solid var(--accent-green);
-            color: var(--accent-green);
-            padding: 1rem;
-            border-radius: 6px;
-            margin-top: 1rem;
-            display: none;
-        }
-        
-        .upload-content-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Enhanced candidate result styling */
-        .candidate-result {
-            background: var(--bg-card);
-            border: 1px solid var(--border-primary);
-            border-radius: 8px;
             padding: 1.5rem;
-            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+            display: none;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .candidate-result {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .candidate-result::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0;
             transition: var(--transition-smooth);
         }
         
         .candidate-result:hover {
-            box-shadow: var(--shadow-card);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(81, 207, 102, 0.15);
+        }
+        
+        .candidate-result:hover::before {
+            opacity: 1;
         }
         
         .info-section {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid var(--border-primary);
             margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
         }
         
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border-primary);
+        .info-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-green), #40c057);
+            opacity: 0;
+            transition: var(--transition-smooth);
         }
         
-        .info-item:last-child {
-            border-bottom: none;
+        .info-section:hover::before {
+            opacity: 1;
         }
         
-        .debug-info {
-            background: var(--bg-secondary);
+        .skill-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            color: var(--text-primary);
             border: 1px solid var(--border-primary);
-            border-radius: 6px;
-            padding: 1rem;
-            margin-top: 1rem;
-            font-family: 'Courier New', monospace;
-            font-size: 0.875rem;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .skill-tag:hover::before {
+            left: 100%;
+        }
+        
+        .skill-tag:hover {
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
+            color: var(--bg-primary);
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(81, 207, 102, 0.3);
+        }
+        
+        .enhanced-btn {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #40c057 100%);
+            box-shadow: 0 4px 15px rgba(81, 207, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .enhanced-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .enhanced-btn:hover::before {
+            left: 100%;
+        }
+        
+        .enhanced-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(81, 207, 102, 0.4);
+        }
+        
+        .success-badge {
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.15), rgba(81, 207, 102, 0.25));
+            border: 1px solid var(--accent-green);
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .error-badge {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 107, 107, 0.25));
+            border: 1px solid var(--accent-red);
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: var(--accent-green);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: particle-float 8s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(1) {
+            width: 6px;
+            height: 6px;
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+        
+        .particle:nth-child(2) {
+            width: 10px;
+            height: 10px;
+            top: 70%;
+            right: 20%;
+            animation-delay: 3s;
+        }
+        
+        .particle:nth-child(3) {
+            width: 4px;
+            height: 4px;
+            bottom: 20%;
+            left: 80%;
+            animation-delay: 6s;
+        }
+        
+        @keyframes particle-float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.3; }
         }
         
         @media (max-width: 768px) {
             .upload-zone {
-                padding: 2rem 1rem;
+                padding: 2.5rem 1.5rem;
             }
             
             .upload-icon {
-                font-size: 3rem;
+                font-size: 3.5rem;
+            }
+            
+            .file-format-badges {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .format-badge {
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
     <div class="main-wrapper">
-        <!-- Navigation -->
+        <!-- STANDARDIZED NAVIGATION -->
         <nav class="navbar">
             <div class="navbar-container">
                 <a href="/" class="navbar-brand">
                     <i class="fas fa-brain icon"></i> HireAI
                 </a>
                 <ul class="navbar-nav">
-                    <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="/upload" class="nav-link active">Upload Resume</a></li>
-                    <li><a href="/search" class="nav-link">Search Candidates</a></li>
-                    <li><a href="/analytics" class="nav-link">Analytics</a></li>
+                    <li><a href="/" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="/upload" class="nav-link" data-page="upload">Upload Resume</a></li>
+                    <li><a href="/candidates" class="nav-link" data-page="candidates">View Candidates</a></li>
+                    <li><a href="/search" class="nav-link" data-page="search">Search Candidates</a></li>
+                    <li><a href="/outreach" class="nav-link" data-page="outreach">Personalized Outreach</a></li>
+                    <li><a href="/analytics" class="nav-link" data-page="analytics">Analytics</a></li>
                 </ul>
+                
+                <!-- Mobile menu toggle -->
+                <button class="navbar-toggle" id="navbar-toggle" style="display: none;">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </nav>
 
-        <!-- Upload Section with Flexbox Centering -->
-        <div class="centered-container">
-            <div class="main-container">
-                <div class="upload-content-wrapper">
-                    <!-- Page Header -->
-                    <div class="centered-content mb-5 animate-fadeInUp">
-                        <h1 class="hero-title">
-                            <i class="fas fa-upload icon-large"></i>
-                            Upload Resumes
-                        </h1>
-                        <p class="hero-subtitle">
-                            Upload candidate resumes for AI-powered parsing and analysis. 
-                            Supports PDF, DOCX, and DOC formats up to 10MB.
-                        </p>
-                        
-                        <!-- Live timestamp -->
-                        <div class="footer-timestamp" style="margin-top: 1rem;">
-                            <i class="fas fa-clock icon-only"></i>
-                            <span id="currentDateTime">2025-06-01 12:49:19</span> UTC
-                            <span class="text-muted" style="margin-left: 1rem;">
-                                <i class="fas fa-user icon-only"></i> pranamya-jain
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Upload Zone -->
-                    <div class="animate-fadeInUp">
-                        <div class="upload-zone" id="uploadZone">
-                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                            <h3 class="mb-3">Drag & Drop Resumes Here</h3>
-                            <p class="text-secondary mb-4">
-                                or <span class="text-success" style="text-decoration: underline;">browse files</span> to upload
+        <!-- Enhanced Upload Section -->
+        <div class="upload-section">
+            <div class="floating-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            
+            <div class="centered-container">
+                <div class="main-container">
+                    <div class="upload-content-wrapper">
+                        <!-- Enhanced Page Header -->
+                        <div class="hero-header animate-fadeInUp">
+                            <h1 class="hero-title">
+                                <i class="fas fa-upload icon-large"></i>
+                                Upload Resumes
+                            </h1>
+                            <p class="hero-subtitle">
+                                Upload candidate resumes for AI-powered parsing and analysis. 
+                                Supports PDF, DOCX, and DOC formats up to 10MB.
                             </p>
-                            <div class="flex-center" style="gap: 1rem;">
-                                <div class="text-muted">
-                                    <i class="fas fa-file-pdf icon"></i> PDF
-                                </div>
-                                <div class="text-muted">
-                                    <i class="fas fa-file-word icon"></i> DOCX
-                                </div>
-                                <div class="text-muted">
-                                    <i class="fas fa-file-alt icon"></i> DOC
-                                </div>
-                            </div>
-                            <input type="file" id="fileInput" multiple accept=".pdf,.docx,.doc" style="display: none;">
-                        </div>
-
-                        <!-- File Information -->
-                        <div class="file-info" id="fileInfo">
-                            <h4 class="mb-2">
-                                <i class="fas fa-file icon"></i> Selected Files
-                            </h4>
-                            <div id="fileList"></div>
-                        </div>
-
-                        <!-- Progress Section -->
-                        <div class="progress-container" id="progressContainer">
-                            <div class="flex-between mb-2">
-                                <span id="progressText">Preparing upload...</span>
-                                <span id="progressPercent">0%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progressFill"></div>
+                            
+                            <!-- Live timestamp -->
+                            <div class="footer-timestamp" style="margin-top: 1.5rem;">
+                                <i class="fas fa-clock icon-only"></i>
+                                <span id="currentDateTime">2025-06-01 15:05:37</span> UTC
+                                <span class="text-muted" style="margin-left: 1rem;">
+                                    <i class="fas fa-user icon-only"></i> pranamya-jain
+                                </span>
                             </div>
                         </div>
 
-                        <!-- Messages -->
-                        <div class="error-message" id="errorMessage">
-                            <i class="fas fa-exclamation-triangle icon"></i>
-                            <span id="errorText"></span>
-                            <div id="debugInfo" class="debug-info"></div>
+                        <!-- Enhanced Upload Zone -->
+                        <div class="animate-fadeInUp">
+                            <div class="upload-zone" id="uploadZone">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <h3 class="mb-3">Drag & Drop Resumes Here</h3>
+                                <p class="text-secondary mb-4">
+                                    or <span class="text-success" style="text-decoration: underline; cursor: pointer;">browse files</span> to upload
+                                </p>
+                                <div class="file-format-badges">
+                                    <div class="format-badge text-muted">
+                                        <i class="fas fa-file-pdf icon"></i> PDF
+                                    </div>
+                                    <div class="format-badge text-muted">
+                                        <i class="fas fa-file-word icon"></i> DOCX
+                                    </div>
+                                    <div class="format-badge text-muted">
+                                        <i class="fas fa-file-alt icon"></i> DOC
+                                    </div>
+                                </div>
+                                <input type="file" id="fileInput" multiple accept=".pdf,.docx,.doc" style="display: none;">
+                            </div>
+
+                            <!-- File Information -->
+                            <div class="file-info" id="fileInfo">
+                                <h4 class="mb-2">
+                                    <i class="fas fa-file icon"></i> Selected Files
+                                </h4>
+                                <div id="fileList"></div>
+                            </div>
+
+                            <!-- Enhanced Progress Section -->
+                            <div class="progress-container" id="progressContainer">
+                                <div class="flex-between mb-2">
+                                    <span id="progressText">Preparing upload...</span>
+                                    <span id="progressPercent">0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                </div>
+                            </div>
+
+                            <!-- Enhanced Messages -->
+                            <div class="error-message" id="errorMessage" style="display: none;">
+                                <div class="error-badge">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span id="errorText"></span>
+                                </div>
+                                <div id="debugInfo" class="debug-info"></div>
+                            </div>
+
+                            <div class="success-message" id="successMessage" style="display: none;">
+                                <div class="success-badge">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span id="successText"></span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="success-message" id="successMessage">
-                            <i class="fas fa-check-circle icon"></i>
-                            <span id="successText"></span>
+                        <!-- Results Section -->
+                        <div class="results-section animate-fadeInUp" id="resultsSection">
+                            <h2 class="section-title">
+                                <i class="fas fa-check-circle icon"></i> Extracted Resume Data
+                            </h2>
+                            <div id="resultsContainer"></div>
                         </div>
-                    </div>
 
-                    <!-- Results Section -->
-                    <div class="results-section animate-fadeInUp" id="resultsSection">
-                        <h2 class="section-title">
-                            <i class="fas fa-check-circle icon"></i> Extracted Resume Data
-                        </h2>
-                        <div id="resultsContainer"></div>
-                    </div>
-
-                    <!-- Quick Actions -->
-                    <div class="centered-content mt-5 animate-fadeInUp">
-                        <h3 class="mb-4">What's Next?</h3>
-                        <div class="flex-center" style="gap: 1rem; flex-wrap: wrap;">
-                            <a href="/search" class="btn btn-primary btn-large">
-                                <i class="fas fa-search icon"></i> Search Candidates
-                            </a>
-                            <a href="/analytics" class="btn btn-large">
-                                <i class="fas fa-chart-bar icon"></i> View Analytics
-                            </a>
+                        <!-- Enhanced Quick Actions -->
+                        <div class="centered-content mt-5 animate-fadeInUp">
+                            <h3 class="mb-4">What's Next?</h3>
+                            <div class="flex-center" style="gap: 1rem; flex-wrap: wrap;">
+                                <a href="/search" class="btn btn-primary btn-large enhanced-btn">
+                                    <i class="fas fa-search icon"></i> Search Candidates
+                                </a>
+                                <a href="/analytics" class="btn btn-large">
+                                    <i class="fas fa-chart-bar icon"></i> View Analytics
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -355,7 +581,7 @@
                 </p>
                 <div class="footer-timestamp">
                     <i class="fas fa-clock icon-only"></i>
-                    <span id="footerDateTime">2025-06-01 12:49:19</span> UTC
+                    <span id="footerDateTime">2025-06-01 15:05:37</span> UTC
                     <span class="text-muted" style="margin-left: 1rem;">
                         <i class="fas fa-user icon-only"></i> pranamya-jain
                     </span>
@@ -364,6 +590,7 @@
         </footer>
     </div>
 
+    <!-- STANDARDIZED NAVBAR ACTIVE STATE MANAGEMENT + ALL PRESERVED FUNCTIONALITY -->
     <script>
         let selectedFiles = [];
         let uploadInProgress = false;
@@ -385,6 +612,64 @@
         const resultsSection = document.getElementById('resultsSection');
         const resultsContainer = document.getElementById('resultsContainer');
         const debugInfo = document.getElementById('debugInfo');
+
+        // STANDARDIZED NAVBAR ACTIVE STATE MANAGEMENT
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Remove active class from all links
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to current page link
+            let activeSet = false;
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                const page = link.getAttribute('data-page');
+                
+                // Check for exact match or page identifier
+                if (href === currentPath || 
+                    (currentPath === '/' && page === 'home') ||
+                    (currentPath.includes('/upload') && page === 'upload') ||
+                    (currentPath.includes('/candidates') && page === 'candidates') ||
+                    (currentPath.includes('/search') && page === 'search') ||
+                    (currentPath.includes('/outreach') && page === 'outreach') ||
+                    (currentPath.includes('/analytics') && page === 'analytics')) {
+                    link.classList.add('active');
+                    activeSet = true;
+                }
+            });
+            
+            // Fallback: if no active state set, activate home
+            if (!activeSet) {
+                const homeLink = document.querySelector('[data-page="home"]');
+                if (homeLink) homeLink.classList.add('active');
+            }
+            
+            // Mobile menu toggle functionality
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarNav = document.querySelector('.navbar-nav');
+            
+            if (navbarToggle && navbarNav) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarNav.classList.toggle('active');
+                });
+                
+                // Close mobile menu when clicking on a link
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navbarNav.classList.remove('active');
+                    });
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarNav.contains(e.target)) {
+                        navbarNav.classList.remove('active');
+                    }
+                });
+            }
+        });
 
         // Update live datetime to UTC
         function updateDateTime() {
@@ -464,7 +749,7 @@
             }
         }
 
-        // Validation and upload (ENHANCED)
+        // Validation and upload (PRESERVED)
         function validateAndUpload() {
             hideMessages();
             hideResults();
@@ -532,7 +817,7 @@
             }
         }
 
-        // Enhanced upload function with better response handling
+        // Enhanced upload function with better response handling (PRESERVED)
         async function uploadSingleFile(file, current, total) {
             const formData = new FormData();
             formData.append('resume', file);
@@ -587,7 +872,7 @@
             progressPercent.textContent = percent + '%';
         }
 
-        // Enhanced function to display all results
+        // Enhanced function to display all results (PRESERVED)
         function displayAllResults() {
             let html = '';
             
@@ -620,7 +905,7 @@
             resultsSection.style.display = 'block';
         }
 
-        // Enhanced function to create candidate result card
+        // Enhanced function to create candidate result card (PRESERVED)
         function createCandidateResultCard(candidate, filename) {
             // Safely extract data with fallbacks
             const safeCandidate = {
@@ -642,8 +927,8 @@
                             <i class="fas fa-user-check icon"></i> 
                             ${safeCandidate.name}
                         </h4>
-                        <div style="background: rgba(81, 207, 102, 0.1); border: 1px solid var(--accent-green); border-radius: 6px; padding: 0.5rem 1rem;">
-                            <i class="fas fa-check-circle" style="color: var(--accent-green); margin-right: 0.5rem;"></i>
+                        <div class="success-badge">
+                            <i class="fas fa-check-circle" style="color: var(--accent-green);"></i>
                             <small style="color: var(--accent-green); font-weight: 600;">Successfully Processed</small>
                         </div>
                     </div>
@@ -718,8 +1003,8 @@
                             <i class="fas fa-file-times icon"></i> 
                             ${filename}
                         </h4>
-                        <div style="background: rgba(255, 107, 107, 0.1); border: 1px solid var(--accent-red); border-radius: 6px; padding: 0.5rem 1rem;">
-                            <i class="fas fa-exclamation-triangle" style="color: var(--accent-red); margin-right: 0.5rem;"></i>
+                        <div class="error-badge">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--accent-red);"></i>
                             <small style="color: var(--accent-red); font-weight: 600;">Processing Failed</small>
                         </div>
                     </div>
@@ -740,7 +1025,7 @@
             `;
         }
 
-        // Enhanced Skills Display Function
+        // Enhanced Skills Display Function (PRESERVED)
         function displaySkills(skills) {
             if (!skills || skills.length === 0) {
                 return '<div class="skills-empty"><i class="fas fa-info-circle"></i> No technical skills detected. This may be due to resume format or OCR limitations.</div>';
@@ -749,7 +1034,7 @@
             return skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('');
         }
 
-        // Education Display Function
+        // Education Display Function (PRESERVED)
         function displayEducation(education) {
             if (!education || education.length === 0) {
                 return '<div style="color: var(--text-secondary);">No education information extracted</div>';
@@ -764,7 +1049,7 @@
             `).join('');
         }
 
-        // Global helper functions
+        // Global helper functions (PRESERVED)
         window.showDebugInfo = function(filename, error, fullResult) {
             const info = `
 === DEBUG INFORMATION ===
@@ -799,7 +1084,7 @@ ${JSON.stringify(fullResult, null, 2)}
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        // Message functions
+        // Message functions (PRESERVED)
         function showError(message) {
             errorText.textContent = message;
             errorMessage.style.display = 'block';
@@ -823,7 +1108,7 @@ ${JSON.stringify(fullResult, null, 2)}
             resultsContainer.innerHTML = '';
         }
 
-        // Scroll animations
+        // Scroll animations (PRESERVED)
         function addScrollAnimations() {
             const animateElements = document.querySelectorAll('.animate-fadeInUp');
             
@@ -844,22 +1129,14 @@ ${JSON.stringify(fullResult, null, 2)}
             });
         }
 
-        // Initialize
+        // Initialize (PRESERVED)
         document.addEventListener('DOMContentLoaded', function() {
-            // Set the specific time as requested
-            const currentElement = document.getElementById('currentDateTime');
-            const footerElement = document.getElementById('footerDateTime');
-            
-            if (currentElement) currentElement.textContent = '2025-06-01 12:49:19';
-            if (footerElement) footerElement.textContent = '2025-06-01 12:49:19';
-            
-            // Start live updates
             updateDateTime();
             setInterval(updateDateTime, 1000);
             addScrollAnimations();
             
             console.log('HireAI Upload Page initialized for user: pranamya-jain');
-            console.log('Current time: 2025-06-01 12:49:19 UTC');
+            console.log('Current time: 2025-06-01 15:05:37 UTC');
         });
     </script>
 </body>

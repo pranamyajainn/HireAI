@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Outreach - HireAI</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <style>
+        /* Page-specific styles for outreach.html */
+        .outreach-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow-subtle);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .candidate-card {
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .candidate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.05), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .candidate-card:hover::before {
+            left: 100%;
+        }
+        
+        .candidate-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-elevated);
+            border-color: var(--accent-green);
+        }
+        
+        .email-preview {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-primary);
+            padding: 0.25rem 0.75rem;
+            margin: 0.25rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            transition: var(--transition-fast);
+        }
+        
+        .contacted-badge {
+            background: rgba(81, 207, 102, 0.1);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .outreach-layout {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem 0;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: var(--bg-card);
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 12px;
+            border: 1px solid var(--border-primary);
+            color: var(--text-primary);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+        
+        .close:hover {
+            color: var(--accent-red);
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .template-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-primary);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .btn-preview {
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            border: 1px solid var(--accent-green);
+        }
+        
+        .btn-preview:hover {
+            background: #40c057;
+            border-color: #40c057;
+        }
+        
+        .btn-send {
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            border: 1px solid var(--accent-green);
+        }
+        
+        .btn-send:hover {
+            background: #40c057;
+            border-color: #40c057;
+        }
+        
+        .btn-cancel {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-primary);
+        }
+        
+        .btn-cancel:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+        
+        .match-score {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .score-excellent { color: var(--accent-green); }
+        .score-good { color: var(--accent-yellow); }
+        .score-fair { color: var(--accent-red); }
+        
+        @media (max-width: 768px) {
+            .outreach-layout {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .outreach-container {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="/" class="navbar-brand">
+                    <i class="fas fa-brain icon"></i> HireAI
+                </a>
+                <ul class="navbar-nav">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/upload" class="nav-link">Upload Resume</a></li>
+                    <li><a href="/candidates" class="nav-link">View Candidates</a></li>
+                    <li><a href="/search" class="nav-link">Search Candidates</a></li>
+                    <li><a href="/outreach" class="nav-link active">Personalized Outreach</a></li>
+                    <li><a href="/analytics" class="nav-link">Analytics</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="main-container">
+            <!-- Page Header with Flexbox Centering -->
+            <div class="header-section animate-fadeInUp">
+                <h1 class="hero-title">
+                    <i class="fas fa-envelope icon-large"></i> Personalized Outreach
+                </h1>
+                <p class="hero-subtitle">Create and send AI-powered personalized emails to candidates</p>
+                
+                <!-- Live timestamp -->
+                <div class="footer-timestamp" style="margin-top: 1rem;">
+                    <i class="fas fa-clock icon-only"></i>
+                    <span id="currentDateTime">2025-06-01 14:21:30</span> UTC
+                    <span class="text-muted" style="margin-left: 1rem;">
+                        <i class="fas fa-user icon-only"></i> pranamya-jain
+                    </span>
+                </div>
+            </div>
+
+            <div class="outreach-layout">
+                <!-- Job Configuration Panel -->
+                <div class="animate-fadeInLeft">
+                    <div class="outreach-container">
+                        <h3 class="mb-4">
+                            <i class="fas fa-sliders-h icon"></i> Job & Recruiter Details
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Job Title *</label>
+                            <input type="text" id="jobTitle" class="form-input" placeholder="e.g., Senior Python Developer" value="Software Developer">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Company Name *</label>
+                            <input type="text" id="company" class="form-input" placeholder="e.g., TechCorp Inc." value="TechCorp">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Job Summary</label>
+                            <textarea id="jobSummary" class="form-input form-textarea" rows="3" 
+                                placeholder="Brief description of the role...">building innovative web applications</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Benefits & Perks</label>
+                            <input type="text" id="benefits" class="form-input" 
+                                placeholder="e.g., Remote work, competitive salary..."
+                                value="competitive salary, remote work, growth opportunities">
+                        </div>
+
+                        <h4 class="mb-3 mt-4">Recruiter Information</h4>
+
+                        <div class="form-group">
+                            <label class="form-label">Your Name *</label>
+                            <input type="text" id="recruiterName" class="form-input" 
+                                placeholder="Your full name" value="Jane Smith">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Your Email *</label>
+                            <input type="email" id="recruiterEmail" class="form-input" 
+                                placeholder="your.email@company.com" value="jane@techcorp.com">
+                        </div>
+
+                        <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 6px; margin-top: 1.5rem;">
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle icon"></i>
+                                These details will be used to personalize all outreach emails.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Candidates List -->
+                <div class="animate-fadeInUp">
+                    {% if candidates and candidates|length > 0 %}
+                        <div style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                            <div class="flex-between">
+                                <h3 class="mb-0">
+                                    <i class="fas fa-users icon"></i> 
+                                    {{ candidates|length }} Candidate{{ 's' if candidates|length != 1 else '' }} Available
+                                </h3>
+                                <small class="text-muted">Click on a candidate to create personalized outreach</small>
+                            </div>
+                        </div>
+
+                        <div id="candidatesList">
+                            {% for candidate in candidates %}
+                            <div class="candidate-card card">
+                                <div class="card-body">
+                                    <div class="flex-between">
+                                        <div style="flex: 1;">
+                                            <h4 class="mb-2">
+                                                {{ candidate.name or 'Unknown Name' }}
+                                                {% if candidate.experience_years %}
+                                                    <small class="text-muted">({{ candidate.experience_years }} years exp.)</small>
+                                                {% endif %}
+                                            </h4>
+                                            <p class="text-secondary mb-2">
+                                                <i class="fas fa-envelope icon"></i> {{ candidate.email or 'No email available' }}
+                                                {% if candidate.location %}
+                                                    <span style="margin-left: 1rem;">
+                                                        <i class="fas fa-map-marker-alt icon"></i> {{ candidate.location }}
+                                                    </span>
+                                                {% endif %}
+                                            </p>
+                                            
+                                            {% if candidate.skills %}
+                                                <div class="mb-2">
+                                                    {% for skill in candidate.skills[:5] %}
+                                                        <span class="skill-tag">{{ skill }}</span>
+                                                    {% endfor %}
+                                                    {% if candidate.skills|length > 5 %}
+                                                        <span class="skill-tag">+{{ candidate.skills|length - 5 }} more</span>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+
+                                            <div class="form-group">
+                                                <select id="template_{{ candidate.id }}" class="template-select">
+                                                    <option value="initial_contact">📧 Initial Contact</option>
+                                                    <option value="follow_up">🔄 Follow Up</option>
+                                                    <option value="rejection_soft">💌 Soft Rejection</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center" style="min-width: 150px;">
+                                            {% if candidate.match_score %}
+                                                {% set score_class = 'score-excellent' if candidate.match_score >= 80 else 'score-good' if candidate.match_score >= 60 else 'score-fair' %}
+                                                <div class="match-score {{ score_class }} mb-2">{{ candidate.match_score }}%</div>
+                                                <small class="text-muted d-block mb-3">Match Score</small>
+                                            {% endif %}
+                                            
+                                            <button class="btn btn-preview btn-small" onclick="previewEmail('{{ candidate.id }}')">
+                                                <i class="fas fa-eye icon"></i> Preview Email
+                                            </button>
+                                            
+                                            <!-- Contact Status -->
+                                            {% set contacted = outreach_logs | selectattr('candidate_id', 'equalto', candidate.id) | list %}
+                                            {% if contacted %}
+                                                <div class="contacted-badge mt-2">
+                                                    <i class="fas fa-check-circle"></i> 
+                                                    Last contacted: {{ contacted[-1].timestamp[:10] }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <!-- Empty State -->
+                        <div class="centered-content" style="min-height: 400px;">
+                            <i class="fas fa-users empty-state-icon"></i>
+                            <h3 class="text-secondary mb-3">No Candidates Available</h3>
+                            <p class="text-secondary mb-4">
+                                Upload some resumes first to start creating personalized outreach campaigns.
+                            </p>
+                            <a href="/upload" class="btn btn-primary btn-large">
+                                <i class="fas fa-upload icon"></i> Upload Resumes
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-brain icon"></i> HireAI
+                </div>
+                <p class="footer-text">
+                    Built with ❤️ by <strong>Team Seeds! 🌱</strong><br>
+                    Intelligent personalized outreach powered by AI
+                </p>
+                <div class="footer-timestamp">
+                    <i class="fas fa-clock icon-only"></i>
+                    <span id="footerDateTime">2025-06-01 14:21:30</span> UTC
+                    <span class="text-muted" style="margin-left: 1rem;">
+                        <i class="fas fa-seedling icon-only"></i> Team Seeds
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Email Preview Modal -->
+    <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="margin-bottom: 1.5rem;">
+                <i class="fas fa-envelope icon"></i> Email Preview
+            </h2>
+            <div id="emailPreview" class="email-preview"></div>
+            <div class="flex-between" style="margin-top: 1.5rem; gap: 1rem;">
+                <button class="btn btn-cancel" onclick="closeModal()">
+                    <i class="fas fa-times icon"></i> Cancel
+                </button>
+                <button class="btn btn-send" onclick="sendEmail()">
+                    <i class="fas fa-paper-plane icon"></i> Send Email
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentCandidateId = null;
+        let currentEmailData = null;
+
+        // Update live datetime to UTC
+        function updateDateTime() {
+            const now = new Date();
+            const utcString = now.toISOString().slice(0, 19).replace('T', ' ');
+            document.getElementById('currentDateTime').textContent = utcString;
+            document.getElementById('footerDateTime').textContent = utcString;
+        }
+
+        function previewEmail(candidateId) {
+            currentCandidateId = candidateId;
+            
+            // Validate required fields
+            const jobTitle = document.getElementById('jobTitle').value.trim();
+            const company = document.getElementById('company').value.trim();
+            const recruiterName = document.getElementById('recruiterName').value.trim();
+            const recruiterEmail = document.getElementById('recruiterEmail').value.trim();
+            
+            if (!jobTitle || !company || !recruiterName || !recruiterEmail) {
+                alert('Please fill in all required fields (Job Title, Company, Your Name, Your Email)');
+                return;
+            }
+            
+            const templateType = document.getElementById(`template_${candidateId}`).value;
+            const jobData = {
+                job_title: jobTitle,
+                company: company,
+                job_summary: document.getElementById('jobSummary').value,
+                benefits: document.getElementById('benefits').value,
+                recruiter_name: recruiterName,
+                recruiter_email: recruiterEmail
+            };
+
+            // Show loading state
+            const previewBtn = event.target;
+            const originalText = previewBtn.innerHTML;
+            previewBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            previewBtn.disabled = true;
+
+            fetch('/outreach/preview', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    candidate_id: candidateId,
+                    template_type: templateType,
+                    ...jobData
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+                
+                currentEmailData = data;
+                document.getElementById('emailPreview').innerHTML = `
+                    <div style="background: var(--bg-card); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                        <p><strong>To:</strong> <span style="color: var(--accent-green);">${data.candidate_email}</span></p>
+                        <p><strong>From:</strong> ${recruiterName} &lt;${recruiterEmail}&gt;</p>
+                        <p><strong>Subject:</strong> <span style="color: var(--text-primary); font-weight: 600;">${data.subject}</span></p>
+                    </div>
+                    <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border-primary); font-family: 'Inter', sans-serif; line-height: 1.6;">
+                        ${data.body.replace(/\n/g, '<br>')}
+                    </div>
+                `;
+                
+                document.getElementById('emailModal').style.display = 'block';
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            })
+            .finally(() => {
+                previewBtn.innerHTML = originalText;
+                previewBtn.disabled = false;
+            });
+        }
+
+        function sendEmail() {
+            if (!currentEmailData || !currentCandidateId) {
+                alert('No email data available');
+                return;
+            }
+
+            const templateType = document.getElementById(`template_${currentCandidateId}`).value;
+            
+            // Show loading state
+            const sendBtn = event.target;
+            const originalText = sendBtn.innerHTML;
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            sendBtn.disabled = true;
+            
+            fetch('/outreach/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    candidate_id: currentCandidateId,
+                    template_type: templateType,
+                    subject: currentEmailData.subject,
+                    body: currentEmailData.body,
+                    candidate_email: currentEmailData.candidate_email
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('✅ Email sent successfully!');
+                    closeModal();
+                    location.reload(); // Reload to show updated contact status
+                } else {
+                    alert('❌ Error sending email: ' + data.message);
+                }
+            })
+            .catch(error => {
+                alert('❌ Error: ' + error);
+            })
+            .finally(() => {
+                sendBtn.innerHTML = originalText;
+                sendBtn.disabled = false;
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('emailModal').style.display = 'none';
+            currentCandidateId = null;
+            currentEmailData = null;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('emailModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Scroll animations
+        function addScrollAnimations() {
+            const animateElements = document.querySelectorAll('.animate-fadeInUp, .animate-fadeInLeft');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0) translateX(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transition = 'all 0.6s ease-out';
+                if (el.classList.contains('animate-fadeInUp')) {
+                    el.style.transform = 'translateY(30px)';
+                } else if (el.classList.contains('animate-fadeInLeft')) {
+                    el.style.transform = 'translateX(-30px)';
+                }
+                observer.observe(el);
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            addScrollAnimations();
+            
+            console.log('HireAI Outreach Page initialized for user: pranamya-jain');
+            console.log('Current time: 2025-06-01 14:21:30 UTC');
+        });
+    </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 /* HireAI Global Styles - Enhanced with Flexbox Centering */
-/* Generated: 2025-05-31 17:43:04 UTC | Team: Seeds! 🌱 */
+/* Generated: 2025-06-01 15:14:55 UTC | Team: Seeds! 🌱 | User: pranamya-jain */
 
 :root {
     /* Color Palette */
@@ -127,7 +127,7 @@ body {
     padding: var(--spacing-xl) 0;
 }
 
-/* ENHANCED NAVIGATION */
+/* STANDARDIZED ENHANCED NAVIGATION */
 .navbar {
     background: var(--bg-card);
     border-bottom: 1px solid var(--border-primary);
@@ -137,6 +137,7 @@ body {
     z-index: 1000;
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow-subtle);
+    min-height: 70px; /* Fixed height for consistency */
 }
 
 .navbar-container {
@@ -146,6 +147,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 54px; /* Fixed inner height */
 }
 
 .navbar-brand {
@@ -154,6 +156,8 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
 }
 
 .navbar-brand:hover {
@@ -164,8 +168,10 @@ body {
 .navbar-nav {
     display: flex;
     list-style: none;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md); /* Consistent spacing */
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-link {
@@ -176,6 +182,10 @@ body {
     border-radius: 6px;
     transition: var(--transition-fast);
     position: relative;
+    white-space: nowrap; /* Prevent text wrapping */
+    display: flex;
+    align-items: center;
+    min-height: 38px; /* Fixed height for all nav items */
 }
 
 .nav-link:hover {
@@ -187,6 +197,7 @@ body {
 .nav-link.active {
     color: var(--accent-green);
     background: var(--bg-secondary);
+    font-weight: 600;
 }
 
 .nav-link.active::after {
@@ -199,6 +210,17 @@ body {
     height: 2px;
     background: var(--accent-green);
     border-radius: 1px;
+}
+
+/* Mobile menu toggle (hidden by default, shows on mobile) */
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: var(--spacing-xs);
 }
 
 /* ENHANCED TYPOGRAPHY */
@@ -477,7 +499,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: var(--spacing-sm);
 }
 
-/* RESPONSIVE DESIGN */
+/* ENHANCED RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .main-container {
         padding: 0 var(--spacing-sm);
@@ -485,14 +507,50 @@ h1, h2, h3, h4, h5, h6 {
     
     .navbar-container {
         padding: 0 var(--spacing-sm);
-        flex-direction: column;
-        gap: var(--spacing-sm);
+        position: relative;
     }
     
     .navbar-nav {
-        gap: var(--spacing-sm);
-        flex-wrap: wrap;
-        justify-content: center;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border: 1px solid var(--border-primary);
+        border-top: none;
+        flex-direction: column;
+        gap: 0;
+        display: none;
+        box-shadow: var(--shadow-card);
+    }
+    
+    .navbar-nav.active {
+        display: flex;
+    }
+    
+    .nav-link {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        border-radius: 0;
+        border-bottom: 1px solid var(--border-primary);
+        min-height: 48px;
+        justify-content: flex-start;
+    }
+    
+    .nav-link:last-child {
+        border-bottom: none;
+    }
+    
+    .nav-link.active::after {
+        display: none;
+    }
+    
+    .nav-link.active {
+        background: var(--accent-green);
+        color: var(--bg-primary);
+    }
+    
+    .navbar-toggle {
+        display: block;
     }
     
     .hero-title {
@@ -513,6 +571,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 480px) {
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+    }
+    
     .hero-title {
         font-size: 2rem;
     }
@@ -610,9 +676,7 @@ h1, h2, h3, h4, h5, h6 {
 .border-warning { border: 1px solid var(--accent-yellow); }
 .border-danger { border: 1px solid var(--accent-red); }
 
-/* Add these to your existing styles.css file */
-
-/* PeopleGPT Utilities */
+/* ENHANCED UTILITIES */
 .datetime-display {
     font-family: 'Inter', monospace;
     background: rgba(255, 255, 255, 0.1);
@@ -644,7 +708,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
 }
 
-/* Enhanced alert styles */
+/* ENHANCED ALERT STYLES */
 .alert {
     padding: 1rem;
     border-radius: 6px;

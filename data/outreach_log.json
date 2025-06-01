@@ -1,0 +1,44 @@
+[
+  {
+    "candidate_id": "20250601_192602",
+    "template_type": "rejection_soft",
+    "timestamp": "2025-06-01T19:53:15.424159",
+    "status": "error"
+  },
+  {
+    "candidate_id": "20250601_192602",
+    "template_type": "rejection_soft",
+    "timestamp": "2025-06-01T19:53:47.172309",
+    "status": "error"
+  },
+  {
+    "candidate_id": "20250601_192602",
+    "template_type": "rejection_soft",
+    "timestamp": "2025-06-01T20:03:48.878484",
+    "status": "error"
+  },
+  {
+    "candidate_id": "20250601_192602",
+    "template_type": "initial_contact",
+    "timestamp": "2025-06-01T20:10:32.247812",
+    "status": "success"
+  },
+  {
+    "candidate_id": "20250601_192602",
+    "template_type": "initial_contact",
+    "timestamp": "2025-06-01T20:13:11.656864",
+    "status": "success"
+  },
+  {
+    "candidate_id": "20250601_213338",
+    "template_type": "initial_contact",
+    "timestamp": "2025-06-01T21:48:50.503546",
+    "status": "success"
+  },
+  {
+    "candidate_id": "20250601_222312",
+    "template_type": "rejection_soft",
+    "timestamp": "2025-06-01T22:28:11.583344",
+    "status": "success"
+  }
+]

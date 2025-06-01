@@ -11,22 +11,72 @@
     <!-- Custom Styles -->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <style>
-        /* Page-specific styles for candidates.html */
+        /* Enhanced aesthetic styles for candidates.html */
+        .candidates-page {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .candidates-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(81, 207, 102, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(81, 207, 102, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .candidates-header {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 50%, var(--bg-card) 100%);
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border-primary);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .candidates-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 100%, rgba(81, 207, 102, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-title {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-green) 50%, var(--text-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
         .candidates-container {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
         
         .candidate-card {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
             transition: var(--transition-smooth);
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
         .candidate-card::before {
@@ -36,7 +86,19 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.1), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .candidate-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-green), #40c057, var(--accent-green));
+            opacity: 0;
             transition: var(--transition-smooth);
         }
         
@@ -44,99 +106,207 @@
             left: 100%;
         }
         
+        .candidate-card:hover::after {
+            opacity: 1;
+        }
+        
         .candidate-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-elevated);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(81, 207, 102, 0.2);
             border-color: var(--accent-green);
         }
         
         .candidate-avatar {
-            width: 60px;
-            height: 60px;
-            background: var(--accent-green);
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             color: var(--bg-primary);
             font-weight: 600;
-            margin-right: 1rem;
+            margin-right: 1.5rem;
+            box-shadow: 0 4px 16px rgba(81, 207, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .candidate-avatar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .candidate-avatar:hover::before {
+            left: 100%;
         }
         
         .skill-tag {
             display: inline-block;
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             color: var(--text-primary);
             border: 1px solid var(--border-primary);
-            padding: 0.25rem 0.75rem;
+            padding: 0.4rem 0.8rem;
             margin: 0.25rem 0.25rem 0.25rem 0;
             border-radius: 12px;
             font-size: 0.75rem;
-            transition: var(--transition-fast);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .skill-tag:hover::before {
+            left: 100%;
         }
         
         .skill-tag:hover {
-            background: rgba(81, 207, 102, 0.2);
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
+            color: var(--bg-primary);
             border-color: var(--accent-green);
-            color: var(--accent-green);
+            transform: translateY(-1px);
         }
         
         .search-filter-section {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 2.5rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow-subtle);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .search-filter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .search-filter-section:hover::before {
+            opacity: 1;
         }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
         }
         
         .stat-card {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
             text-align: center;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.1), transparent);
             transition: var(--transition-smooth);
         }
         
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-green), #40c057, var(--accent-green));
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .stat-card:hover::before {
+            left: 100%;
+        }
+        
+        .stat-card:hover::after {
+            opacity: 1;
+        }
+        
         .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-subtle);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(81, 207, 102, 0.2);
+            border-color: var(--accent-green);
         }
         
         .stat-number {
-            font-size: 2rem;
+            font-size: 3rem;
             font-weight: 700;
-            color: var(--accent-green);
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: block;
+            text-shadow: 0 4px 8px rgba(81, 207, 102, 0.3);
         }
         
         .stat-label {
             color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
+            font-size: 1rem;
+            margin-top: 1rem;
+            font-weight: 500;
         }
         
         .empty-state {
             text-align: center;
-            padding: 4rem 2rem;
-            background: var(--bg-card);
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
         }
         
         .empty-state-icon {
-            font-size: 4rem;
-            color: var(--text-muted);
+            font-size: 5rem;
+            background: linear-gradient(135deg, var(--text-muted), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 8px rgba(81, 207, 102, 0.2));
         }
         
         .filter-tags {
@@ -147,20 +317,27 @@
         }
         
         .filter-tag {
-            background: rgba(81, 207, 102, 0.1);
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.2), rgba(81, 207, 102, 0.3));
             border: 1px solid var(--accent-green);
             color: var(--accent-green);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
             font-size: 0.75rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(81, 207, 102, 0.2);
         }
         
         .filter-tag .remove-filter {
             cursor: pointer;
             font-size: 0.875rem;
+            transition: var(--transition-fast);
+        }
+        
+        .filter-tag .remove-filter:hover {
+            transform: scale(1.2);
         }
         
         .candidate-meta {
@@ -180,73 +357,194 @@
         }
         
         .pagination .btn.active {
-            background: var(--accent-green);
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
             color: var(--bg-primary);
             border-color: var(--accent-green);
+            box-shadow: 0 4px 12px rgba(81, 207, 102, 0.3);
+        }
+        
+        .enhanced-btn {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #40c057 100%);
+            box-shadow: 0 4px 15px rgba(81, 207, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .enhanced-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .enhanced-btn:hover::before {
+            left: 100%;
+        }
+        
+        .enhanced-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(81, 207, 102, 0.4);
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-dot {
+            position: absolute;
+            background: var(--accent-green);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float-candidates 14s ease-in-out infinite;
+        }
+        
+        .floating-dot:nth-child(1) {
+            width: 12px;
+            height: 12px;
+            top: 25%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .floating-dot:nth-child(2) {
+            width: 16px;
+            height: 16px;
+            top: 65%;
+            right: 25%;
+            animation-delay: 5s;
+        }
+        
+        .floating-dot:nth-child(3) {
+            width: 10px;
+            height: 10px;
+            bottom: 35%;
+            left: 70%;
+            animation-delay: 10s;
+        }
+        
+        .floating-dot:nth-child(4) {
+            width: 8px;
+            height: 8px;
+            top: 45%;
+            left: 85%;
+            animation-delay: 7s;
+        }
+        
+        @keyframes float-candidates {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-40px) rotate(180deg); opacity: 0.3; }
+        }
+        
+        .datetime-display {
+            font-family: 'Inter', monospace;
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.2), rgba(81, 207, 102, 0.1));
+            border: 1px solid var(--accent-green);
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            box-shadow: 0 4px 16px rgba(81, 207, 102, 0.2);
         }
         
         @media (max-width: 768px) {
+            .candidates-header {
+                padding: 3rem 0;
+            }
+            
             .candidate-card {
-                padding: 1rem;
+                padding: 1.5rem;
             }
             
             .candidate-avatar {
-                width: 50px;
-                height: 50px;
-                font-size: 1.25rem;
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
             }
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
             }
             
             .search-filter-section {
-                padding: 1rem;
+                padding: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="main-wrapper">
-        <!-- Navigation -->
+    <div class="main-wrapper candidates-page">
+        <div class="floating-elements">
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+        </div>
+        
+        <!-- STANDARDIZED NAVIGATION -->
         <nav class="navbar">
             <div class="navbar-container">
                 <a href="/" class="navbar-brand">
                     <i class="fas fa-brain icon"></i> HireAI
                 </a>
                 <ul class="navbar-nav">
-                    <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="/upload" class="nav-link">Upload Resume</a></li>
-                    <li><a href="/search" class="nav-link">Search Candidates</a></li>
-                    <li><a href="/candidates" class="nav-link active">Candidates</a></li>
-                    <li><a href="/analytics" class="nav-link">Analytics</a></li>
+                    <li><a href="/" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="/upload" class="nav-link" data-page="upload">Upload Resume</a></li>
+                    <li><a href="/candidates" class="nav-link" data-page="candidates">View Candidates</a></li>
+                    <li><a href="/search" class="nav-link" data-page="search">Search Candidates</a></li>
+                    <li><a href="/outreach" class="nav-link" data-page="outreach">Personalized Outreach</a></li>
+                    <li><a href="/analytics" class="nav-link" data-page="analytics">Analytics</a></li>
                 </ul>
+                
+                <!-- Mobile menu toggle -->
+                <button class="navbar-toggle" id="navbar-toggle" style="display: none;">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </nav>
 
-        <div class="main-container">
-            <div class="candidates-container">
-                <!-- Page Header -->
-                <div class="centered-content mb-5 animate-fadeInUp">
-                    <h1 class="hero-title">
+        <!-- Enhanced Candidates Header -->
+        <div class="candidates-header">
+            <div class="main-container">
+                <div class="centered-content">
+                    <h1 class="hero-title mb-3">
                         <i class="fas fa-users icon-large"></i>
                         Candidate Database
                     </h1>
-                    <p class="hero-subtitle">
+                    <p class="hero-subtitle mb-4">
                         Manage and explore your candidate pool with advanced filtering and search
                     </p>
                     
-                    <!-- Live timestamp -->
-                    <div class="footer-timestamp" style="margin-top: 1rem;">
-                        <i class="fas fa-clock icon-only"></i>
-                        <span id="currentDateTime">2025-06-01 08:11:56</span> UTC
+                    <!-- Enhanced Live timestamp -->
+                    <div class="datetime-display">
+                        <i class="fas fa-clock icon"></i>
+                        <span id="currentDateTime">2025-06-01 17:12:37</span> UTC
                         <span class="text-muted" style="margin-left: 1rem;">
-                            <i class="fas fa-user icon-only"></i> pranamya-jain
+                            <i class="fas fa-user icon"></i> pranamya-jain
                         </span>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Statistics Section -->
+        <div class="main-container">
+            <div class="candidates-container">
+                <!-- Enhanced Statistics Section -->
                 <div class="animate-fadeInUp">
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -276,10 +574,10 @@
                     </div>
                 </div>
 
-                <!-- Search and Filter Section -->
+                <!-- Enhanced Search and Filter Section -->
                 <div class="animate-fadeInUp">
                     <div class="search-filter-section">
-                        <h3 class="mb-3">
+                        <h3 class="mb-4">
                             <i class="fas fa-filter icon"></i> Search & Filter
                         </h3>
                         
@@ -308,10 +606,10 @@
                         
                         <div class="flex-between">
                             <div class="flex-start" style="gap: 0.5rem;">
-                                <button class="btn btn-primary" onclick="applyFilters()">
+                                <button class="btn btn-primary enhanced-btn" onclick="applyFilters()">
                                     <i class="fas fa-search icon"></i> Apply Filters
                                 </button>
-                                <button class="btn" onclick="clearFilters()">
+                                <button class="btn enhanced-btn" onclick="clearFilters()">
                                     <i class="fas fa-times icon"></i> Clear
                                 </button>
                             </div>
@@ -322,7 +620,7 @@
                                     <option value="experience">Sort by Experience</option>
                                     <option value="date">Sort by Date Added</option>
                                 </select>
-                                <button class="btn btn-success" onclick="exportCandidates()">
+                                <button class="btn btn-success enhanced-btn" onclick="exportCandidates()">
                                     <i class="fas fa-download icon"></i> Export
                                 </button>
                             </div>
@@ -335,7 +633,7 @@
                     </div>
                 </div>
 
-                <!-- Results Section -->
+                <!-- Enhanced Results Section -->
                 <div class="animate-fadeInUp">
                     {% if candidates and candidates|length > 0 %}
                         <!-- Candidates List -->
@@ -396,32 +694,32 @@
                         </div>
                         
                     {% else %}
-                        <!-- Empty State -->
+                        <!-- Enhanced Empty State -->
                         <div class="empty-state">
                             <i class="fas fa-users empty-state-icon"></i>
                             <h3 class="text-secondary mb-3">No Candidates Found</h3>
                             <p class="text-secondary mb-4">
                                 Start building your candidate database by uploading resumes.
                             </p>
-                            <a href="/upload" class="btn btn-primary btn-large">
+                            <a href="/upload" class="btn btn-primary btn-large enhanced-btn">
                                 <i class="fas fa-upload icon"></i> Upload Resumes
                             </a>
                         </div>
                     {% endif %}
                 </div>
 
-                <!-- Quick Actions -->
+                <!-- Enhanced Quick Actions -->
                 {% if candidates and candidates|length > 0 %}
                     <div class="centered-content mt-5 animate-fadeInUp">
                         <h3 class="mb-4">Quick Actions</h3>
                         <div class="flex-center" style="gap: 1rem; flex-wrap: wrap;">
-                            <a href="/upload" class="btn btn-large">
+                            <a href="/upload" class="btn btn-large enhanced-btn">
                                 <i class="fas fa-plus icon"></i> Add More Candidates
                             </a>
-                            <a href="/search" class="btn btn-primary btn-large">
+                            <a href="/search" class="btn btn-primary btn-large enhanced-btn">
                                 <i class="fas fa-search icon"></i> Start Searching
                             </a>
-                            <a href="/analytics" class="btn btn-large">
+                            <a href="/analytics" class="btn btn-large enhanced-btn">
                                 <i class="fas fa-chart-bar icon"></i> View Analytics
                             </a>
                         </div>
@@ -442,7 +740,7 @@
                 </p>
                 <div class="footer-timestamp">
                     <i class="fas fa-clock icon-only"></i>
-                    <span id="footerDateTime">2025-06-01 08:11:56</span> UTC
+                    <span id="footerDateTime">2025-06-01 17:12:37</span> UTC
                     <span class="text-muted" style="margin-left: 1rem;">
                         <i class="fas fa-seedling icon-only"></i> Team Seeds
                     </span>
@@ -452,6 +750,64 @@
     </div>
 
     <script>
+        // STANDARDIZED NAVBAR ACTIVE STATE MANAGEMENT
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Remove active class from all links
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to current page link
+            let activeSet = false;
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                const page = link.getAttribute('data-page');
+                
+                // Check for exact match or page identifier
+                if (href === currentPath || 
+                    (currentPath === '/' && page === 'home') ||
+                    (currentPath.includes('/upload') && page === 'upload') ||
+                    (currentPath.includes('/candidates') && page === 'candidates') ||
+                    (currentPath.includes('/search') && page === 'search') ||
+                    (currentPath.includes('/outreach') && page === 'outreach') ||
+                    (currentPath.includes('/analytics') && page === 'analytics')) {
+                    link.classList.add('active');
+                    activeSet = true;
+                }
+            });
+            
+            // Fallback: if no active state set, activate home
+            if (!activeSet) {
+                const homeLink = document.querySelector('[data-page="home"]');
+                if (homeLink) homeLink.classList.add('active');
+            }
+            
+            // Mobile menu toggle functionality
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarNav = document.querySelector('.navbar-nav');
+            
+            if (navbarToggle && navbarNav) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarNav.classList.toggle('active');
+                });
+                
+                // Close mobile menu when clicking on a link
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navbarNav.classList.remove('active');
+                    });
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarNav.contains(e.target)) {
+                        navbarNav.classList.remove('active');
+                    }
+                });
+            }
+        });
+
         // Safe initialization of candidates data with null checking
         let allCandidates = [];
         let filteredCandidates = [];
@@ -707,7 +1063,7 @@
                         <i class="fas fa-search empty-state-icon"></i>
                         <h3 class="text-secondary mb-3">No candidates match your filters</h3>
                         <p class="text-secondary mb-4">Try adjusting your search criteria.</p>
-                        <button class="btn btn-primary" onclick="clearFilters()">
+                        <button class="btn btn-primary enhanced-btn" onclick="clearFilters()">
                             <i class="fas fa-times icon"></i> Clear Filters
                         </button>
                     </div>
@@ -848,9 +1204,9 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Set current time
-            document.getElementById('currentDateTime').textContent = '2025-06-01 08:11:56';
-            document.getElementById('footerDateTime').textContent = '2025-06-01 08:11:56';
+            // Set current time with provided timestamp
+            document.getElementById('currentDateTime').textContent = '2025-06-01 17:12:37';
+            document.getElementById('footerDateTime').textContent = '2025-06-01 17:12:37';
             
             // Start live updates
             updateDateTime();
@@ -862,6 +1218,7 @@
             
             console.log('HireAI Candidates Page initialized for user: pranamya-jain');
             console.log('Total candidates loaded:', allCandidates.length);
+            console.log('Current time: 2025-06-01 17:12:37 UTC');
         });
     </script>
 </body>

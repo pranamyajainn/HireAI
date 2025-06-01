@@ -1,0 +1,14 @@
+{
+  "initial_contact": {
+    "subject": "Exciting {job_title} Opportunity at {company_name}",
+    "body": "Hi {candidate_name},\n\nI hope this email finds you well. I came across your profile and was impressed by your experience in {top_skills}.\n\nWe have an exciting {job_title} opportunity at {company_name} that I believe would be a great fit for your background. The role involves {job_summary} and offers {benefits}.\n\nBased on your experience with {relevant_experience}, I think you'd excel in this position. The match score for your profile is {match_score}%.\n\nWould you be interested in learning more about this opportunity? I'd love to schedule a brief call to discuss the details.\n\nBest regards,\n{recruiter_name}\n{recruiter_email}\n{company_name}"
+  },
+  "follow_up": {
+    "subject": "Following up on {job_title} opportunity",
+    "body": "Hi {candidate_name},\n\nI wanted to follow up on the {job_title} position I shared with you last week.\n\nThis role is still available and I believe your skills in {top_skills} make you an ideal candidate. The hiring manager is actively reviewing profiles and I'd hate for you to miss this opportunity.\n\nAre you available for a quick 15-minute call this week to discuss?\n\nBest regards,\n{recruiter_name}"
+  },
+  "rejection_soft": {
+    "subject": "Thank you for your interest in {job_title}",
+    "body": "Hi {candidate_name},\n\nThank you for your interest in the {job_title} position at {company_name}.\n\nWhile we've decided to move forward with other candidates for this particular role, I was impressed by your background in {top_skills}.\n\nI'd love to keep your profile on file for future opportunities that might be a better fit. Would you be open to me reaching out when relevant positions become available?\n\nBest regards,\n{recruiter_name}"
+  }
+}
