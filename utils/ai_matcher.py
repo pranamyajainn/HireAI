@@ -22,7 +22,7 @@ class AIMatcher:
                 try:
                     print(f"🔧 AIMatcher: Configuring Gemini...")
                     genai.configure(api_key=gemini_key)
-                    self.model = genai.GenerativeModel('gemini-1.5-flash')
+                    self.model = genai.GenerativeModel('gemini-2.0-flash')
                     
                     # Simple test without storing the response
                     self.model.generate_content("Test")
@@ -312,9 +312,16 @@ class AIMatcher:
         total_score += skill_score * 0.4
         
         # 2. Experience Matching (30% weight)
-        candidate_exp = candidate.get('experience_years', 0)
+        candidate_exp_raw = candidate.get('experience_years')
+        candidate_exp = 0
+        if candidate_exp_raw is not None:
+            try:
+                candidate_exp = int(float(candidate_exp_raw))
+            except (ValueError, TypeError):
+                candidate_exp = 0 # Default to 0 if conversion fails
+
         required_exp = criteria.get('min_experience', 0)
-        
+
         if required_exp == 0:
             exp_score = 80  # No requirement specified
         elif candidate_exp >= required_exp:
@@ -325,7 +332,7 @@ class AIMatcher:
             # Penalty for less experience
             exp_score = max(20, (candidate_exp / required_exp) * 70)
             concerns.append(f"Only {candidate_exp} years (required: {required_exp}+)")
-        
+
         total_score += exp_score * 0.3
         
         # 3. Location/Remote Matching (20% weight)
@@ -346,14 +353,14 @@ class AIMatcher:
             concerns.append("Location may not be ideal")
         
         total_score += location_score * 0.2
-        
+
         # 4. Seniority Matching (10% weight)
-        candidate_exp = candidate.get('experience_years', 0)
+        # Use the already processed integer candidate_exp
         required_seniority = criteria.get('seniority', 'mid')
-        
+
         seniority_score = self._match_seniority(candidate_exp, required_seniority)
         total_score += seniority_score * 0.1
-        
+
         # Overall assessment
         final_score = min(100, int(total_score))
         

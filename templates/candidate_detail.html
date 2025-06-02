@@ -490,7 +490,11 @@
                         <button class="btn btn-primary action-btn" onclick="generateQuestions()">
                             <i class="fas fa-question-circle icon"></i> Generate Interview Questions
                         </button>
-                        <button class="btn btn-success action-btn" onclick="downloadResume()">
+                        <!-- New Background Check Button -->
+                        <button class="btn btn-success action-btn" onclick="navigateToBackgroundCheck()">
+                            <i class="fas fa-shield-alt icon"></i> Background Check & Pre-screening
+                        </button>
+                        <button class="btn btn-primary action-btn" onclick="downloadResume()">
                             <i class="fas fa-download icon"></i> Download Resume
                         </button>
                         <button class="btn action-btn" onclick="viewFullProfile()">
@@ -819,6 +823,35 @@
                 resultDiv.style.display = 'block';
             }
         }
+
+// Update the navigateToBackgroundCheck function in candidate_detail.html
+function navigateToBackgroundCheck() {
+    if (!currentCandidate) {
+        alert('Candidate information not available');
+        return;
+    }
+    
+    // Choose the most reliable identifier available
+    let identifierType = 'email';
+    let identifierValue = currentCandidate.email;
+    
+    // Fallback to other identifiers if email isn't available
+    if (!identifierValue) {
+        if (currentCandidate.name) {
+            identifierType = 'name';
+            identifierValue = currentCandidate.name;
+        } else if (currentCandidate.filename) {
+            identifierType = 'filename';
+            identifierValue = currentCandidate.filename;
+        } else {
+            alert('Cannot identify candidate - missing required information');
+            return;
+        }
+    }
+    
+    // Navigate to the background check page using the identifier - use underscore here
+    window.location.href = `/background_check?type=${identifierType}&value=${encodeURIComponent(identifierValue)}`;
+}
 
         // NEW: Run AI Screening Function
         async function runAIScreening() {

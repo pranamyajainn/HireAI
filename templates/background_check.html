@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeopleGPT Screening | HireAI</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <style>
+        /* Add or modify styles for the new layout */
+        .query-input-container {
+            margin-bottom: 2rem;
+            background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border-primary);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .query-input-container label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .query-input-container textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-primary);
+            border-radius: 0.375rem;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .query-input-container textarea:focus {
+            border-color: var(--accent-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.2);
+        }
+
+        .results-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .candidate-match-item {
+            background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border-primary);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .candidate-match-item:hover {
+             transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .candidate-match-item h4 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .candidate-match-item p {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .match-score {
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        .match-reasons {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-primary);
+        }
+
+        .match-reasons h5 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .match-reasons ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin: 0;
+        }
+
+        .match-reasons li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+         .no-results-message {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-secondary);
+         }
+
+         .no-results-message i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-warning);
+         }
+
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- STANDARDIZED NAVIGATION -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="/" class="navbar-brand">
+                    <i class="fas fa-brain icon"></i> HireAI
+                </a>
+                <ul class="navbar-nav">
+                    <li><a href="/" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="/upload" class="nav-link" data-page="upload">Upload Resume</a></li>
+                    <li><a href="/candidates" class="nav-link" data-page="candidates">View Candidates</a></li>
+                    <li><a href="/search" class="nav-link" data-page="search">Search Candidates</a></li>
+                    <li><a href="/outreach" class="nav-link" data-page="outreach">Personalized Outreach</a></li>
+                    <li><a href="/analytics" class="nav-link" data-page="analytics">Analytics</a></li>
+                    <li><a href="/background_check" class="nav-link active" data-page="background_check">AI Screening</a></li>
+
+                </ul>
+                
+                <!-- Mobile menu toggle -->
+                <button class="navbar-toggle" id="navbar-toggle" style="display: none;">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div class="main-container">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1 class="page-title">PeopleGPT Candidate Screening</h1>
+                    <p class="page-subtitle">Find the best candidates using natural language queries</p>
+                </div>
+
+                <!-- Query Input Section -->
+                <div class="query-input-container animate-fadeInUp">
+                    <label for="jobDescriptionQuery">Enter Job Description or Search Query:</label>
+                    <textarea id="jobDescriptionQuery" placeholder="e.g., Find software engineers with 5+ years of experience in Python and Django, located in California."></textarea>
+                </div>
+                <!-- End Query Input Section -->
+
+                <div class="action-bar animate-fadeInUp">
+                    <button id="searchBtn" class="btn btn-primary enhanced-btn">
+                        <i class="fas fa-search"></i> Search Candidates
+                    </button>
+                </div>
+
+                <div id="loadingIndicator" class="loading-container" style="display: none;">
+                    <div class="spinner"></div>
+                    <p class="text-secondary">Searching and analyzing candidates...</p>
+                </div>
+
+                <!-- Results Section -->
+                <div id="resultsSection" style="display: none;">
+                    <h3 style="margin-bottom: 1.5rem;">Matching Candidates (<span id="totalFound">0</span>)</h3>
+                    <ul id="candidatesList" class="results-list"></ul>
+                </div>
+
+                <!-- No Results Message -->
+                <div id="noResultsMessage" class="no-results-message" style="display: none;">
+                    <i class="fas fa-users-slash"></i>
+                    <h3>No Candidates Found</h3>
+                    <p>Try a different query or <a href="/upload">upload more resumes</a>.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-brain icon"></i> HireAI
+                </div>
+                <p class="footer-text">
+                    Built with ❤️ by <strong>Team Seeds! 🌱</strong><br>
+                    Revolutionizing recruitment with artificial intelligence
+                </p>
+                <div class="footer-timestamp">
+                    <i class="fas fa-clock icon-only"></i>
+                    <span id="currentDateTime">2025-06-01 19:32:05</span> UTC
+                    <span class="text-muted" style="margin-left: 1rem;">
+                        <i class="fas fa-user icon-only"></i> pranamya-jain
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript for functionality -->
+        <!-- JavaScript for functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const jobDescriptionQuery = document.getElementById('jobDescriptionQuery');
+            const searchBtn = document.getElementById('searchBtn'); // Corrected ID
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const resultsSection = document.getElementById('resultsSection');
+            const totalFound = document.getElementById('totalFound');
+            const candidatesList = document.getElementById('candidatesList');
+            const noResultsMessage = document.getElementById('noResultsMessage');
+
+            // Function to display matched candidates
+            function displayMatchedCandidates(candidates) {
+                candidatesList.innerHTML = ''; // Clear previous results
+                if (candidates && candidates.length > 0) {
+                    candidates.forEach(candidate => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'candidate-match-item animate-fadeInUp';
+                        listItem.innerHTML = `
+                            <h4>${candidate.name || 'N/A'}</h4>
+                            <p>${candidate.email || 'N/A'} | ${candidate.location || 'N/A'} | ${candidate.experience_years || 0} Years Exp</p>
+                            <p>Match Score: <span class="match-score">${candidate.match_score || 0}%</span></p>
+                            <div class="match-reasons">
+                                <h5>Match Reasons:</h5>
+                                <ul>
+                                    ${candidate.match_reasons && Array.isArray(candidate.match_reasons) ? candidate.match_reasons.map(reason => `<li>${reason}</li>`).join('') : '<li>No specific reasons provided.</li>'}
+                            </ul>
+                        </div>
+                    `;
+                    candidatesList.appendChild(listItem);
+                });
+                resultsSection.style.display = 'block';
+                noResultsMessage.style.display = 'none';
+                totalFound.textContent = candidates.length;
+            } else {
+                resultsSection.style.display = 'none';
+                noResultsMessage.style.display = 'block';
+                totalFound.textContent = '0';
+            }
+        }
+
+        // The main click handler function for searchBtn
+        async function handleSearchButtonClick() {
+            console.log('Search button clicked!'); // Added log
+            const query = jobDescriptionQuery.value.trim();
+            if (!query) {
+                alert('Please enter a job description or search query.');
+                return;
+            }
+
+            // Show loading indicator
+            loadingIndicator.style.display = 'flex';
+            searchBtn.disabled = true;
+            resultsSection.style.display = 'none';
+            noResultsMessage.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/peoplegpt_screening', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ job_description: query }),
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert(`Error: ${data.error}`);
+                    displayMatchedCandidates([]); // Show no results on error
+                    return;
+                }
+
+                // Display the results
+                displayMatchedCandidates(data.candidates);
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred during the search. Please check the console for details.');
+                displayMatchedCandidates([]); // Show no results on error
+            } finally {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                searchBtn.disabled = false;
+            }
+        }
+
+        // Attach the event listener for the search button
+        searchBtn.addEventListener('click', handleSearchButtonClick);
+
+        // Optional: Trigger search on Enter key in textarea
+        jobDescriptionQuery.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent newline in textarea
+                handleSearchButtonClick();
+            }
+        });
+
+        // STANDARDIZED NAVBAR ACTIVE STATE MANAGEMENT (Keep this as is)
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => link.classList.remove('active'));
+
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            const page = link.getAttribute('data-page');
+
+            if (href === currentPath ||
+                (currentPath === '/' && page === 'home') ||
+                (currentPath.includes('/upload') && page === 'upload') ||
+                (currentPath.includes('/candidates') && page === 'candidates') ||
+                (currentPath.includes('/search') && page === 'search') ||
+                (currentPath.includes('/outreach') && page === 'outreach') ||
+                (currentPath.includes('/background_check') && page === 'background_check') ||
+                (currentPath.includes('/analytics') && page === 'analytics')) {
+                link.classList.add('active');
+            }
+        });
+
+        // Update live datetime to UTC (Keep this as is)
+        function updateDateTime() {
+            const now = new Date();
+            const utcString = now.toISOString().slice(0, 19).replace('T', ' ');
+            const currentElement = document.getElementById('currentDateTime');
+            if (currentElement) currentElement.textContent = utcString;
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    });
+</script>

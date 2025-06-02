@@ -21,6 +21,13 @@ app = Flask(__name__)
 app.config.from_object(Config)
 CORS(app)
 
+# --- ADD THIS CUSTOM JINJA FILTER ---
+# This filter converts a Python object to a JSON string, safe for embedding in HTML <script> tags.
+@app.template_filter('tojson_safe')
+def tojson_safe_filter(obj):
+    return json.dumps(obj)
+# --- END ADDITION ---
+
 # Ensure upload directory exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
@@ -67,6 +74,13 @@ try:
 except ImportError:
     ADVANCED_EXPORT_AVAILABLE = False
     print("⚠️ Advanced export libraries not available. Install with: pip install reportlab pandas openpyxl")
+
+# Add this import at the top with your other imports
+from utils.outreach_manager import OutreachManager
+
+# Import the AIScreening class from utils
+from utils.ai_screening import AIScreening
+
 
 # ================================
 # PAGE ROUTES
@@ -1346,18 +1360,12 @@ def search_candidates_internal(search_request):
         print(f"❌ Error in search_candidates_internal: {e}")
         return []
     
-# Add this import at the top with your other imports
-from utils.outreach_manager import OutreachManager
-
-# Add these routes to your existing app.py file (paste them before the final if __name__ == '__main__' block)
-
 @app.route('/outreach')
 def outreach_dashboard():
     """Outreach management dashboard"""
     try:
         # Load candidates
-        with open('data/candidates.json', 'r') as f:
-            candidates = json.load(f)
+        candidates = load_candidates()
         
         # Load outreach logs
         try:
@@ -1370,7 +1378,7 @@ def outreach_dashboard():
                              candidates=candidates, 
                              outreach_logs=outreach_logs)
     except Exception as e:
-        return render_template('error.html', error=str(e))
+        return render_template('outreach.html', error=str(e))
 
 @app.route('/outreach/preview', methods=['POST'])
 def preview_outreach():
@@ -1381,8 +1389,7 @@ def preview_outreach():
         template_type = data.get('template_type', 'initial_contact')
         
         # Load candidate data
-        with open('data/candidates.json', 'r') as f:
-            candidates = json.load(f)
+        candidates = load_candidates()
         
         candidate = next((c for c in candidates if c.get('id') == candidate_id), None)
         if not candidate:
@@ -1447,6 +1454,146 @@ def send_outreach():
         
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+from utils.ai_screening import AIScreening
+try:
+    # Use Gemini for our enhanced AI features
+    ai_matcher = AIMatcher(api_key=gemini_api_key)
+    job_analyzer = JobAnalyzer(api_key=gemini_api_key)
+    print("✅ AI components initialized successfully")
+except Exception as e:
+    print(f"❌ Error initializing AI components: {e}")
+    # Initialize with fallback (no API key)
+    ai_matcher = AIMatcher()
+    job_analyzer = JobAnalyzer()
+
+# 🆕 Initialize PeopleGPT Query Parser
+try:
+    query_parser = NaturalLanguageQueryParser()
+    print("✅ PeopleGPT Query Parser initialized successfully")
+except Exception as e:
+    print(f"❌ Error initializing PeopleGPT Query Parser: {e}")
+    query_parser = None
+
+# --- NEW: Initialize AIScreening instance ---
+ai_screening_tool = AIScreening()
+@app.route('/debug_candidates')
+def debug_candidates():
+    """
+    Debug endpoint to check if candidates.json can be accessed and what it contains
+    """
+    try:
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'candidates.json')
+        
+        response = {
+            "file_exists": os.path.exists(file_path),
+            "file_path": file_path,
+            "working_dir": os.getcwd(),
+            "candidates": []
+        }
+        
+        if response["file_exists"]:
+            with open(file_path, 'r') as file:
+                candidates = json.load(file)
+                response["candidate_count"] = len(candidates)
+                response["candidates"] = [
+                    {"name": c.get("name"), "email": c.get("email")} 
+                    for c in candidates[:5]  # Just show first 5
+                ]
+        
+        return jsonify(response)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+# Removed background_check_select as it's no longer needed for this approach
+
+@app.route('/background_check')
+def background_check_page():
+    """
+    Displays the PeopleGPT screening page.
+    It passes all candidates initially for potential display or selection.
+    """
+    candidates = load_candidates() # Load all candidates
+    return render_template('background_check.html',
+                         candidates=candidates,
+                         current_datetime=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                         current_user='pranamya-jain')
+
+@app.route('/api/peoplegpt_screening', methods=['POST'])
+def peoplegpt_screening_api():
+    """
+    PeopleGPT Screening API - Natural language job description to find matching candidates.
+    Built by Team Seeds! 🌱 for pranamya-jain
+    """
+    try:
+        if not request.json:
+            return jsonify({"error": "Request must be JSON", 'timestamp': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC'}), 400
+
+        data = request.get_json()
+        natural_query = data.get('job_description', '').strip()
+
+        if not natural_query:
+            return jsonify({"error": "Job description query is required", 'timestamp': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC'}), 400
+
+        # Step 1: Parse natural language query
+        if not query_parser:
+             return jsonify({
+                'success': False,
+                'error': 'PeopleGPT Query Parser not available',
+                'timestamp': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC'
+            }), 500
+
+        parsed_result = query_parser.parse_query(natural_query)
+
+        # Step 2: Load candidates
+        candidates = load_candidates()
+
+        if not candidates:
+            return jsonify({
+                'success': True,
+                'candidates': [],
+                'parsed_query': parsed_result,
+                'total_found': 0,
+                'search_summary': 'No candidates found in database',
+                'message': 'Upload some resumes to start searching!',
+                'searched_by': 'pranamya-jain',
+                'search_time': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC',
+                'ai_enabled': ai_matcher.ai_available if ai_matcher else False
+            })
+
+        # Step 3: Use AI matcher with parsed job description and filters
+        if not ai_matcher:
+             return jsonify({
+                'success': False,
+                'error': 'AI Matcher not available',
+                'timestamp': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC'
+            }), 500
+
+        matched_candidates = ai_matcher.match_candidates(
+            parsed_result['job_description'],
+            candidates,
+            parsed_result['filters']
+        )
+
+        return jsonify({
+            'success': True,
+            'candidates': matched_candidates,
+            'parsed_query': parsed_result,
+            'total_found': len(matched_candidates),
+            'search_summary': f"Found {len(matched_candidates)} candidates matching your criteria",
+            'original_query': natural_query,
+            'searched_by': 'pranamya-jain',
+            'search_time': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC',
+            'ai_enabled': ai_matcher.ai_available and query_parser is not None
+        })
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': f'PeopleGPT screening failed: {str(e)}',
+            'timestamp': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC'
+        }), 500
 
 # ================================
 # APPLICATION STARTUP
