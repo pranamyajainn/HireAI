@@ -1,293 +1,174 @@
 [
   {
-    "id": "20250602_020904",
-    "filename": "20250602_020900_Praveena Resume (2) - TIRUMALA INDIRA PRAVEENA.pdf",
+    "id": "20250602_090729",
+    "filename": "20250602_090339_Resume new - Sneha Bhat.pdf",
     "uploaded_at": "2025-06-01T06:00:37Z",
     "status": "parsed_and_stored",
     "uploaded_by": "pranamya-jain",
     "team": "Seeds! \ud83c\udf31",
-    "name": "Indira Praveena T",
-    "email": "tipraveena09@gmail.com",
-    "phone": "+917416934366",
-    "location": "Bangalore,Karnataka",
-    "skills": [
-      "Artificial Intelligence",
-      "Machine Learning",
-      "Full Stack Web Development",
-      "Generative AI",
-      "Data Base Management Systems",
-      "Angular",
-      "React",
-      "PyTorch"
-    ],
-    "experience": [],
-    "education": [
-      {
-        "degree": null,
-        "institution": "MS RAMAIAH INSTITUTE OF TECHNOLOGY",
-        "year": "2022-2026",
-        "field": "Computer Science and Engineering\nSpecialisation in Artificial Intelligence and Machine Learning"
-      }
-    ],
-    "experience_years": null,
-    "summary": "A dedicated and tech-savvy student with a passion for Web Development, AI/ML, and Data Analytics. Experienced in developing innovative solutions through hands-on projects. Proficient in API development and focused on data privacy techniques, including federated learning and differential privacy.",
-    "certifications": [],
-    "languages": [
-      "Python",
-      "Java",
-      "C++",
-      "SQL",
-      "Javascript",
-      "HTML/CSS"
-    ],
-    "projects": [
-      {
-        "name": "CONSUME WISE",
-        "description": "Product Health Analysis Application\nApplication where users enter product names to receive a detailed health analysis based on data processing and AI algorithms. Interpret product data and provide health insights, leveraging techniques such as machine learning.",
-        "technologies": [
-          "Python",
-          "Django",
-          "Google Gemini"
-        ]
-      },
-      {
-        "name": "TALENT HUB",
-        "description": "Talent Management Website\nWeb platform designed to connect skilled individuals with people, facilitating talent discovery and entertainment. Designed and integrated an intuitive interface for users to post their intrests.",
-        "technologies": []
-      },
-      {
-        "name": "WASTE WISE CONNECT",
-        "description": "Waste Segregation ML Model\nMachine learning model designed to assist users in segregating waste by identifying different types, such as degradable, plastic, and recyclable materials. Implemented image recognition techniques to analyze and classify waste items using computer vision algorithms.",
-        "technologies": [
-          "Python",
-          "YOLOV5"
-        ]
-      }
-    ],
-    "raw_text": "Indira Praveena T                 +91tipraveena09@gmail.com7416934366\n\n                                                                     Bangalore,Karnataka\n\nP R O F I L E                                        E D U C A T I O N\n\nA dedicated and tech-savvy student with a passion for Web\nDevelopment, AI/ML, and Data Analytics. Experienced in      MS RAMAIAH INSTITUTE OF\ndeveloping innovative solutions through hands-on projects .         TECHNOLOGY\nProficient in API development and focused on data privacy\n                                                               (2022-2026)techniques, including federated learning and differential\nprivacy. Strong problem-solving skills, with a commitment           Computer Science and Engineering\nto  leveraging  technology  for  social  good.  Eager  to              Specialisation in Artificial Intelligence\ncontribute  to  impactful  projects  while  continuously              and  Machine Learning\nexpanding technical expertise.                                CGPA : 9.3 / 10.0\n\n P R O J E C T S\n\n   CONSUME WISE                                           S K I L L S\n    Product Health Analysis Application\n     2024-Present\n                                                                                        Artificial Intelligence\n       Application where users enter product names to\n                                                          Machine Learning\n        receive    a  detailed  health  analysis  based  on  dat\n                                                                              Full Stack Web Development     a processing and AI algorithms.\n       Interpret product data and provide health insights,          Generative AI\n       leveraging techniques such  as  machine learning..           Data Base Management Systems\n      Technologies Used: Python, Django, Google Gemini                                                                       Familiar with Angular,React,PyTorch\n\n   TALENT HUB\n    Talent Management Website                                             L A N G U A G E S\n     2024-Present\n\n    Web  platform  designed  to  connect   skilled\n                                                            Python\n        individuals  with  people, facilitating talent discover\n                                                                  Java\n      y and  entertainment.\n                                                           C++\n      Designed and integrated an intuitive interface for\n                                                      SQL\n         users to  post their intrests.\n                                                                         Javascript\n  WASTE WISE CONNECT                            HTML/CSS\n   Waste Segregation ML Model\n    2024                            O T H E R  L I N K S\n     Machine learning model designed to assist users in\n       segregating   waste   by identifying   different  types\n       , suc  h  a  s degradable  , plastic  , an   d recyclab        GitHub:\n    le  materials.                                                            https://github.com/tip04-git/\n     Implemented  image  recognition  techniques  to\n        analyze  and  classify   waste items  using compute        Linkedin:\n      r vision algorithms..                                                             linkedin.com/in/indira-\n      Technologies Used: Python, YOLOV5\n                                                       praveena-t-000b81314/\n+91 7416934366\n\nIndira Praveena T\n\ntipraveena09@gmail.com\n\nBangalore,Karnataka\n\nP R O F I L E\n\nE D U C A T I O N\n\nA dedicated and tech-savvy student with a passion for Web\nDevelopment, AI/ML, and Data Analytics. Experienced in\ndeveloping innovative solutions through hands-on projects .\nProficient in API development and focused on data privacy\ntechniques, including federated learning and differential\nprivacy. Strong problem-solving skills, with a commitment\nto leveraging technology for social good. Eager to\ncontribute \nto \nimpactful \nprojects \nwhile \ncontinuously\nexpanding technical expertise.\n\nMS RAMAIAH INSTITUTE OF\n\n TECHNOLOGY\n\n(2022-2026)\n\nComputer Science and Engineering\n\nSpecialisation in Artificial Intelligence\n\n and Machine Learning \n\nCGPA :  9.3 / 10.0\n\nP R O J E C T S\n\nCONSUME WISE \n\nS K I L L S\n\nProduct Health Analysis Application\n\n2024-Present\n\nArtificial Intelligence \n\nApplication where users enter product names to\n\nMachine Learning\n\n receive  a  detailed  health  analysis  based  on  dat\n\nFull Stack Web Development\n\na processing and AI algorithms.\n\nGenerative AI\n\nInterpret product data and provide health insights,\n\n leveraging techniques such as machine learning..\n\nData Base Management Systems\n\nTechnologies Used: Python, Django, Google Gemini\n\nFamiliar with Angular,React,PyTorch\n\nTALENT HUB\n\nTalent Management Website\n\nL A N G U A G E S\n\n2024-Present\n\nWeb \nplatform \ndesigned \nto \nconnect \nskilled\n\nPython\n\n individuals with people, facilitating talent discover\n\nJava\n\ny and entertainment.\n\nC++\n\nDesigned and integrated an intuitive interface for\n\nSQL\n\n users to post their intrests.\n\nJavascript\n\nWASTE WISE CONNECT\n\nHTML/CSS\n\nWaste Segregation ML Model\n\n2024\n\nO T H E R  L I N K S\n\nMachine learning model designed to assist users in\n\n segregating  waste  by  identifying  different  types\n\n, suc\nh a\ns degradable\n, plastic\n, an\nd recyclab\n\nGitHub:\n\nle materials.\n\n       https://github.com/tip04-git/\n\nImplemented image recognition techniques to\n\n analyze  and  classify  waste  items  using  compute\n\nLinkedin:\n\nr vision algorithms..\n\n     linkedin.com/in/indira-\n\nTechnologies Used: Python, YOLOV5\n\npraveena-t-000b81314/",
-    "file_path": "data/uploads/20250602_020900_Praveena Resume (2) - TIRUMALA INDIRA PRAVEENA.pdf",
-    "parsed_at": "2025-06-02T02:09:04.990020",
-    "parser_type": "OCR+AI"
-  },
-  {
-    "id": "20250602_023204",
-    "filename": "20250602_023157_AjayNayakResume - Ajay Nayak.docx",
-    "uploaded_at": "2025-06-01T06:00:37Z",
-    "status": "parsed_and_stored",
-    "uploaded_by": "pranamya-jain",
-    "team": "Seeds! \ud83c\udf31",
-    "name": "Ajay Nayak G",
-    "email": null,
-    "phone": "+91 7022874879",
+    "name": "Sneha Datthathray Bhat",
+    "email": "snehaaa.bhat@gmail.com",
+    "phone": "+91 9481067835",
     "location": null,
     "skills": [
-      "Algorithm",
-      "API",
-      "API Integration",
-      "API Testing",
-      "CSS",
-      "Data Structures",
-      "Debugging",
-      "Express.js",
-      "Git",
-      "GitHub",
-      "HTML",
-      "JavaScript",
-      "JWT",
-      "MongoDB",
-      "Mongoose",
-      "Node.js",
-      "Postman",
-      "Socket.io",
-      "System Testing",
-      "TailwindCSS",
-      "WebSockets",
+      "Python",
+      "NumPy",
+      "Pandas",
+      "SciPy",
+      "Scikit-learn",
+      "Keras",
+      "TensorFlow",
+      "PyTorch",
+      "OpenCV",
+      "BeautifulSoup",
+      "SQL (MySQL)",
+      "R",
       "Java",
-      "Java 17",
-      "OOPS",
-      "Python",
-      "C",
-      "Flutter",
-      "Vite",
-      "React",
-      "Dotenv",
-      "Bcrypt",
-      "Cookie-Parser",
-      "Cloudinary"
-    ],
-    "experience": [],
-    "education": [
-      {
-        "degree": "Information Science Engineering (ISE)",
-        "institution": "M S Ramaiah Institute of Technology (MSRIT)",
-        "year": "Current \u2013 3rd Year",
-        "field": null
-      },
-      {
-        "degree": "12th",
-        "institution": "Jain Heritage School",
-        "year": null,
-        "field": "PCMC (Science)"
-      },
-      {
-        "degree": "10th",
-        "institution": "Jain Heritage School",
-        "year": null,
-        "field": null
-      }
-    ],
-    "experience_years": null,
-    "summary": "Dedicated and detail-oriented ISE student with a strong focus on problem-solving, logical thinking, and optimizing systems for maximum efficiency. Currently learning full-stack development, with hands-on experience in MERN Stack (MongoDB, Express.js, React, Node.js), Socket.io, and data structures.",
-    "certifications": [
-      "Algorithms Part-1 (Coursera)",
-      "Algorithms Part-2 (Coursera)",
-      "Web Developer Bootcamp \u2014 Current (Udemy)",
-      "Java Masterclass \u2014 Current (Udemy)",
-      "How to Build Your Own ChatBot using Python? (Great Learning)",
-      "Master Cognitive Biases and Improve Your Critical Thinking (Udemy)"
-    ],
-    "languages": [],
-    "projects": [
-      {
-        "name": "ChatApp using MERN stack",
-        "description": "A real time chat application built with the MERN stack, featuring instant messaging, online status tracking, and media uploads.",
-        "technologies": [
-          "Node.js",
-          "Vite",
-          "React",
-          "Express",
-          "MongoDB",
-          "Mongoose",
-          "Socket.io",
-          "TailwindCSS",
-          "JWT",
-          "bcrypt",
-          "cookie-parser",
-          "Cloudinary"
-        ]
-      },
-      {
-        "name": "Movie Explorer",
-        "description": "MovieExplorer is a web app that helps users search for movies, explore trending titles, and view detailed information like genres, ratings, and release dates. It offers an easy-to-use interface for discovering and learning more about your favourite films.\nDeveloped a dynamic web-based application for searching and exploring trending and popular movies.\nImplemented a Trie data structure for efficient autocomplete search.\nIntegrated The Movie Database (TMDb) API to fetch real-time movie details.\nOptimized search performance by storing trending movies in a Trie for faster access.",
-        "technologies": []
-      },
-      {
-        "name": "Algorithm Playground",
-        "description": "The Algorithm Playground is an interactive platform featuring multiple algorithm visualizations, including sorting, searching, and pathfinding algorithms. Users can engage with each algorithm step-by-step, observing real-time execution and transitions. The platform aims to simplify complex concepts and enhance learning through visual and interactive experiences.\nDeveloped interactive visualizations for various algorithms, including sorting, searching, and pathfinding, using HTML, CSS, and JavaScript.\nWorked on the frontend to create responsive, user-friendly interfaces and helped with backend integration for real-time algorithm execution.\nImplemented event-driven programming for user interaction, enabling step-by-step control of algorithms.\nFocused on problem-solving to break down complex algorithms and make them accessible for educational purposes.",
-        "technologies": [
-          "HTML",
-          "CSS",
-          "JavaScript"
-        ]
-      }
-    ],
-    "raw_text": "Ajay Nayak G\n\u2022 +91 7022874879 \u2022  \nLinkedIn   \nGitHub    \nSummary\nDedicated and detail-oriented ISE student with a strong focus on problem-solving, logical thinking, and optimizing systems for maximum efficiency. Currently learning full-stack development, with hands-on experience in MERN Stack (MongoDB, Express.js, React, Node.js), Socket.io, and data structures. Proficient in Java, Python, and C.\nBeyond coding, I bring the discipline of a karate black belt, the strategic thinking of a former football team captain, the leadership experience of a band major, and the creative problem-solving mindset of an artist. Passionate about building impactful solutions and continuously improving technical skills. Strong interest in business and entrepreneurship, aiming to create scalable, user-centric applications that solve real-world challenges. Known for an adaptable mindset, trust, honesty, and the ability to approach challenges with a unique perspective, ensuring high-quality results in every project.\nEducation\nCurrent \u2013 3rd Year\nInformation Science Engineering (ISE) | M S Ramaiah Institute of Technology (MSRIT)\nCGPA - 9.06 GPA \n12th\nPCMC (Science) | Jain Heritage School\nPercentage - 93%\n10th \nJain Heritage School\nPercentage - 88%\nProjects\nChatApp using MERN stack\n\nA real time chat application built with the MERN stack, featuring instant messaging, online status tracking, and media uploads.\nTech Stack: Node.js, Vite, React, Express, MongoDB, Mongoose, Socket.io, TailwindCSS\nAuthentication: JWT, bcrypt, cookie-parser\nMedia Handling: Cloudinary integration\nAPI Testing: Postman\nError Handling: Implemented on both frontend and backend\nProjects\nMovie Explorer\nDEC 2024 - JAN 2025\n\n\nMovieExplorer is a web app that helps users search for movies, explore trending titles, and view detailed information like genres, ratings, and release dates. It offers an easy-to-use interface for discovering and learning more about your favourite films.\nDeveloped a dynamic web-based application for searching and exploring trending and popular movies.\nImplemented a Trie data structure for efficient autocomplete search.\nIntegrated The Movie Database (TMDb) API to fetch real-time movie details.\nOptimized search performance by storing trending movies in a Trie for faster access.\n\n\n\nAlgorithm Playground\nOct 2024 - Jan 2025\n\n\nThe Algorithm Playground is an interactive platform featuring multiple algorithm visualizations, including sorting, searching, and pathfinding algorithms. Users can engage with each algorithm step-by-step, observing real-time execution and transitions. The platform aims to simplify complex concepts and enhance learning through visual and interactive experiences.\nDeveloped interactive visualizations for various algorithms, including sorting, searching, and pathfinding, using HTML, CSS, and JavaScript.\nWorked on the frontend to create responsive, user-friendly interfaces and helped with backend integration for real-time algorithm execution.\nImplemented event-driven programming for user interaction, enabling step-by-step control of algorithms.\nFocused on problem-solving to break down complex algorithms and make them accessible for educational purposes.\n\nSkills (Technical)\nAlgorithm, API, API Integration, API Testing, CSS, Data Structures, Debugging, Express.js, Git, GitHub, HTML, JavaScript, JWT, MongoDB, Mongoose, Node.js, Postman, Socket.io, System Testing, TailwindCSS, WebSockets, Java, Java 17, OOPS, Python, C, Flutter, Vite, React, Dotenv, Bcrypt, Cookie-Parser, Cloudinary.\nLicenses and Certifications\nAlgorithms Part-1 (Coursera)\nAlgorithms Part-2 (Coursera)\nWeb Developer Bootcamp \u2014 Current (Udemy)\nJava Masterclass \u2014 Current (Udemy)\nHow to Build Your Own ChatBot using Python? (Great Learning)\nMaster Cognitive Biases and Improve Your Critical Thinking (Udemy)\n\nKey Achievements\nSAP Hackathon\nBeing shortlisted among the top projects in the SAP Hackathon showcases our ability to develop innovative solutions under pressure. The project focused on localization\u2014leveraging resources from the nearby community to enhance efficiency. While it didn\u2019t make it to the final round, it demonstrated our critical thinking, strong ideation, and teamwork. We successfully developed the frontend, further refining our technical and collaborative skills.\n\nStrengths\nAttitude over Skill mindset\nCuriousness\nCalm under Pressure\nProblem Solving -Passionate about finding unconventional yet effective solutions to complex challenges.\n\n\nPersonal Achievements & Extracurricular Activities\n\nMMA Fighter and Karate Black Belt \u2013 Trained in mixed martial arts, Achieved black belt level, demonstrating discipline and perseverance.\nSketch Artist \u2013 Skilled in detailed artwork and creative illustration.\nEx-Football Team Captain \u2013 Led the school football team, developing leadership and teamwork skills.\nBand Major in School \u2013 Directed and coordinated the school band, showcasing leadership and discipline.",
-    "file_path": "data/uploads/20250602_023157_AjayNayakResume - Ajay Nayak.docx",
-    "parsed_at": "2025-06-02T02:32:04.020473",
-    "parser_type": "OCR+AI"
-  },
-  {
-    "id": "20250602_042413",
-    "filename": "20250602_042404_Ankit_raj - ANKIT RAJ.pdf",
-    "uploaded_at": "2025-06-01T06:00:37Z",
-    "status": "parsed_and_stored",
-    "uploaded_by": "pranamya-jain",
-    "team": "Seeds! \ud83c\udf31",
-    "name": "Ankit Raj",
-    "email": "ankitraj4653@gmail.com",
-    "phone": "8539900733",
-    "location": "Bangalore, India",
-    "skills": [
-      "C",
-      "JAVA",
-      "JavaScript",
-      "SQL",
-      "Hadoop",
-      "Spark",
-      "Python",
       "C++",
-      "GIT",
-      "Machine Learning",
-      "Problem Solving",
-      "Eclipse",
-      "VS CODE",
-      "DSA",
-      "Leadership",
-      "Teamwork"
+      "Regression",
+      "Classification",
+      "Clustering",
+      "Natural Language Processing (NLP)",
+      "Large Language Models (LLM)",
+      "Computer Vision",
+      "Transfer Learning",
+      "GenAI",
+      "Neural Networks",
+      "CNN",
+      "RNN",
+      "Transformer Models",
+      "Power BI",
+      "Tableau",
+      "Matplotlib",
+      "Seaborn",
+      "Plotly",
+      "Full Stack (HTML, CSS, JavaScript, React, Node.js, Express, MongoDB)",
+      "Analytical Thinking",
+      "Problem-Solving",
+      "Effective Communication (technical & non-technical)",
+      "Curiosity & Continuous Learning",
+      "Attention to Detail",
+      "Time Management",
+      "Team Collaboration",
+      "Adaptability to Evolving Technologies",
+      "Critical Thinking",
+      "Agile Mindset",
+      "Creativity in Solution Design",
+      "Accountability & Ownership"
     ],
     "experience": [
       {
-        "title": "Vice-Chairman",
-        "company": "RIT ACM Student Chapter",
-        "duration": "05/2023 - Present",
-        "description": null
+        "title": "IBM WatsonX 50k Grant Project Intern",
+        "company": "IBM",
+        "duration": "On going",
+        "description": "Conducted data preprocessing, cleaning, and annotation on legal case documents for AI model training.\nDeveloped a Gen AI-based text summarization and precedent extraction module for legal case analysis.\nCollaborated on building a prototype for an explainable Legal Case and Precedent Analyzer to assist Indian judiciary processes."
+      },
+      {
+        "title": "NLP Project intern",
+        "company": "Kannada Ganaka Parishatthu",
+        "duration": "On going",
+        "description": "Developing a Natural Language Processing-based PDF toolkit application for Kannada Ganaka Parishat.\nImplementing text extraction, summarization, and conversion features for Kannada language PDFs.\nBuilding native language resource tools to support efficient processing and manipulation of Kannada text documents."
+      },
+      {
+        "title": "Core Member",
+        "company": "Tensor.ai",
+        "duration": null,
+        "description": "Organized AI/ML hackathons, workshops, and technical events. Promoted research and project initiatives, and contributed to event planning, resource coordination, and mentoring."
       }
     ],
     "education": [
       {
-        "degree": "B.E.",
-        "institution": "Ramaiah Institute of Technology",
-        "year": "2022-Present",
-        "field": "CSE (AI &ML)"
+        "degree": "Bachelor of Engineering",
+        "institution": "M S Ramaiah Institute of Technology",
+        "year": "2022 - 2026",
+        "field": "Artificial Intelligence and Data Science"
       },
       {
-        "degree": "Intermediate",
-        "institution": "Vatayan",
-        "year": "07/2019 - 07/2021",
+        "degree": "10 th / SSLC",
+        "institution": "Karnataka Secondary Education Examination Board",
+        "year": "2019- 2020",
+        "field": null
+      },
+      {
+        "degree": "12 th / PUC",
+        "institution": "Department of Pre-University Education , Karnataka",
+        "year": "2020 - 2022",
         "field": null
       }
     ],
     "experience_years": null,
-    "summary": "Passionate about Machine Learning, with a strong leadership background as Vice Chairman of ACM. I thrive on solving complex problems, leading teams, and driving innovation. Always eager to learn and grow in tech!",
-    "certifications": [
-      "SE Certificate from NPTEL, IIT Kharagpur, showcasing expertise in software development, agile practices, and key engineering concepts."
-    ],
-    "languages": [
-      "English",
-      "Hindi"
-    ],
+    "summary": "I am a Bachelor of Engineering student in Artificial Intelligence and Data Science at M S Ramaiah Institute of Technology. AI & Data Science enthusiast with experience in developing AI-driven healthcare solutions, web applications, and multi-modal data analysis. Proven hackathon winner and interested in real world problem solving with strong foundations in Python, Machine Learning, and Web Development.",
+    "certifications": [],
+    "languages": [],
     "projects": [
       {
-        "name": "Text to Image Generator",
-        "description": "Developed a text-to-image generation project using Stable Di\ufb00usion and GPT-2, focusing on model optimization, e\ufb03ciency, and applications in creative AI",
+        "name": "Audio-video-transcription with AI",
+        "description": "Developed a Streamlit-based application to extract and transcribe audio from video files using AI models. Integrated AI-generated text-to-speech to replace original audio while preserving video synchronization. Enabled seamless audio-video merging with improved clarity, supporting multilingual transcription and speech generation.",
         "technologies": [
-          "Stable Diffusion",
-          "GPT-2"
+          "Streamlit",
+          "AI Models"
         ]
       },
       {
-        "name": "Automatic mistakes detection and corrections in variable declarations of C language",
-        "description": "Developed an AI-powered system for automatic mistake detection and correction in C variable declarations, using machine learning, static analysis, and transformer-based models for real-time error detection and correction. Designed for seamless IDE integration, enhancing coding e\ufb03ciency.",
+        "name": "AI approach for Early detection and predicting the risk of Genomic and proteomic diseases",
+        "description": "AI for Protein Interaction and Disease Risk Prediction Developed GNN and Gen AI models to predict protein interactions and assess disease risks from genomic and proteomic data, achieving 83.13% accuracy and enabling early detection through biomarker analysis.",
+        "technologies": [
+          "GNN",
+          "Gen AI models"
+        ]
+      },
+      {
+        "name": "Blockchain and AI driven approach for the efficient Parkinson disease episode prediction",
+        "description": "Designed an AI-powered system for early detection and continuous monitoring of Parkinson\u2019s Disease symptoms.Integrated wearable sensor data with machine learning algorithms to predict and track patient motor fluctuations and tremors.Utilized blockchain technology to securely store and manage patient health records, enhancing data privacy and accessibility for healthcare providers.",
         "technologies": [
           "AI",
-          "Machine Learning",
-          "Static Analysis",
-          "Transformer-based models"
+          "Machine learning",
+          "Blockchain"
         ]
       },
       {
-        "name": "Weather Detector",
-        "description": "Developed this project as a part of group project in College. Takes the city as User Input, which in returns a details analysis of weather of that particular city. Separated details view section for each region.",
-        "technologies": []
+        "name": "AI-Driven Early Diagnosis of Pediatric Autoimmune Disorders Using Retinal Imaging & Blood Biomarkers",
+        "description": "Developing an AI-powered diagnostic system integrating biomarkers, retinal imaging, and patient history for early prediction of autoimmune diseases (MS, T1D, RA, SLE). Implemented Vision Transformer (ViT) for image analysis, TabNet for biomarker prediction, and a multi-modal deep learning model. Deployed a web-based interface delivering explainable risk scores to support clinical decision-making.",
+        "technologies": [
+          "Vision Transformer (ViT)",
+          "TabNet"
+        ]
       },
       {
-        "name": "WSN for Environmental Monitoring",
-        "description": "Developed a Wireless Sensor Network (WSN) simulation for environmental monitoring using an enhanced GWO-LEACH protocol in NS3. The optimized algorithm improves energy e\ufb03ciency, load balancing, and network lifespan by dynamically selecting cluster heads based on energy and workload. Results con\ufb01rm superior performance over traditional LEACH, making it ideal for real-world applications.",
+        "name": "To-Do list",
+        "description": "Developed a responsive To-Do List web application using HTML and CSS.Implemented features for task creation, editing, deletion, and status updates to manage daily activities.Added task categorization and prioritization options to enhance productivity, task organization, and user experience.",
         "technologies": [
-          "WSN",
-          "GWO-LEACH protocol",
-          "NS3"
+          "HTML",
+          "CSS"
+        ]
+      },
+      {
+        "name": "Fantom Code 2024 Hackathon - Winner, RVITM, Bengaluru",
+        "description": "Parkinson\u2019s Disease Detection and Monitoring System Designed a system for early detection and monitoring of Parkinson\u2019s Disease using wearable sensors, AI algorithms, and blockchain to improve patient quality of life.",
+        "technologies": [
+          "wearable sensors",
+          "AI algorithms",
+          "blockchain"
+        ]
+      },
+      {
+        "name": "SEED'24 International Hackathon - 1st Prize, SEED Global Education",
+        "description": "Parkinson\u2019s Disease Detection and Monitoring System Designed a system for early detection and monitoring of Parkinson\u2019s Disease using wearable sensors, AI algorithms, and blockchain to improve patient quality of life.",
+        "technologies": [
+          "wearable sensors",
+          "AI algorithms",
+          "blockchain"
         ]
       }
     ],
-    "raw_text": "Ankit Raj\n            ML Enthusiast\n                      Passionate about Machine Learning, with a strong leadership background as Vice Chairman of ACM. I\n                         thrive on solving complex problems, leading teams, and driving innovation. Always eager to learn and\n                   grow in tech!\n\nankitraj4653@gmail.com        8539900733         Bangalore, India         linkedin.com/in/ankit-raj-8ab5a7252\n\nEDUCATION                           SKILLS\n\nCSE (AI &ML), B.E.                                   C    JAVA     JavaScript    SQL    Hadoop\nRamaiah Institute of Technology   CGPA-9.17\n                                                                  Spark    Python    C++     GIT12/2022 - Present,                                      Bangalore\n\n                                                             Machine Learning    Problem Solving     Eclipse\nIntermediate\nVatayan                                                VS CODE    DSA     Leadership    Teamwork\n07/2019 - 07/2021,                                       Siwan\n\nACHIEVEMENTSPERSONAL PROJECTS\n                                                         3rd Prize MQ 2023Text to Image Generator\n                                                      Won 3rd Prize In Annual Mathematics Quiz\n  Developed a text-to-image generation project using Stable\n  Di\ufb00usion and GPT-2, focusing on model optimization, e\ufb03ciency,\n                                                          SIH HACKATHON  and applications in creative AI\n                                                                    Got slected in top 40 teams at regional level\nAutomatic mistakes detection and corrections in\n                                                          Eventsvariable declarations of C language\n                                                                         Organised 10+ Tech Events In RIT  Developed an AI-powered system for automatic mistake detection\n  and correction in C variable declarations, using machine learning,\n   static analysis, and transformer-based models for real-time error          Volunteer\n  detection and correction. Designed for seamless IDE integration,            Volunteered for events at college level as a part of E-Cell and NSS\n  enhancing coding e\ufb03ciency.\n\nWeather Detector\n  Developed this project as a part of group project in College. Takes     ORGANIZATIONS  the city as User Input, which in returns a details analysis of weather\n  of that particular city. Separated details view section for each\n  region.                                                    RIT ACM Student Chapter (05/2023 - Present)\n                                                                          Vice-Chairman\nWSN for Environmental Monitoring\n  Developed a Wireless Sensor Network (WSN) simulation for\n  environmental monitoring using an enhanced GWO-LEACH protocol\n   in NS3. The optimized algorithm improves energy e\ufb03ciency, load      CERTIFICATES\n  balancing, and network lifespan by dynamically selecting cluster\n  heads based on energy and workload. Results con\ufb01rm superior         NPTEL  performance over traditional LEACH, making it ideal for real-world\n   applications.                                                       SE Certi\ufb01cate from NPTEL, IIT Kharagpur, showcasing expertise in\n                                                                          software development, agile practices, and key engineering concepts.\n\nLANGUAGES\n\n                                                                      English                         Hindi\n                                                                                         Full Professional Pro\ufb01ciency            Full Professional Pro\ufb01ciency\n\nINTERESTS\n\n                                                             Problem Solving and Coding Challenges\n\n                                                                 Continuous Learning and Technology Trends\n\n                                                                        Technical Clubs     Mobile Photography\nAnkit Raj \n\nML Enthusiast \n\nPassionate about Machine Learning, with a strong leadership background as Vice Chairman of ACM. I\nthrive on solving complex problems, leading teams, and driving innovation. Always eager to learn and\ngrow in tech! \n\nankitraj4653@gmail.com \n8539900733 \nBangalore, India \nlinkedin.com/in/ankit-raj-8ab5a7252 \n\nEDUCATION \n\nSKILLS \n\nCSE (AI &ML), B.E. \nRamaiah Institute of Technology      CGPA-9.17 \n\nC \nJAVA \nJavaScript \nSQL \nHadoop \n\nSpark \nPython \nC++ \nGIT \n\n12/2022 - Present,  \nBangalore \n\nMachine Learning \nProblem Solving \nEclipse \n\nIntermediate \nVatayan \n\nVS CODE \nDSA \nLeadership \nTeamwork \n\n07/2019 - 07/2021,  \nSiwan \n\nACHIEVEMENTS \n\nPERSONAL PROJECTS \n\n3rd Prize MQ 2023 \nWon 3rd Prize In Annual Mathematics Quiz \n\nText to Image Generator \n\nDeveloped a text-to-image generation project using Stable\nDi\ufb00usion and GPT-2, focusing on model optimization, e\ufb03ciency,\nand applications in creative AI \n\nSIH HACKATHON \nGot slected in top 40 teams at regional level \n\nAutomatic mistakes detection and corrections in\nvariable declarations of C language \n\nEvents \nOrganised 10+ Tech Events In RIT \n\nDeveloped an AI-powered system for automatic mistake detection\nand correction in C variable declarations, using machine learning,\nstatic analysis, and transformer-based models for real-time error\ndetection and correction. Designed for seamless IDE integration,\nenhancing coding e\ufb03ciency. \n\nVolunteer \nVolunteered for events at college level as a part of E-Cell and NSS \n\nWeather Detector \n\nORGANIZATIONS \n\nDeveloped this project as a part of group project in College. Takes\nthe city as User Input, which in returns a details analysis of weather\nof that particular city. Separated details view section for each\nregion. \n\nRIT ACM Student Chapter (05/2023 - Present) \nVice-Chairman \n\nWSN for Environmental Monitoring \n\nDeveloped a Wireless Sensor Network (WSN) simulation for\nenvironmental monitoring using an enhanced GWO-LEACH protocol\nin NS3. The optimized algorithm improves energy e\ufb03ciency, load\nbalancing, and network lifespan by dynamically selecting cluster\nheads based on energy and workload. Results con\ufb01rm superior\nperformance over traditional LEACH, making it ideal for real-world\napplications. \n\nCERTIFICATES \n\nNPTEL \nSE Certi\ufb01cate from NPTEL, IIT Kharagpur, showcasing expertise in\nsoftware development, agile practices, and key engineering concepts. \n\nLANGUAGES \n\nEnglish \nFull Professional Pro\ufb01ciency \n\nHindi \nFull Professional Pro\ufb01ciency \n\nINTERESTS \n\nProblem Solving and Coding Challenges \n\nContinuous Learning and Technology Trends \n\nTechnical Clubs \nMobile Photography",
-    "file_path": "data/uploads/20250602_042404_Ankit_raj - ANKIT RAJ.pdf",
-    "parsed_at": "2025-06-02T04:24:13.899656",
+    "raw_text": "Sneha Datthathray Bhat\n  Artificial Intelligence and Data Science\n +91 9481067835\n  snehaaa.bhat@gmail.com\n  GitHub | LinkedIn\n  Nationality : Indian\n\nI am a Bachelor of Engineering student in Artificial Intelligence and Data Science at M S Ramaiah Institute of Technology. AI & Data Science\n  enthusiast with experience in developing AI-driven healthcare solutions, web applications, and multi-modal data analysis. Proven hackathon\n  winner and interested in real world problem solving with strong foundations in Python, Machine Learning, and Web Development.\n\nIBM WatsonX 50k Grant Project Intern\n IBM,\n On going ,\n \u25cf\u200bConducted data preprocessing, cleaning, and annotation on legal case documents for AI model training.\n \u25cf\u200bDeveloped a Gen AI-based text summarization and precedent extraction module for legal case analysis.\n \u25cf\u200bCollaborated on building a prototype for an explainable Legal Case and Precedent Analyzer to assist Indian judiciary processes.\n\n NLP Project intern\n Kannada Ganaka Parishatthu,\n On going ,\n \u25cf\u200bDeveloping a Natural Language Processing-based PDF toolkit application for Kannada Ganaka Parishat.\n \u25cf\u200bImplementing text extraction, summarization, and conversion features for Kannada language PDFs.\n \u25cf\u200bBuilding native language resource tools to support efficient processing and manipulation of Kannada text documents.\n\n.\n\u25cf\u200b   Audio-video-transcription with AI:\n      Developed a Streamlit-based application to extract and transcribe audio from video files using AI models.\u200b\n       Integrated AI-generated text-to-speech to replace original audio while preserving video synchronization.\n      Enabled seamless audio-video merging with improved clarity, supporting multilingual transcription and speech generation.\n\n\u25cf\u200b   AI approach for Early detection and predicting the risk of Genomic and proteomic diseases:\n     AI for Protein Interaction and Disease Risk Prediction Developed GNN and Gen AI models to predict protein interactions and assess disease\n       risks from genomic and proteomic data, achieving 83.13% accuracy and enabling early detection through biomarker analysis.\n\n\u25cf\u200b   Blockchain and AI driven approach for the efficient Parkinson disease episode prediction :\n \u200b    Designed an AI-powered system for early detection and continuous monitoring of Parkinson\u2019s Disease symptoms.Integrated wearable sensor\n      data with machine learning algorithms to predict and track patient motor fluctuations and tremors.Utilized blockchain technology to securely\n      store and manage patient health records, enhancing data privacy and accessibility for healthcare providers.\n\n\u25cf\u200b   AI-Driven Early Diagnosis of Pediatric Autoimmune  Disorders Using Retinal Imaging & Blood Biomarkers :\n \u200b    Developing an AI-powered diagnostic system integrating biomarkers, retinal imaging, and patient history for early prediction of autoimmune\n      diseases (MS, T1D, RA, SLE). Implemented Vision Transformer (ViT) for image analysis, TabNet for biomarker prediction, and a\n      multi-modal deep learning model. Deployed a web-based interface delivering explainable risk scores to support clinical decision-making.\n\n\u25cf\u200b   To-Do list:\n     Developed a responsive To-Do List web application using HTML and CSS.Implemented features for task creation, editing, deletion, and status\n      updates to manage daily activities.Added task categorization and prioritization options to enhance productivity, task organization, and user\n      experience.\n\n10 th / SSLC Karnataka Secondary Education Examination Board \u2013 98%                                   2019- 2020\n\n  12 th / PUC Department of Pre-University Education , Karnataka \u2013 92%                                  2020 - 2022\n\n M S Ramaiah Institute of Technology (Artificial Intelligence and Data Science) -CGPA \u2013 9.42                 2022 - 2026\nSneha Datthathray Bhat \n   Artificial Intelligence and Data Science \n\n+91 9481067835 \nsnehaaa.bhat@gmail.com \nGitHub | LinkedIn \n   Nationality : Indian \n\nI am a Bachelor of Engineering student in Artificial Intelligence and Data Science at M S Ramaiah Institute of Technology. AI & Data Science \nenthusiast with experience in developing AI-driven healthcare solutions, web applications, and multi-modal data analysis. Proven hackathon \nwinner and interested in real world problem solving with strong foundations in Python, Machine Learning, and Web Development. \n\nIBM WatsonX 50k Grant Project Intern \nIBM, \nOn going , \n\u25cf\u200bConducted data preprocessing, cleaning, and annotation on legal case documents for AI model training. \n\u25cf\u200bDeveloped a Gen AI-based text summarization and precedent extraction module for legal case analysis. \n\u25cf\u200bCollaborated on building a prototype for an explainable Legal Case and Precedent Analyzer to assist Indian judiciary processes. \n     \nNLP Project intern \nKannada Ganaka Parishatthu, \nOn going , \n\u25cf\u200bDeveloping a Natural Language Processing-based PDF toolkit application for Kannada Ganaka Parishat. \n\u25cf\u200bImplementing text extraction, summarization, and conversion features for Kannada language PDFs. \n\u25cf\u200bBuilding native language resource tools to support efficient processing and manipulation of Kannada text documents. \n\n. \n\n\u25cf\u200b\nAudio-video-transcription with AI: \n          Developed a Streamlit-based application to extract and transcribe audio from video files using AI models.\u200b\n\n Integrated AI-generated text-to-speech to replace original audio while preserving video synchronization. \n          Enabled seamless audio-video merging with improved clarity, supporting multilingual transcription and speech generation. \n \n\u25cf\u200b\nAI approach for Early detection and predicting the  risk of Genomic and proteomic diseases: \n         AI for Protein Interaction and Disease Risk Prediction Developed GNN and Gen AI models to predict protein interactions and assess disease \n\nrisks from genomic and proteomic data, achieving 83.13% accuracy and enabling early detection through biomarker analysis. \n \n\u25cf\u200b\nBlockchain and AI driven approach for the efficient  Parkinson disease episode prediction : \n\u200b\nDesigned an AI-powered system for early detection and continuous monitoring of Parkinson\u2019s Disease symptoms.Integrated wearable sensor \ndata with machine learning algorithms to predict and track patient motor fluctuations and tremors.Utilized blockchain technology to securely \nstore and manage patient health records, enhancing data privacy and accessibility for healthcare providers. \n \n\u25cf\u200b\nAI-Driven Early Diagnosis of Pediatric  Autoimmune   Disorders Using Retinal Imaging & Blood Biomarkers : \n\u200b\nDeveloping an AI-powered diagnostic system integrating biomarkers, retinal imaging, and patient history for early prediction of autoimmune \ndiseases (MS, T1D, RA, SLE). Implemented Vision Transformer (ViT) for image analysis, TabNet for biomarker prediction, and a \nmulti-modal deep learning model. Deployed a web-based interface delivering explainable risk scores to support clinical decision-making. \n \n\u25cf\u200b\nTo-Do list: \n         Developed a responsive To-Do List web application using HTML and CSS.Implemented features for task creation, editing, deletion, and status \n\nupdates to manage daily activities.Added task categorization and prioritization options to enhance productivity, task organization, and user \nexperience. \n\n10 th / SSLC Karnataka Secondary Education Examination Board \u2013 98% \n2019- 2020 \n\n12 th / PUC Department of Pre-University Education , Karnataka \u2013 92% \n2020 - 2022 \n\nM S Ramaiah Institute of Technology (Artificial Intelligence and Data Science)  -CGPA \u2013 9.42 \n\n2022 - 2026 \n\nSoft Skills :\n\n Analytical Thinking, Problem-Solving, Effective Communication (technical & non-technical), Curiosity & Continuous Learning, Attention to\n Detail, Time Management, Team Collaboration, Adaptability to Evolving Technologies, Critical Thinking, Agile Mindset, Creativity in Solution\n Design, Accountability & Ownership\n\n\u25cf\u200b   Programming & Data Tools: Python (NumPy, Pandas, SciPy, Scikit-learn, Keras, TensorFlow, PyTorch, OpenCV, BeautifulSoup), SQL\n    (MySQL), R , Java , C++\n\n\u25cf\u200b   Machine Learning: Regression, Classification, Clustering, Natural Language Processing (NLP), Large Language Models (LLM), Computer\n      Vision, Transfer Learning, GenAI\n\n\u25cf\u200b   Deep Learning: Neural Networks, CNN, RNN, Transformer Models, TensorFlow, PyTorch\n\n\u25cf\u200b   Data Visualization: Power BI, Tableau, Matplotlib, Seaborn, Plotly\n\n\u25cf\u200b  Web Development: Full Stack (HTML, CSS, JavaScript, React, Node.js, Express, MongoDB)\n\n\u25cf\u200b  Fantom Code 2024 Hackathon - Winner, RVITM, Bengaluru\n     Parkinson\u2019s Disease Detection and Monitoring System Designed a system for early detection and monitoring of Parkinson\u2019s Disease using\n    wearable sensors, AI algorithms, and blockchain to improve patient quality of life.\n\n\u25cf\u200b  SEED'24 International Hackathon - 1st Prize, SEED Global Education\n     Parkinson\u2019s Disease Detection and Monitoring System Designed a system for early detection and monitoring of Parkinson\u2019s Disease using\n    wearable sensors, AI algorithms, and blockchain to improve patient quality of life.\n\n\u25cf\u200b  Core Member, Tensor.ai\n    Organized AI/ML hackathons, workshops, and technical events. Promoted research and project initiatives, and contributed to event planning,\n     resource coordination, and mentoring.\n\nSoft Skills : \n\nAnalytical Thinking, Problem-Solving, Effective Communication (technical & non-technical), Curiosity & Continuous Learning, Attention to \nDetail, Time Management, Team Collaboration, Adaptability to Evolving Technologies, Critical Thinking, Agile Mindset, Creativity in Solution \nDesign, Accountability & Ownership \n\n\u25cf\u200b\nProgramming & Data Tools: Python (NumPy, Pandas, SciPy, Scikit-learn, Keras, TensorFlow, PyTorch, OpenCV, BeautifulSoup), SQL \n(MySQL),  R , Java , C++ \n\n\u25cf\u200b\nMachine Learning: Regression, Classification, Clustering, Natural Language Processing (NLP), Large Language Models (LLM), Computer \nVision, Transfer Learning, GenAI \n\n\u25cf\u200b\nDeep Learning: Neural Networks, CNN, RNN, Transformer Models, TensorFlow, PyTorch \n\n\u25cf\u200b\nData Visualization: Power BI, Tableau, Matplotlib, Seaborn, Plotly \n\n\u25cf\u200b\nWeb Development: Full Stack (HTML, CSS, JavaScript, React, Node.js, Express, MongoDB) \n\n\u25cf\u200b\nFantom Code 2024 Hackathon - Winner, RVITM, Bengaluru \n                  Parkinson\u2019s Disease Detection and Monitoring System Designed a system for early detection and monitoring of Parkinson\u2019s Disease using \n\nwearable sensors, AI algorithms, and blockchain to improve patient quality of life. \n\n\u25cf\u200b\nSEED'24 International Hackathon - 1st Prize, SEED Global Education \n                  Parkinson\u2019s Disease Detection and Monitoring System Designed a system for early detection and monitoring of Parkinson\u2019s Disease using \n\nwearable sensors, AI algorithms, and blockchain to improve patient quality of life. \n\n\u25cf\u200b\nCore Member, Tensor.ai \n                 Organized AI/ML hackathons, workshops, and technical events. Promoted research and project initiatives, and contributed to event planning, \n\nresource coordination, and mentoring.",
+    "file_path": "data/uploads/20250602_090339_Resume new - Sneha Bhat.pdf",
+    "parsed_at": "2025-06-02T09:07:29.547261",
     "parser_type": "OCR+AI"
   },
   {
-    "id": "20250602_053402",
-    "filename": "20250602_053358_Anirudh_resume - Anirudh Rai.pdf",
+    "id": "20250602_091406",
+    "filename": "20250602_091242_Anirudh_resume - Anirudh Rai.pdf",
     "uploaded_at": "2025-06-01T06:00:37Z",
     "status": "parsed_and_stored",
     "uploaded_by": "pranamya-jain",
@@ -295,76 +176,378 @@
     "name": "Anirudh S Rai",
     "email": "anirudhanirudh982@gmail.com",
     "phone": "+91-9945739677",
-    "location": "Bengaluru, India",
+    "location": "anirudhsrai\n\nEducation\n\nRamaiah Institute of Technology, Bengaluru                                            ",
     "skills": [
-      "C++",
-      "Python",
-      "Java",
-      "C",
-      "JavaScript",
-      "Node.js",
-      "Html",
-      "Css",
+      "Javascript",
+      "Docker",
+      "Github",
+      "Mongodb",
+      "Go",
+      "Design",
+      "React",
       "Sql",
-      "Flutter",
+      "R",
+      "C++",
+      "Java",
+      "Python",
+      "Node.Js",
+      "Css",
       "Express",
-      "MongoDB",
-      "Git",
-      "GitHub",
       "Leadership",
-      "Time Management"
+      "Git",
+      "Html"
     ],
     "experience": [
       {
-        "title": "Intern",
-        "company": "Quiz App",
-        "duration": "Oct 2023-Nov 2023",
-        "description": "Completed a 3 week training program on Flutter. Developed a Quiz App based on the popular quizzing app called QuizUp. Gained hands-on experience with Flutter\u2019s widget-based architecture, and hot reload, while learning to build responsive and cross-platform user interfaces."
+        "title": "Skills\n\nProgramming",
+        "company": "Hub",
+        "duration": "Not specified",
+        "description": "Details extracted from resume"
       }
     ],
     "education": [
       {
-        "degree": "Bachelor of Engineering",
-        "institution": "Ramaiah Institute of Technology",
-        "year": "2022 \u2013 2026",
-        "field": "Computer Science & Engineering"
+        "degree": "ma",
+        "institution": "Institute",
+        "year": "Not specified",
+        "field": "Not specified"
       },
       {
-        "degree": "Class XII (PCM)",
-        "institution": "Sharada P.U College",
-        "year": "2020 \u2013 2022",
-        "field": null
+        "degree": "ma",
+        "institution": "Institute",
+        "year": "Not specified",
+        "field": "Not specified"
       }
     ],
-    "experience_years": null,
-    "summary": null,
+    "experience_years": 0,
+    "summary": "Anirudh S Rai\n   # anirudhanirudh982@gmail.com   \u0083 +91-9945739677    \u00a7 github.com/AnirudhRa1\n                    \u00ef https://tinyurl.com/anirudhsrai",
     "certifications": [],
+    "languages": [],
+    "projects": [],
+    "raw_text": "Anirudh S Rai\n   # anirudhanirudh982@gmail.com   \u0083 +91-9945739677    \u00a7 github.com/AnirudhRa1\n                    \u00ef https://tinyurl.com/anirudhsrai\n\nEducation\n\nRamaiah Institute of Technology, Bengaluru                                            2022 \u2013 2026\n\n \u2022 Bachelor of Engineering, Computer Science & Engineering\n\n \u2022 GPA: 9.27/10\n\nSharada P.U College , Mangalore                                                     2020 \u2013 2022\n\n \u2022 Class XII (PCM), Grades: 92.6%\n\nInternships\n\nQuiz App                                                                              Oct 2023-Nov 2023\n\n \u2022 Completed a 3 week training program on Flutter.\n\n \u2022 Developed a Quiz App based on the popular quizzing app called QuizUp.\n\n \u2022 Gained hands-on experience with Flutter\u2019s widget-based architecture, and hot reload, while learning to build\n   responsive and cross-platform user interfaces.\n\nProjects\n\nPersonal Music Streaming App                                                             2024\n\n \u2022 Developed a personal music streaming app that allows users to upload, stream, and manage their own music\n    library.\n\n \u2022 Implemented secure authentication and a RESTful API to handle song metadata, streaming.\n\n \u2022 Containerized the entire application using Docker and deployed it for seamless access across devices.\n\n \u2022 Technologies: React, Node.js, Express.js, MongoDB, Docker\n\nDelivery App for College Students                                                          2024\n\n \u2022 Built a platform where students can post and accept delivery tasks within their college.\n\n \u2022 Designed a reward system where students earn points or money for completing deliveries.\n\n \u2022 Technologies: Flutter , Node.js, MongoDB.\n\nSkills\n\nProgramming Languages: C++, Python, Java, C, JavaScript,\nFrameworks/Tools: Node.js, Html, Css, Sql, Flutter, Express, MongoDB, Git, GitHub\nSoft Skills: Leadership,Time Management\n\nCompetitive Programming\n\n \u2022 CodeForces: Solved over 200 problems with Max Rating: 1432 , Best Global Rank: 973\n\n \u2022 LeetCode: Solved over 600 problems with, Best Global Rank: 1789\n\n \u2022 Achieved 1st place in the Republic Day Coding Contest held at my college.\nAnirudh S Rai\n\n# anirudhanirudh982@gmail.com\n\u0083 +91-9945739677\n\u00a7 github.com/AnirudhRa1\n\u00ef https://tinyurl.com/anirudhsrai\n\nEducation\n\nRamaiah Institute of Technology, Bengaluru\n2022 \u2013 2026\n\n\u2022 Bachelor of Engineering, Computer Science & Engineering\n\n\u2022 GPA: 9.27/10\n\nSharada P.U College , Mangalore\n2020 \u2013 2022\n\n\u2022 Class XII (PCM), Grades: 92.6%\n\nInternships\n\nQuiz App\nOct 2023-Nov 2023\n\n\u2022 Completed a 3 week training program on Flutter.\n\n\u2022 Developed a Quiz App based on the popular quizzing app called QuizUp.\n\n\u2022 Gained hands-on experience with Flutter\u2019s widget-based architecture, and hot reload, while learning to build\nresponsive and cross-platform user interfaces.\n\nProjects\n\nPersonal Music Streaming App\n2024\n\n\u2022 Developed a personal music streaming app that allows users to upload, stream, and manage their own music\nlibrary.\n\n\u2022 Implemented secure authentication and a RESTful API to handle song metadata, streaming.\n\n\u2022 Containerized the entire application using Docker and deployed it for seamless access across devices.\n\n\u2022 Technologies: React, Node.js, Express.js, MongoDB, Docker\n\nDelivery App for College Students\n2024\n\n\u2022 Built a platform where students can post and accept delivery tasks within their college.\n\n\u2022 Designed a reward system where students earn points or money for completing deliveries.\n\n\u2022 Technologies: Flutter , Node.js, MongoDB.\n\nSkills\n\nProgramming Languages: C++, Python, Java, C, JavaScript,\nFrameworks/Tools: Node.js, Html, Css, Sql, Flutter, Express, MongoDB, Git, GitHub\nSoft Skills: Leadership,Time Management\n\nCompetitive Programming\n\n\u2022 CodeForces: Solved over 200 problems with Max Rating: 1432 , Best Global Rank: 973\n\n\u2022 LeetCode: Solved over 600 problems with, Best Global Rank: 1789\n\n\u2022 Achieved 1st place in the Republic Day Coding Contest held at my college.",
+    "file_path": "data/uploads/20250602_091242_Anirudh_resume - Anirudh Rai.pdf",
+    "parsed_at": "2025-06-02T09:14:06.347974",
+    "parser_type": "OCR+AI"
+  },
+  {
+    "id": "20250602_091409",
+    "filename": "20250602_091342_DHANRAJ_RATERIA_BE_FINAL (2) - Dhanraj Rateria.pdf",
+    "uploaded_at": "2025-06-01T06:00:37Z",
+    "status": "parsed_and_stored",
+    "uploaded_by": "pranamya-jain",
+    "team": "Seeds! \ud83c\udf31",
+    "name": "Dhanraj Rateria",
+    "email": "dhanrajrateria@gmail.com",
+    "phone": "+91 8234012941",
+    "location": "  Flutter, HT",
+    "skills": [
+      "Tensorflow",
+      "R",
+      "Devops",
+      "Java",
+      "Python",
+      "Numpy",
+      "Gcp",
+      "Pytorch",
+      "Flask",
+      "Mysql",
+      "Pandas",
+      "Seaborn",
+      "Css",
+      "Html",
+      "Windows",
+      "Jenkins",
+      "Bash",
+      "Scikit-Learn",
+      "Docker",
+      "Github",
+      "Go",
+      "Design",
+      "Sql",
+      "React",
+      "Azure",
+      "Linux",
+      "Aws",
+      "Deep Learning",
+      "Leadership",
+      "Git"
+    ],
+    "experience": [
+      {
+        "title": "Content Writer and Social Media Manager",
+        "company": "Major Projects",
+        "duration": "Not specified",
+        "description": "Details extracted from resume"
+      }
+    ],
+    "education": [
+      {
+        "degree": "ma",
+        "institution": "Institute",
+        "year": "Not specified",
+        "field": "Not specified"
+      },
+      {
+        "degree": "ma",
+        "institution": "Institute",
+        "year": "Not specified",
+        "field": "Not specified"
+      }
+    ],
+    "experience_years": 0,
+    "summary": "R dhanrajrateria@gmail.com | R 1ms22cy020@msrit.edu | \u00d3 +91 8234012941 | \u00bd Bengaluru, India\n    \u0087 GitHub | \u00af LinkedIn | / LeetCode | \uf1c0Kaggle | / CodeForces | 7 Twitter | 2 Hugging Face | \u008c Portfolio",
+    "certifications": [],
+    "languages": [],
+    "projects": [],
+    "raw_text": "Dhanraj Rateria\n\n      R dhanrajrateria@gmail.com | R 1ms22cy020@msrit.edu | \u00d3 +91 8234012941 | \u00bd Bengaluru, India\n    \u0087 GitHub | \u00af LinkedIn | / LeetCode | \uf1c0Kaggle | / CodeForces | 7 Twitter | 2 Hugging Face | \u008c Portfolio\n\nEducation\n\u2022 BE, Computer Science & Engineering (Cyber Security), Ramaiah Institute Of Technology, Bengaluru   2026\n CGPA or CPI: 9.3/10.0\n\u2022 Senior Secondary (XII), Science, O.P. Jindal School Patrapali, Raigarh                                2022\n  Percentage: 96.00% (CBSE board)\n\u2022 Secondary (X), O.P. Jindal School Patrapali, Raigarh                                                  2020\n  Percentage: 98.00% (CBSE board)\n\nTechnical Skills                     Relevant Coursework\nProgramming: Python, C, Java, Bash Operating Sys-  Engineering Mathematics, Operating Systems, Data Struc-\ntems: Windows, Linux ML & Data Processing: Ten-  tures and Algorithms, Database Management Systems,\nsorFlow, PyTorch, Scikit-learn, Numpy, Pandas, Seaborn  Computer Networks, Computer  Architecture,  Compiler\nWeb & Mobile:  Flutter, HTML, CSS, ReactJS, Nex-  Design,  Automata  Theory,  UNIX, AWS  Fundamen-\ntJS Backend & DevOps:  Flask, NodeJS, Docker, Ku-  tals,Software Engineering, Natural Language Processing,\nbernetes, Git,CI/CD(Jenkins), Prometheus, Hadoop, Spark  Deep Learning, TensorFlow Development, Machine Learn-\nCloud: GCP, AWS (EKS, ECS), Azure Database: Mon-  ing, Cryptography\ngoDB, MySQL, Firebase Quantum Computing: Qiskit,\nQuantum Algorithms, Quantum Circuits\n\nProfessional Experience\n\u2022 Hewlett Packard Enterprise (HPE)\n  \u2013 CPP Research Project Intern, Feb, 2025 - Present\n    \u2217Working on developing AI-powered Quantum Resistant Cryptographic Algorithms\n   \u2217Aiming to achieve 90% efficiency compared to traditional algorithms\n\n  \u2013 Research Project Intern, Feb, 2024 - Oct, 2024\n   \u2217ASTRA SIM Research, optimizing 50+ configuration combinations for 100+ models, reducing overhead by 30%\n    \u2217Analyzed performance metrics to enhance distributed training, boosting model convergence speed by 15%\n\n\u2022 Unisys\n  \u2013 Research Project Intern, Nov, 2024 - Present\n    \u2217Developed an Intelligent Assistant simplifying the process of generating and modifying product configurations\n   \u2217Worked with XML files with over 3000 configurations and attributes, optimizing generation and matching\n\nLeadership & Volunteer Experience\n\u2022 IEEE RIT, Bangalore,\n  \u2013 Treasurer, IEEE Computer Society (2023 - Present)\n  \u2013 Execom, IEEE Web Resources (2022 - 2023)\n\n\u2022 Entrepreneurship Development Cell, RIT Bangalore,\n  \u2013 IT Head (2024 - Present)\n  \u2013 Content Writer and Social Media Manager (2023 - 2024)\n\nMajor Projects\n\u2022 ASTRA-SIM Research Project, HPE Industry Collaboration, Report                      Feb, 2024 - Oct, 2024\n  \u2013 ASTRA SIM Research, optimizing 50+ configuration combinations for 100+ models, reducing overhead by 30%\n\n\u2022 Quantum Federated Learning Simulator, GitHub                                  Mar, 2025 - May, 2025\n  \u2013 Achieved a comparative study and 90% efficiency and 50% improvement in precision in the use of a federated\n    quantum learning environment to train ML models.\n\n\u2022 ML Based CAPTCHA: Redifining UIDAI website(SIH, 2024), GitHub             Aug 2024 - Oct 2024\n  \u2013 Developed a 95 % accurate CAPTCHA based on user parameters fed into an ML model for GOI (ReactJS, Tensor-\n    Flow, Selenium)\n\n\u2022 Rahasya: A Dark Pattern Detector Tool(DPBH, 2024), GitHub                    Dec 2023 - Feb 2024\n  \u2013 Developed an NLP and vision based Dark Patter detector for more than 20 Dark Patterns\n\n\u2022 Logistics Application for Small Businesses(Solve for India, 2023), GitHub            Jan 2023 - Jun 2023\n  \u2013 Developed a blockchain based real time logistics management application using Flutter and Solidity\n\n1\nDhanraj Rateria\n\nR dhanrajrateria@gmail.com | R 1ms22cy020@msrit.edu | \u00d3 +91 8234012941 | \u00bd Bengaluru, India\n\u0087 GitHub | \u00af LinkedIn | / LeetCode | \uf1c0Kaggle | / CodeForces | 7 Twitter | 2 Hugging Face | \u008c Portfolio\n\nEducation\n\n\u2022 BE, Computer Science & Engineering (Cyber Security), Ramaiah Institute Of Technology, Bengaluru\n2026\nCGPA or CPI: 9.3/10.0\n\u2022 Senior Secondary (XII), Science, O.P. Jindal School Patrapali, Raigarh\n2022\nPercentage: 96.00% (CBSE board)\n\u2022 Secondary (X), O.P. Jindal School Patrapali, Raigarh\n2020\nPercentage: 98.00% (CBSE board)\n\nTechnical Skills\nProgramming: Python, C, Java, Bash Operating Sys-\ntems: Windows, Linux ML & Data Processing: Ten-\nsorFlow, PyTorch, Scikit-learn, Numpy, Pandas, Seaborn\nWeb & Mobile:\nFlutter, HTML, CSS, ReactJS, Nex-\ntJS Backend & DevOps: Flask, NodeJS, Docker, Ku-\nbernetes, Git,CI/CD(Jenkins), Prometheus, Hadoop, Spark\nCloud: GCP, AWS (EKS, ECS), Azure Database: Mon-\ngoDB, MySQL, Firebase Quantum Computing: Qiskit,\nQuantum Algorithms, Quantum Circuits\n\nRelevant Coursework\nEngineering Mathematics, Operating Systems, Data Struc-\ntures and Algorithms, Database Management Systems,\nComputer Networks, Computer Architecture, Compiler\nDesign,\nAutomata\nTheory,\nUNIX,\nAWS\nFundamen-\ntals,Software Engineering, Natural Language Processing,\nDeep Learning, TensorFlow Development, Machine Learn-\ning, Cryptography\n\nProfessional Experience\n\n\u2022 Hewlett Packard Enterprise (HPE)\n\n\u2013 CPP Research Project Intern, Feb, 2025 - Present\n\n\u2217Working on developing AI-powered Quantum Resistant Cryptographic Algorithms\n\u2217Aiming to achieve 90% efficiency compared to traditional algorithms\n\n\u2013 Research Project Intern, Feb, 2024 - Oct, 2024\n\n\u2217ASTRA SIM Research, optimizing 50+ configuration combinations for 100+ models, reducing overhead by 30%\n\u2217Analyzed performance metrics to enhance distributed training, boosting model convergence speed by 15%\n\n\u2022 Unisys\n\n\u2013 Research Project Intern, Nov, 2024 - Present\n\n\u2217Developed an Intelligent Assistant simplifying the process of generating and modifying product configurations\n\u2217Worked with XML files with over 3000 configurations and attributes, optimizing generation and matching\n\nLeadership & Volunteer Experience\n\u2022 IEEE RIT, Bangalore,\n\n\u2013 Treasurer, IEEE Computer Society (2023 - Present)\n\u2013 Execom, IEEE Web Resources (2022 - 2023)\n\n\u2022 Entrepreneurship Development Cell, RIT Bangalore,\n\n\u2013 IT Head (2024 - Present)\n\u2013 Content Writer and Social Media Manager (2023 - 2024)\n\nMajor Projects\n\u2022 ASTRA-SIM Research Project, HPE Industry Collaboration, Report\nFeb, 2024 - Oct, 2024\n\u2013 ASTRA SIM Research, optimizing 50+ configuration combinations for 100+ models, reducing overhead by 30%\n\n\u2022 Quantum Federated Learning Simulator, GitHub\nMar, 2025 - May, 2025\n\u2013 Achieved a comparative study and 90% efficiency and 50% improvement in precision in the use of a federated\nquantum learning environment to train ML models.\n\n\u2022 ML Based CAPTCHA: Redifining UIDAI website(SIH, 2024), GitHub\nAug 2024 - Oct 2024\n\u2013 Developed a 95 % accurate CAPTCHA based on user parameters fed into an ML model for GOI (ReactJS, Tensor-\nFlow, Selenium)\n\n\u2022 Rahasya: A Dark Pattern Detector Tool(DPBH, 2024), GitHub\nDec 2023 - Feb 2024\n\u2013 Developed an NLP and vision based Dark Patter detector for more than 20 Dark Patterns\n\n\u2022 Logistics Application for Small Businesses(Solve for India, 2023), GitHub\nJan 2023 - Jun 2023\n\u2013 Developed a blockchain based real time logistics management application using Flutter and Solidity\n\n1\n\nMinor Projects\nMonitoring systems and scaling, pipeline and incident management applications, mathematical concepts(Trasformers,\nNIST papers etc.)  implementation from scratch.  Quantitative finance concepts and uses.  Breaking down computer\nscience concepts(operating systems, technical frameworks and their uses). Frontend and Backend daily web applications.\nPortfolio for details.\n\u2022 Technical blogs\n\u2022 Non-technical blogs\nAchievements\n\u2022 Winner, Smart India Hackathon 2024 (Intra-college)\n\u2022 Winner, Smart India Hackathon 2023 (Intra-college)\n\u2022 Winner, Solving for India Hackathon 2023 (Inter-college)\n\u2022 Regional Round Winner, Dark Pattern Buster Hackathon 2024\n\u2022 Regional Round Winner, SAP Hackfest 2024\n\u2022 2nd runner-up, Leadership Unleashed, TAPMI 2025\n\u2022 Active contributor on LeetCode and CodeForces, solving complex algorithmic problems\n\n2\nMinor Projects\n\nMonitoring systems and scaling, pipeline and incident management applications, mathematical concepts(Trasformers,\nNIST papers etc.) implementation from scratch. Quantitative finance concepts and uses. Breaking down computer\nscience concepts(operating systems, technical frameworks and their uses). Frontend and Backend daily web applications.\nPortfolio for details.\n\u2022 Technical blogs\n\u2022 Non-technical blogs\nAchievements\n\n\u2022 Winner, Smart India Hackathon 2024 (Intra-college)\n\u2022 Winner, Smart India Hackathon 2023 (Intra-college)\n\u2022 Winner, Solving for India Hackathon 2023 (Inter-college)\n\u2022 Regional Round Winner, Dark Pattern Buster Hackathon 2024\n\u2022 Regional Round Winner, SAP Hackfest 2024\n\u2022 2nd runner-up, Leadership Unleashed, TAPMI 2025\n\u2022 Active contributor on LeetCode and CodeForces, solving complex algorithmic problems\n\n2",
+    "file_path": "data/uploads/20250602_091342_DHANRAJ_RATERIA_BE_FINAL (2) - Dhanraj Rateria.pdf",
+    "parsed_at": "2025-06-02T09:14:09.900203",
+    "parser_type": "OCR+AI"
+  },
+  {
+    "id": "20250602_095602",
+    "filename": "20250602_095555_DhavalaT S_InternshalaResume-17 - DHAVALA T S.pdf",
+    "uploaded_at": "2025-06-01T06:00:37Z",
+    "status": "parsed_and_stored",
+    "uploaded_by": "pranamya-jain",
+    "team": "Seeds! \ud83c\udf31",
+    "name": "Dhavala T S",
+    "email": "tsdhavala@gmail.com",
+    "phone": "+91 8762880502",
+    "location": "Bangalore",
+    "skills": [
+      "Python",
+      "Data Analytics",
+      "MS-Excel",
+      "Machine Learning",
+      "Deep Learning",
+      "Neural Networks",
+      "English Proficiency (Written)",
+      "English Proficiency (Spoken)",
+      "Data Science",
+      "SQL",
+      "Natural Language Processing (NLP)",
+      "Algorithms",
+      "R Programming",
+      "Data Structures",
+      "MS-PowerPoint",
+      "Power BI",
+      "Microsoft Azure",
+      "HTML",
+      "CSS"
+    ],
+    "experience": [
+      {
+        "title": "Research \u2022 Internship",
+        "company": "Samsung R &D Institute",
+        "duration": "Sep 2024 - Present",
+        "description": "As a research intern, I'm working on automation of post link optimization in Linux x86 and Android ARM 64 primarily via profile guided optimization(PGO), using Python for automation and Gtest, ADB. Also using technologies such as LTO and BOLT."
+      },
+      {
+        "title": "Data Science \u2022 Internship",
+        "company": "Oasis Infobyte",
+        "duration": "Aug 2024 - Present",
+        "description": "Worked on projects like flower classification in iris dataset, Unemployment analysis, car price prediction, SMS spam filtering and sales prediction using relevant Machine Learning techniques"
+      },
+      {
+        "title": "Python Development \u2022 Internship",
+        "company": "Octanet Services Private Limited",
+        "duration": "Aug 2024",
+        "description": "Worked on an ATM simulation in Google colab which takes input of ATM pin and checks pin , withdrawal of money, deposit money, check balance, change pin."
+      },
+      {
+        "title": "Data Science \u2022 Internship",
+        "company": "Codeclause Private Limited",
+        "duration": "Aug 2024 - Sep 2024",
+        "description": "As an intern at Codeclause,I developed a ML model to detect fraudulent activities in credit card transactions(task 1),an advanced model using XGBoost for the same and golden project- heart disease prediction(random forest) with streamlit UI"
+      }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor of Engineering (B.E)",
+        "institution": "Ramaiah Institute Of Technology",
+        "year": "2022 - 2026",
+        "field": "Data Science"
+      }
+    ],
+    "experience_years": 0,
+    "summary": "Aspiring data scientist with expertise in machine learning, data analysis, and predictive modeling.",
+    "certifications": [
+      "Artificial Intelligence",
+      "Data Science",
+      "Microsoft Azure Data Fundamentals Cloud Skills Challenge",
+      "Microsoft Azure AI Fundamentals Cloud Skills Challenge",
+      "AI"
+    ],
     "languages": [],
     "projects": [
       {
-        "name": "Personal Music Streaming App",
-        "description": "Developed a personal music streaming app that allows users to upload, stream, and manage their own music library. Implemented secure authentication and a RESTful API to handle song metadata, streaming. Containerized the entire application using Docker and deployed it for seamless access across devices.",
+        "name": "Heart disease prediction",
+        "description": "This project aims to predict the likelihood of heart disease based on various health metrics input by the user. Using a user-friendly interface built with Streamlit, users can enter data such as age, sex, cholesterol levels, and more. The system processes this input and utilizes a Random Forest Classifier (built using Scikit-Learn) to assess the risk of heart disease.\n\nKey features include:\n\nA clean and intuitive UI for health data input.\nReal-time prediction using a pre-trained machine learning model.\nSeamless integration of data preprocessing and model inference.\nTechnologies used: Python, Streamlit, Scikit-Learn, Pandas, Joblib, and NumPy.\n\nThis project enhances the understanding of cardiovascular risk factors and demonstrates the practical application of predictive models in healthcare.",
         "technologies": [
-          "React",
-          "Node.js",
-          "Express.js",
-          "MongoDB",
-          "Docker"
+          "Python",
+          "Streamlit",
+          "Scikit-Learn",
+          "Pandas",
+          "Joblib",
+          "NumPy"
         ]
       },
       {
-        "name": "Delivery App for College Students",
-        "description": "Built a platform where students can post and accept delivery tasks within their college. Designed a reward system where students earn points or money for completing deliveries.",
+        "name": "Parkinson's Episode Prediction System",
+        "description": "Developed an AI system to predict the off episodes of Parkinson's disease based on parameters like Alpha synuclein dopamine and sp02",
+        "technologies": []
+      },
+      {
+        "name": "Green chips",
+        "description": "Developed an effective E-waste management system which helps people connect with E-waste disposal centres and helps disposers get an estimate of the money they might get based on uploading pictures of the e-waste they are about to dispose",
+        "technologies": []
+      }
+    ],
+    "raw_text": "Dhavala T S\n\ntsdhavala@gmail.com | +91 8762880502 | Bangalore\n\nCAREER OBJECTIVE\n\nAspiring data scientist with expertise in machine learning, data analysis, and predictive modeling.\n\nWORK EXPERIENCE\n\nResearch \u2022 Internship                                                                        Sep 2024 - Present\nSamsung R &D Institute, Virtual\n\nAs a research intern, I'm working on automation of post link optimization in Linux x86 and Android ARM 64 primarily via profile guided\noptimization(PGO), using Python for automation and Gtest, ADB. Also using technologies such as LTO and BOLT.\n\nData Science \u2022 Internship                                                                   Aug 2024 - Present\nOasis Infobyte, Virtual\n\nWorked on projects like flower classification in iris dataset, Unemployment analysis, car price prediction, SMS spam filtering and sales\nprediction using relevant Machine Learning techniques\n\nPython Development \u2022 Internship                                                                    Aug 2024\nOctanet Services Private Limited, Virtual\n\nWorked on an ATM simulation in Google colab which takes input of ATM pin and checks pin , withdrawal of money, deposit money,\ncheck balance, change pin.\n\nData Science \u2022 Internship                                                                 Aug 2024 - Sep 2024\nCodeclause Private Limited, Virtual\n\nAs an intern at Codeclause,I developed a ML model to detect fraudulent activities in credit card transactions(task 1),an advanced model\nusing XGBoost for the same and golden project- heart disease prediction(random forest) with streamlit UI\n\nEDUCATION\n\nBachelor of Engineering (B.E), Data Science                                                           2022 - 2026\nRamaiah Institute Of Technology\n\nTRAININGS / CERTIFICATIONS\n\nArtificial Intelligence                                      Data Science\nJul 2024 - Present                                       Mar 2024\n\nInfosys Springboard, Virtual                                                 Skillsoft, Virtual\n\nSelected as a part of Pragati program of Infosys Springboard\n(cohort 2)\n\nMicrosoft Azure Data Fundamentals Cloud Skills               Microsoft Azure AI Fundamentals Cloud Skills\nChallenge                                                 Challenge\nFeb 2024 - Mar 2024                                        Jan 2024\n\nMicrosoft, Virtual                                                    Microsoft, Virtual\n\nParticipated in students ambassador clouds skills challenge on     Was an active skills challenge on Microsoft Learn. Got to learn\nData science concepts and earned badges and certificate.        new essential skills and earned badges and certificates.\n\nAI\nDec 2023\n\nSkill Nation, Virtual\n\nGained experience in a workshop for ChatGPT prompts and use\nof various AI tools\n\nPORTFOLIO\n\nPage - 1/3\nDhavala T S\n\ntsdhavala@gmail.com |  +91 8762880502 | Bangalore\n\nCAREER OBJECTIVE\n\nAspiring data scientist with expertise in machine learning, data analysis, and predictive modeling.\n\nWORK EXPERIENCE\n\nResearch \u2022 Internship\nSep 2024 - Present\nSamsung R &D Institute, Virtual\n\nAs a research intern, I'm working on automation of post link optimization in Linux x86 and Android ARM 64 primarily via profile guided\noptimization(PGO), using Python for automation and Gtest, ADB. Also using technologies such as LTO and BOLT.\n\nData Science \u2022 Internship\nAug 2024 - Present\nOasis Infobyte, Virtual\n\nWorked on projects like flower classification in iris dataset, Unemployment analysis, car price prediction, SMS spam filtering and sales\nprediction using relevant Machine Learning techniques\n\nPython Development \u2022 Internship\nAug 2024\nOctanet Services Private Limited, Virtual\n\nWorked on an ATM simulation in Google colab which takes input of ATM pin and checks pin , withdrawal of money, deposit money,\ncheck balance, change pin.\n\nData Science \u2022 Internship\nAug 2024 - Sep 2024\nCodeclause Private Limited, Virtual\n\nAs an intern at Codeclause,I developed a ML model to detect fraudulent activities in credit card transactions(task 1),an advanced model\nusing XGBoost for the same and golden project- heart disease prediction(random forest) with streamlit UI\n\nEDUCATION\n\nBachelor of Engineering (B.E), Data Science\n2022 - 2026\nRamaiah Institute Of Technology\n\nTRAININGS / CERTIFICATIONS\n\nArtificial Intelligence\nJul 2024 - Present\n\nData Science\nMar 2024\n\nInfosys Springboard, Virtual\n\nSkillsoft, Virtual\n\nSelected as a part of Pragati program of Infosys Springboard\n(cohort 2)\n\nMicrosoft Azure Data Fundamentals Cloud Skills\nChallenge\nFeb 2024 - Mar 2024\n\nMicrosoft Azure AI Fundamentals Cloud Skills\nChallenge\nJan 2024\n\nMicrosoft, Virtual\n\nMicrosoft, Virtual\n\nParticipated in students ambassador clouds skills challenge on\nData science concepts and earned badges and certificate.\n\nWas an active skills challenge on Microsoft Learn. Got to learn\nnew essential skills and earned badges and certificates.\n\nAI\nDec 2023\n\nSkill Nation, Virtual\n\nGained experience in a workshop for ChatGPT prompts and use\nof various AI tools\n\nPORTFOLIO\n\nPage - 1/3\n\nGitHub link \u2197\n\nPortfolio link \u2197\n\nKaggle link \u2197\n\nCodeChef link \u2197\n\nLeetcode link \u2197\n\nHackerRank link \u2197\n\nPROJECTS\n\nHeart disease prediction \u2197                                    Parkinson's Episode Prediction System \u2197\nAug 2024 - Sep 2024                                     Mar 2024 - Jun 2024\nHeart Disease Prediction System Using Machine Learning          Developed an AI system to predict the off episodes of\n                                                                  Parkinson's disease based on parameters like Alpha synuclein\nThis project aims to predict the likelihood of heart disease based    dopamine and sp02\non various health metrics input by the user. Using a user-friendly\ninterface built with Streamlit, users can enter data such as age,\nsex, cholesterol levels, and more. The system processes this\ninput and utilizes a Random Forest Classifier (built using Scikit-\nLearn) to assess the risk of heart disease.\n\nKey features include:\n\nA clean and intuitive UI for health data input.\nReal-time prediction using a pre-trained machine learning model.\nSeamless integration of data preprocessing and model inference.\nTechnologies used: Python, Streamlit, Scikit-Learn, Pandas,\nJoblib, and NumPy.\n\nThis project enhances the understanding of cardiovascular risk\nfactors and demonstrates the practical application of predictive\nmodels in healthcare.\n\nGreen chips \u2197\nSep 2023 - Nov 2023\nDeveloped an effective E-waste management system which\nhelps people connect with E-waste disposal centres and helps\ndisposers get an estimate of the money they might get based on\nuploading pictures of the e-waste they are about to dispose\n\nSKILLS\n\n\u2022 Python                               \u2022 Data Analytics                         \u2022 MS-Excel\n\n\u2022 Machine Learning                      \u2022 Deep Learning                         \u2022 Neural Networks\n\n\u2022 English Proficiency (Written)             \u2022 English Proficiency (Spoken)             \u2022 Data Science\n\n\u2022 SQL                                 \u2022 Natural Language Processing (NLP)       \u2022 Algorithms\n\n\u2022 R Programming                        \u2022 Data Structures                        \u2022 MS-PowerPoint\n\n\u2022 Power BI                             \u2022 Microsoft Azure                        \u2022 HTML\n\n\u2022 CSS\n\nEXTRA CURRICULAR ACTIVITIES\n\n  An active member of the IEEE Computer Society club of Msrit which hosts technical events\n  Also an active member of NSS club\n\nADDITIONAL DETAILS\n\n  Won first in FantomCode'24 held during 16-17th may in RVITM cracked the ideation round to be a part of the 24 hour hackathon We\n  worked on AI driven Parkinsons off episode prediction based on the chemicals such as alpha-synuclein, dopamine and spO2\n\nPage - 2/3\nGitHub link \u2197\n\nPortfolio link \u2197\n\nKaggle link \u2197\n\nCodeChef link \u2197\n\nLeetcode link \u2197\n\nHackerRank link \u2197\n\nPROJECTS\n\nHeart disease prediction \u2197 \nAug 2024 - Sep 2024\n\nParkinson's Episode Prediction System \u2197 \nMar 2024 - Jun 2024\n\nHeart Disease Prediction System Using Machine Learning\n\nDeveloped an AI system to predict the off episodes of\nParkinson's disease based on parameters like Alpha synuclein\ndopamine and sp02\n\nThis project aims to predict the likelihood of heart disease based\non various health metrics input by the user. Using a user-friendly\ninterface built with Streamlit, users can enter data such as age,\nsex, cholesterol levels, and more. The system processes this\ninput and utilizes a Random Forest Classifier (built using Scikit-\nLearn) to assess the risk of heart disease.\n\nKey features include:\n\nA clean and intuitive UI for health data input.\nReal-time prediction using a pre-trained machine learning model.\nSeamless integration of data preprocessing and model inference.\nTechnologies used: Python, Streamlit, Scikit-Learn, Pandas,\nJoblib, and NumPy.\n\nThis project enhances the understanding of cardiovascular risk\nfactors and demonstrates the practical application of predictive\nmodels in healthcare.\n\nGreen chips \u2197 \nSep 2023 - Nov 2023\n\nDeveloped an effective E-waste management system which\nhelps people connect with E-waste disposal centres and helps\ndisposers get an estimate of the money they might get based on\nuploading pictures of the e-waste they are about to dispose\n\nSKILLS\n\n\u2022\u00a0 Python\n\u2022\u00a0 Data Analytics\n\u2022\u00a0 MS-Excel\n\n\u2022\u00a0 Machine Learning\n\u2022\u00a0 Deep Learning\n\u2022\u00a0 Neural Networks\n\n\u2022\u00a0 English Proficiency (Written)\n\u2022\u00a0 English Proficiency (Spoken)\n\u2022\u00a0 Data Science\n\n\u2022\u00a0 SQL\n\u2022\u00a0 Natural Language Processing (NLP)\n\u2022\u00a0 Algorithms\n\n\u2022\u00a0 R Programming\n\u2022\u00a0 Data Structures\n\u2022\u00a0 MS-PowerPoint\n\n\u2022\u00a0 Power BI\n\u2022\u00a0 Microsoft Azure\n\u2022\u00a0 HTML\n\n\u2022\u00a0 CSS\n\nEXTRA CURRICULAR ACTIVITIES\n\nAn active member of the IEEE Computer Society club of Msrit which hosts technical events\nAlso an active member of NSS club\n\nADDITIONAL DETAILS\n\nWon first in FantomCode'24 held during 16-17th may in RVITM cracked the ideation round to be a part of the 24 hour hackathon We\nworked on AI driven Parkinsons off episode prediction based on the chemicals such as alpha-synuclein, dopamine and spO2\n\nPage - 2/3\n\nExtracurricular Leadership Experience: Execom Member, IEEE Computer Society Jan 2024 \u2013 Present Organized technical events like\ndebugathons, and coding competitions. Coordinated workshops and seminars on emerging technologies\n\nPage - 3/3\nExtracurricular Leadership Experience: Execom Member, IEEE Computer Society Jan 2024 \u2013 Present Organized technical events like\ndebugathons, and coding competitions. Coordinated workshops and seminars on emerging technologies\n\nPage - 3/3",
+    "file_path": "data/uploads/20250602_095555_DhavalaT S_InternshalaResume-17 - DHAVALA T S.pdf",
+    "parsed_at": "2025-06-02T09:56:02.011147",
+    "parser_type": "OCR+AI"
+  },
+  {
+    "id": "20250602_100729",
+    "filename": "20250602_100712_New_Resume (1) - SWAYAM RAO.pdf",
+    "uploaded_at": "2025-06-01T06:00:37Z",
+    "status": "parsed_and_stored",
+    "uploaded_by": "pranamya-jain",
+    "team": "Seeds! \ud83c\udf31",
+    "name": "Swayam Rao",
+    "email": "l138swayamrao14@gmail.com",
+    "phone": "+91 9724174188",
+    "location": "Bangalore, India",
+    "skills": [
+      "Python",
+      "C",
+      "C++",
+      "Rust",
+      "Nmap",
+      "Wireshark",
+      "Metasploit",
+      "Burp Suite",
+      "John the Ripper",
+      "Hydra",
+      "Linux (Kali, Ubuntu)",
+      "Windows",
+      "Penetration Testing",
+      "Network Security",
+      "Cryptography",
+      "Vulnerability Assessment"
+    ],
+    "experience": [
+      {
+        "title": "Founding Member",
+        "company": "secuRIT Club, MSRIT",
+        "duration": "2024 \u2013 Present",
+        "description": "Founded MSRIT\u2019s first cybersecurity club and led 15+ events including workshops, CTFs, and speaker sessions; engaged over 200+ students in cybersecurity activities."
+      },
+      {
+        "title": "Student Coordinator and Developer",
+        "company": "SAP Hackfest 2024",
+        "duration": "2024",
+        "description": "Developed and launched hackfest.info for SAP Hackfest 2024, managing logistics and communication for 200+ participants; achieved 98% post-event satisfaction."
+      },
+      {
+        "title": "Student Coordinator",
+        "company": "Emmetra Workshop",
+        "duration": "2024",
+        "description": "Coordinated cybersecurity workshop logistics and communications for 50+ attendees, including speaker outreach and technical setup."
+      },
+      {
+        "title": "Founder",
+        "company": "secuRIT Club",
+        "duration": "2024 \u2013 Present",
+        "description": "Spearheaded the launch of MSRIT\u2019s first cybersecurity club, bringing together over 200+ students to learn, compete, and collaborate."
+      },
+      {
+        "title": "Student Coordinator",
+        "company": "Hackfest.info",
+        "duration": "2024",
+        "description": "Acted as liaison between SAP mentors and student teams, ensuring smooth planning and execution of the hackathon."
+      },
+      {
+        "title": "HackTheBox Team Member",
+        "company": "MSRIT",
+        "duration": "2024 \u2013 Present",
+        "description": "Represented MSRIT in competitive CTFs, contributing to reverse engineering and web exploitation challenges."
+      },
+      {
+        "title": "MSRIT Table Tennis Team",
+        "company": "MSRIT",
+        "duration": "2022 \u2013 Present",
+        "description": "Competed in VTU inter-zonal tournaments, consistently ranked among top players."
+      }
+    ],
+    "education": [
+      {
+        "degree": "B.E.",
+        "institution": "M.S. Ramaiah Institute of Technology (MSRIT)",
+        "year": "Expected Graduation: 2026",
+        "field": "Computer Science and Engineering (Cyber Security)"
+      },
+      {
+        "degree": "PU College",
+        "institution": "Janasudha PU College",
+        "year": "2022",
+        "field": null
+      }
+    ],
+    "experience_years": 2,
+    "summary": "Passionate cybersecurity enthusiast currently in 6th semester of B.E. in Cyber Security with a CGPA of 8.74. Founding member of MSRIT\u2019s secuRIT club and active CTF competitor. Experienced in penetration testing, network security, and vulnerability assessment. CEH v12 Master Certified and ranked in the top 1% on TryHackMe.",
+    "certifications": [
+      "EC-Council Certified Ethical Hacker (CEH v12) \u2013 Master Certified",
+      "TryHackMe (6 Learning Paths Completed): Jr. Penetration Tester, PenTest+, Buffer Overflow, Active Directory, Lateral Movement, Red Teaming.",
+      "EC-Council: Ethical Hacking using NMAP",
+      "Cisco: Ethical Hacker",
+      "Udemy: Learn Ethical Hacking from Scratch (2024)"
+    ],
+    "languages": [
+      "English",
+      "Hindi",
+      "Kannada"
+    ],
+    "projects": [
+      {
+        "name": "Network Analyzer",
+        "description": "Designed a Python-based tool using Scapy to detect MITM attacks on LAN environments; tested across 3+ attack scenarios in lab simulations.",
         "technologies": [
-          "Flutter",
-          "Node.js",
-          "MongoDB"
+          "Python",
+          "Scapy"
+        ]
+      },
+      {
+        "name": "SecuRIT Club Website",
+        "description": "Built and deployed the official website for MSRIT\u2019s cybersecurity club, providing a hub for 200+ students: securit.club.",
+        "technologies": []
+      },
+      {
+        "name": "SAP Hackathon Website",
+        "description": "Managed end-to-end development of the hackfest.info platform used by 400+ students and mentors for SAP Hackfest registration, updates, and event tracking.",
+        "technologies": []
+      },
+      {
+        "name": "Web Fuzzer",
+        "description": "Created a Python-based fuzzer to discover 10+ unique web vulnerabilities in practice labs; included HTML scraping and injection testing features.",
+        "technologies": [
+          "Python"
+        ]
+      },
+      {
+        "name": "Password Manager",
+        "description": "Developed a secure offline password manager with AES-256 encryption in Python; verified encryption strength using 100+ password entries.",
+        "technologies": [
+          "Python",
+          "AES-256"
         ]
       }
     ],
-    "raw_text": "Anirudh S Rai\n   # anirudhanirudh982@gmail.com   \u0083 +91-9945739677    \u00a7 github.com/AnirudhRa1\n                    \u00ef https://tinyurl.com/anirudhsrai\n\nEducation\n\nRamaiah Institute of Technology, Bengaluru                                            2022 \u2013 2026\n\n \u2022 Bachelor of Engineering, Computer Science & Engineering\n\n \u2022 GPA: 9.27/10\n\nSharada P.U College , Mangalore                                                     2020 \u2013 2022\n\n \u2022 Class XII (PCM), Grades: 92.6%\n\nInternships\n\nQuiz App                                                                              Oct 2023-Nov 2023\n\n \u2022 Completed a 3 week training program on Flutter.\n\n \u2022 Developed a Quiz App based on the popular quizzing app called QuizUp.\n\n \u2022 Gained hands-on experience with Flutter\u2019s widget-based architecture, and hot reload, while learning to build\n   responsive and cross-platform user interfaces.\n\nProjects\n\nPersonal Music Streaming App                                                             2024\n\n \u2022 Developed a personal music streaming app that allows users to upload, stream, and manage their own music\n    library.\n\n \u2022 Implemented secure authentication and a RESTful API to handle song metadata, streaming.\n\n \u2022 Containerized the entire application using Docker and deployed it for seamless access across devices.\n\n \u2022 Technologies: React, Node.js, Express.js, MongoDB, Docker\n\nDelivery App for College Students                                                          2024\n\n \u2022 Built a platform where students can post and accept delivery tasks within their college.\n\n \u2022 Designed a reward system where students earn points or money for completing deliveries.\n\n \u2022 Technologies: Flutter , Node.js, MongoDB.\n\nSkills\n\nProgramming Languages: C++, Python, Java, C, JavaScript,\nFrameworks/Tools: Node.js, Html, Css, Sql, Flutter, Express, MongoDB, Git, GitHub\nSoft Skills: Leadership,Time Management\n\nCompetitive Programming\n\n \u2022 CodeForces: Solved over 200 problems with Max Rating: 1432 , Best Global Rank: 973\n\n \u2022 LeetCode: Solved over 600 problems with, Best Global Rank: 1789\n\n \u2022 Achieved 1st place in the Republic Day Coding Contest held at my college.\nAnirudh S Rai\n\n# anirudhanirudh982@gmail.com\n\u0083 +91-9945739677\n\u00a7 github.com/AnirudhRa1\n\u00ef https://tinyurl.com/anirudhsrai\n\nEducation\n\nRamaiah Institute of Technology, Bengaluru\n2022 \u2013 2026\n\n\u2022 Bachelor of Engineering, Computer Science & Engineering\n\n\u2022 GPA: 9.27/10\n\nSharada P.U College , Mangalore\n2020 \u2013 2022\n\n\u2022 Class XII (PCM), Grades: 92.6%\n\nInternships\n\nQuiz App\nOct 2023-Nov 2023\n\n\u2022 Completed a 3 week training program on Flutter.\n\n\u2022 Developed a Quiz App based on the popular quizzing app called QuizUp.\n\n\u2022 Gained hands-on experience with Flutter\u2019s widget-based architecture, and hot reload, while learning to build\nresponsive and cross-platform user interfaces.\n\nProjects\n\nPersonal Music Streaming App\n2024\n\n\u2022 Developed a personal music streaming app that allows users to upload, stream, and manage their own music\nlibrary.\n\n\u2022 Implemented secure authentication and a RESTful API to handle song metadata, streaming.\n\n\u2022 Containerized the entire application using Docker and deployed it for seamless access across devices.\n\n\u2022 Technologies: React, Node.js, Express.js, MongoDB, Docker\n\nDelivery App for College Students\n2024\n\n\u2022 Built a platform where students can post and accept delivery tasks within their college.\n\n\u2022 Designed a reward system where students earn points or money for completing deliveries.\n\n\u2022 Technologies: Flutter , Node.js, MongoDB.\n\nSkills\n\nProgramming Languages: C++, Python, Java, C, JavaScript,\nFrameworks/Tools: Node.js, Html, Css, Sql, Flutter, Express, MongoDB, Git, GitHub\nSoft Skills: Leadership,Time Management\n\nCompetitive Programming\n\n\u2022 CodeForces: Solved over 200 problems with Max Rating: 1432 , Best Global Rank: 973\n\n\u2022 LeetCode: Solved over 600 problems with, Best Global Rank: 1789\n\n\u2022 Achieved 1st place in the Republic Day Coding Contest held at my college.",
-    "file_path": "data/uploads/20250602_053358_Anirudh_resume - Anirudh Rai.pdf",
-    "parsed_at": "2025-06-02T05:34:02.598598",
+    "raw_text": "Swayam Rao\n  +91 9724174188 \u2014 l138swayamrao14@gmail.com \u2014 GitHub: SwayamRao \u2014 LinkedIn: Swayam Rao \u2014\n                                    TryHackMe: Grim1ock\n\nSummary\n\nPassionate cybersecurity enthusiast currently in 6th semester of B.E. in Cyber Security with a CGPA of 8.74.\nFounding member of MSRIT\u2019s secuRIT club and active CTF competitor. Experienced in penetration testing,\nnetwork security, and vulnerability assessment. CEH v12 Master Certified and ranked in the top 1% on\nTryHackMe.\n\nWork Experience\n\n\u2022 Founding Member \u2013 secuRIT Club                                              2024 \u2013 Present\n  Founded MSRIT\u2019s first cybersecurity club and led 15+ events including workshops, CTFs, and speaker sessions;\n  engaged over 200+ students in cybersecurity activities.\n\n\u2022 Student Coordinator and Developer \u2013 SAP Hackfest 2024                                2024\n  Developed and launched hackfest.info for SAP Hackfest 2024, managing logistics and communication for 200+\n  participants; achieved 98% post-event satisfaction.\n\n\u2022 Student Coordinator \u2013 Emmetra Workshop                                               2024\n  Coordinated cybersecurity workshop logistics and communications for 50+ attendees, including speaker out-\n  reach and technical setup.\n\nProjects\n\n\u2022 Network Analyzer                                                                        2024\n  Designed a Python-based tool using Scapy to detect MITM attacks on LAN environments; tested across 3+\n  attack scenarios in lab simulations.\n\n\u2022 SecuRIT Club Website                                                                   2024\n  Built and deployed the official website for MSRIT\u2019s cybersecurity club, providing a hub for 200+ students:\n  securit.club.\n\n\u2022 SAP Hackathon Website                                                                 2024\n  Managed end-to-end development of the hackfest.info platform used by 400+ students and mentors for SAP\n  Hackfest registration, updates, and event tracking.\n\n\u2022 Web Fuzzer                                                                              2023\n  Created a Python-based fuzzer to discover 10+ unique web vulnerabilities in practice labs; included HTML\n  scraping and injection testing features.\n\n\u2022 Password Manager                                                                       2023\n  Developed a secure offline password manager with AES-256 encryption in Python; verified encryption strength\n  using 100+ password entries.\n\n\u2022 More projects on: GitHub.\n\nAchievements\n\n\u2022 Ranked 5th, 7th, and 8th in EC-Council CEH Compete events (2024).\n\n\u2022 Top 1% on TryHackMe and 6 learning paths completed.\n\n\u2022 Solved 100+ CTF rooms across TryHackMe and picoCTF.\n\n\u2022 Published 30+ CTF writeups on GitHub with 500+ combined views and stars.\n\nLeadership and Extracurriculars\n\n1\nSwayam Rao\n+91 9724174188 \u2014 l138swayamrao14@gmail.com \u2014 GitHub: SwayamRao \u2014 LinkedIn: Swayam Rao \u2014\n\nTryHackMe: Grim1ock\n\nSummary\n\nPassionate cybersecurity enthusiast currently in 6th semester of B.E. in Cyber Security with a CGPA of 8.74.\nFounding member of MSRIT\u2019s secuRIT club and active CTF competitor. Experienced in penetration testing,\nnetwork security, and vulnerability assessment. CEH v12 Master Certified and ranked in the top 1% on\nTryHackMe.\n\nWork Experience\n\n\u2022 Founding Member \u2013 secuRIT Club\n2024 \u2013 Present\nFounded MSRIT\u2019s first cybersecurity club and led 15+ events including workshops, CTFs, and speaker sessions;\nengaged over 200+ students in cybersecurity activities.\n\n\u2022 Student Coordinator and Developer \u2013 SAP Hackfest 2024\n2024\nDeveloped and launched hackfest.info for SAP Hackfest 2024, managing logistics and communication for 200+\nparticipants; achieved 98% post-event satisfaction.\n\n\u2022 Student Coordinator \u2013 Emmetra Workshop\n2024\nCoordinated cybersecurity workshop logistics and communications for 50+ attendees, including speaker out-\nreach and technical setup.\n\nProjects\n\n\u2022 Network Analyzer\n2024\nDesigned a Python-based tool using Scapy to detect MITM attacks on LAN environments; tested across 3+\nattack scenarios in lab simulations.\n\n\u2022 SecuRIT Club Website\n2024\nBuilt and deployed the official website for MSRIT\u2019s cybersecurity club, providing a hub for 200+ students:\nsecurit.club.\n\n\u2022 SAP Hackathon Website\n2024\nManaged end-to-end development of the hackfest.info platform used by 400+ students and mentors for SAP\nHackfest registration, updates, and event tracking.\n\n\u2022 Web Fuzzer\n2023\nCreated a Python-based fuzzer to discover 10+ unique web vulnerabilities in practice labs; included HTML\nscraping and injection testing features.\n\n\u2022 Password Manager\n2023\nDeveloped a secure offline password manager with AES-256 encryption in Python; verified encryption strength\nusing 100+ password entries.\n\n\u2022 More projects on: GitHub.\n\nAchievements\n\n\u2022 Ranked 5th, 7th, and 8th in EC-Council CEH Compete events (2024).\n\n\u2022 Top 1% on TryHackMe and 6 learning paths completed.\n\n\u2022 Solved 100+ CTF rooms across TryHackMe and picoCTF.\n\n\u2022 Published 30+ CTF writeups on GitHub with 500+ combined views and stars.\n\nLeadership and Extracurriculars\n\n1\n\n\u2022 Founder \u2013 secuRIT Club                                                        2024 \u2013 Present\n  Spearheaded the launch of MSRIT\u2019s first cybersecurity club, bringing together over 200+ students to learn,\n  compete, and collaborate.\n\n\u2022 Student Coordinator \u2013 Hackfest.info                                                      2024\n  Acted as liaison between SAP mentors and student teams, ensuring smooth planning and execution of the\n  hackathon.\n\n\u2022 HackTheBox Team Member                                                     2024 \u2013 Present\n  Represented MSRIT in competitive CTFs, contributing to reverse engineering and web exploitation challenges.\n\n\u2022 MSRIT Table Tennis Team                                                      2022 \u2013 Present\n  Competed in VTU inter-zonal tournaments, consistently ranked among top players.\n\nEducation\n\nM.S. Ramaiah Institute of Technology (MSRIT), Bangalore               Expected Graduation: 2026\n\n\u2022 B.E. in Computer Science and Engineering (Cyber Security)\n\n\u2022 Current CGPA: 8.74 (6th Semester)\n\nJanasudha PU College                                                               Graduated: 2022\n\n\u2022 Secured 95%\n\nCertifications\n\n\u2022 EC-Council Certified Ethical Hacker (CEH v12) \u2013 Master Certified\n  Completed both theoretical and practical assessments; top 10 placement in CEH Compete (5th, 7th, 8th ranks).\n\n\u2022 TryHackMe (6 Learning Paths Completed)\n   Jr. Penetration Tester, PenTest+, Buffer Overflow, Active Directory, Lateral Movement, Red Teaming.\n\n\u2022 EC-Council: Ethical Hacking using NMAP\n\n\u2022 Cisco: Ethical Hacker\n\n\u2022 Udemy: Learn Ethical Hacking from Scratch (2024)\n\nTechnical Skills\n\n\u2022 Languages: Python, C, C++, Rust\n\n\u2022 Tools: Nmap, Wireshark, Metasploit, Burp Suite, John the Ripper, Hydra\n\n\u2022 OS: Linux (Kali, Ubuntu), Windows\n\n\u2022 Domains: Penetration Testing, Network Security, Cryptography, Vulnerability Assessment\n\nAdditional Information\n\n\u2022 Languages Known: English (Fluent), Hindi (Fluent), Kannada (Native)\n\n\u2022 Hobbies: Cybersecurity, Table Tennis, Chess, Ethical Hacking\n\n2\n\u2022 Founder \u2013 secuRIT Club\n2024 \u2013 Present\nSpearheaded the launch of MSRIT\u2019s first cybersecurity club, bringing together over 200+ students to learn,\ncompete, and collaborate.\n\n\u2022 Student Coordinator \u2013 Hackfest.info\n2024\nActed as liaison between SAP mentors and student teams, ensuring smooth planning and execution of the\nhackathon.\n\n\u2022 HackTheBox Team Member\n2024 \u2013 Present\nRepresented MSRIT in competitive CTFs, contributing to reverse engineering and web exploitation challenges.\n\n\u2022 MSRIT Table Tennis Team\n2022 \u2013 Present\nCompeted in VTU inter-zonal tournaments, consistently ranked among top players.\n\nEducation\n\nM.S. Ramaiah Institute of Technology (MSRIT), Bangalore\nExpected Graduation: 2026\n\n\u2022 B.E. in Computer Science and Engineering (Cyber Security)\n\n\u2022 Current CGPA: 8.74 (6th Semester)\n\nJanasudha PU College\nGraduated: 2022\n\n\u2022 Secured 95%\n\nCertifications\n\n\u2022 EC-Council Certified Ethical Hacker (CEH v12) \u2013 Master Certified\nCompleted both theoretical and practical assessments; top 10 placement in CEH Compete (5th, 7th, 8th ranks).\n\n\u2022 TryHackMe (6 Learning Paths Completed)\nJr. Penetration Tester, PenTest+, Buffer Overflow, Active Directory, Lateral Movement, Red Teaming.\n\n\u2022 EC-Council: Ethical Hacking using NMAP\n\n\u2022 Cisco: Ethical Hacker\n\n\u2022 Udemy: Learn Ethical Hacking from Scratch (2024)\n\nTechnical Skills\n\n\u2022 Languages: Python, C, C++, Rust\n\n\u2022 Tools: Nmap, Wireshark, Metasploit, Burp Suite, John the Ripper, Hydra\n\n\u2022 OS: Linux (Kali, Ubuntu), Windows\n\n\u2022 Domains: Penetration Testing, Network Security, Cryptography, Vulnerability Assessment\n\nAdditional Information\n\n\u2022 Languages Known: English (Fluent), Hindi (Fluent), Kannada (Native)\n\n\u2022 Hobbies: Cybersecurity, Table Tennis, Chess, Ethical Hacking\n\n2",
+    "file_path": "data/uploads/20250602_100712_New_Resume (1) - SWAYAM RAO.pdf",
+    "parsed_at": "2025-06-02T10:07:29.243766",
     "parser_type": "OCR+AI"
   }
 ]

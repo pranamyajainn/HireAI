@@ -40,5 +40,17 @@
     "template_type": "rejection_soft",
     "timestamp": "2025-06-01T22:28:11.583344",
     "status": "success"
+  },
+  {
+    "candidate_id": "20250602_090729",
+    "template_type": "initial_contact",
+    "timestamp": "2025-06-02T09:45:55.289000",
+    "status": "success"
+  },
+  {
+    "candidate_id": "20250602_091406",
+    "template_type": "rejection_soft",
+    "timestamp": "2025-06-02T09:58:27.175343",
+    "status": "success"
   }
 ]
