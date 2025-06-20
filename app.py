@@ -4,10 +4,16 @@ import os
 import json
 import csv
 import io
+import asyncio
 from datetime import datetime
 from dotenv import load_dotenv
 from config import Config
+# In app.py
+from utils.ai_interviewer import AIInterviewer
+import sys
+from utils.ai_screening import AIScreening 
 
+# ... other imports like Flask, jsonify, etc.
 # Force load environment variables at the very beginning
 load_dotenv()
 
@@ -60,7 +66,28 @@ try:
 except Exception as e:
     print(f"❌ Error initializing PeopleGPT Query Parser: {e}")
     query_parser = None
+# Initialize ElevenLabs AI Interviewer
+try:
+    # This creates one instance of the interviewer that the whole app can use.
+    ai_interviewer = AIInterviewer()
+    print("✅ ElevenLabs AI Interviewer initialized successfully.")
+except ValueError as e:
+    # This will catch the error if the API key is missing.
+    print(f"❌ FATAL ERROR: Could not initialize ElevenLabs AI Interviewer.")
+    print(f"   Reason: {e}")
+    print(f"   Please make sure the ELEVENLABS_API_KEY environment variable is set.")
+    # Set the variable to None so routes can check for it, or exit.
+    ai_interviewer = None 
+    # For a critical service, you might want to stop the server entirely:
+    # import sys
+    # sys.exit(1)
+# ===================================================================
+# === END OF BLOCK TO ADD ===========================================
+# ===================================================================
 
+
+# --- NEW: Initialize AIScreening instance --- (This part already exists)
+ai_screening_tool = AIScreening()
 # Add these imports for advanced export functionality
 try:
     from reportlab.lib.pagesizes import letter, A4
@@ -78,8 +105,7 @@ except ImportError:
 # Add this import at the top with your other imports
 from utils.outreach_manager import OutreachManager
 
-# Import the AIScreening class from utils
-from utils.ai_screening import AIScreening
+
 
 
 # ================================
@@ -1455,7 +1481,6 @@ def send_outreach():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-from utils.ai_screening import AIScreening
 try:
     # Use Gemini for our enhanced AI features
     ai_matcher = AIMatcher(api_key=gemini_api_key)
@@ -1593,6 +1618,173 @@ def peoplegpt_screening_api():
             'success': False,
             'error': f'PeopleGPT screening failed: {str(e)}',
             'timestamp': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') + ' UTC'
+        }), 500
+
+# ================================
+# AI INTERVIEWER ENDPOINTS
+# ================================
+
+@app.route('/api/ai_interview/create_agent', methods=['POST'])
+def create_interview_agent():
+    """
+    Create an AI interview agent with ElevenLabs
+    """
+    if not ai_interviewer:
+        return jsonify({
+            'success': False,
+            'error': 'AI Interviewer not available. Please configure ELEVENLABS_API_KEY.'
+        }), 503
+
+    try:
+        data = request.get_json()
+        job_description = data.get('job_description', '')
+        interview_type = data.get('interview_type', 'technical')
+        agent_name = data.get('agent_name', 'HR Interview Assistant')
+        voice_id = data.get('voice_id', '21m00Tcm4TlvDq8ikWAM')
+
+        agent_id = ai_interviewer.create_interview_agent(
+            agent_name=agent_name,
+            voice_id=voice_id,
+            job_description=job_description,
+           
+        )
+
+        return jsonify({
+            'success': True,
+            'agent_id': agent_id,
+            'message': 'Interview agent created successfully'
+        })
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': f'Failed to create interview agent: {str(e)}'
+        }), 500
+
+@app.route('/api/ai_interview/start_session', methods=['POST'])
+def start_interview_session():
+    """
+    Start an AI interview session
+    """
+    if not ai_interviewer:
+        return jsonify({
+            'success': False,
+            'error': 'AI Interviewer not available. Please configure ELEVENLABS_API_KEY.'
+        }), 503
+
+    try:
+        data = request.get_json()
+        agent_id = data.get('agent_id')
+        candidate_name = data.get('candidate_name', 'Anonymous')
+        
+        if not agent_id:
+            return jsonify({
+                'success': False,
+                'error': 'agent_id is required'
+            }), 400
+
+        # === REPLACEMENT START ===
+        # The function is not async, so we can call it directly.
+        session_info = ai_interviewer.start_interview_session(
+            agent_id=agent_id,
+            candidate_name=candidate_name
+        )
+        # === REPLACEMENT END ===
+
+        return jsonify({
+            'success': True,
+            'session_info': session_info
+        })
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': f'Failed to start interview session: {str(e)}'
+        }), 500
+
+@app.route('/api/ai_interview/end_session', methods=['POST'])
+def end_interview_session():
+    """
+    End an AI interview session
+    """
+    if not ai_interviewer:
+        return jsonify({
+            'success': False,
+            'error': 'AI Interviewer not available'
+        }), 503
+
+    try:
+        data = request.get_json()
+        session_id = data.get('session_id')
+        
+        if not session_id:
+            return jsonify({
+                'success': False,
+                'error': 'session_id is required'
+            }), 400
+
+        # === REPLACEMENT START ===
+        # The function is not async, so we can call it directly.
+        session_summary = ai_interviewer.end_interview_session(session_id)
+        # === REPLACEMENT END ===
+
+        return jsonify({
+            'success': True,
+            'session_summary': session_summary
+        })
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': f'Failed to end interview session: {str(e)}'
+        }), 500
+    
+@app.route('/api/ai_interview/voices', methods=['GET'])
+def get_available_voices():
+    """
+    Get available ElevenLabs voices
+    """
+    if not ai_interviewer:
+        return jsonify({
+            'success': False,
+            'error': 'AI Interviewer not available'
+        }), 503
+
+    try:
+        voices = ai_interviewer.get_available_voices()
+        return jsonify({
+            'success': True,
+            'voices': voices
+        })
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': f'Failed to get voices: {str(e)}'
+        }), 500
+
+@app.route('/api/ai_interview/sessions', methods=['GET'])
+def list_interview_sessions():
+    """
+    List active interview sessions
+    """
+    if not ai_interviewer:
+        return jsonify({
+            'success': False,
+            'error': 'AI Interviewer not available'
+        }), 503
+
+    try:
+        sessions = ai_interviewer.list_active_sessions()
+        return jsonify({
+            'success': True,
+            'sessions': sessions
+        })
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': f'Failed to list sessions: {str(e)}'
         }), 500
 
 # ================================

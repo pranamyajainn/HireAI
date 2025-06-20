@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HireAI - Intelligent candidate management powered by AI">
     <title>Candidates - HireAI</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,8 +17,8 @@
             background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
             min-height: 100vh;
             position: relative;
-            overflow: hidden;
-        }
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }    
         
         .candidates-page::before {
             content: '';
@@ -33,7 +34,7 @@
         
         .candidates-header {
             background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 50%, var(--bg-card) 100%);
-            padding: 4rem 0;
+            padding: 2rem 0; /* Reduced from 4rem to 2rem */
             border-bottom: 1px solid var(--border-primary);
             position: relative;
             z-index: 2;
@@ -72,7 +73,6 @@
             padding: 2rem;
             margin-bottom: 1.5rem;
             transition: var(--transition-smooth);
-            cursor: pointer;
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
@@ -188,7 +188,7 @@
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
             border-radius: 16px;
-            padding: 2.5rem;
+            padding: 2rem; /* Reduced from 2.5rem to 2rem */
             margin-bottom: 2rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             position: relative;
@@ -214,9 +214,9 @@
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem; /* Reduced from 2rem to 1.5rem */
+            margin-bottom: 2rem; /* Reduced from 3rem to 2rem */
             position: relative;
             z-index: 2;
         }
@@ -225,7 +225,7 @@
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
             border-radius: 16px;
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.5rem; /* Reduced from 2.5rem 2rem to 2rem 1.5rem */
             text-align: center;
             transition: var(--transition-smooth);
             position: relative;
@@ -444,22 +444,46 @@
             50% { transform: translateY(-40px) rotate(180deg); opacity: 0.3; }
         }
         
-        .datetime-display {
-            font-family: 'Inter', monospace;
-            background: linear-gradient(135deg, rgba(81, 207, 102, 0.2), rgba(81, 207, 102, 0.1));
-            border: 1px solid var(--accent-green);
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            display: inline-block;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            color: var(--accent-green);
-            box-shadow: 0 4px 16px rgba(81, 207, 102, 0.2);
-        }
-        
+        /* Fixed navbar for mobile - Add this */
         @media (max-width: 768px) {
+            .navbar-toggle {
+                display: block !important; /* Override inline style */
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+                background: transparent;
+                border: none;
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 100;
+            }
+            
+            .navbar-nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--bg-primary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 99;
+            }
+            
+            .navbar-nav.active {
+                display: flex;
+            }
+            
+            .navbar-nav .nav-link {
+                font-size: 1.25rem;
+                margin: 0.5rem 0;
+            }
+            
             .candidates-header {
-                padding: 3rem 0;
+                padding: 2rem 0;
             }
             
             .candidate-card {
@@ -474,16 +498,35 @@
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
+                gap: 1rem;
             }
             
             .search-filter-section {
-                padding: 2rem;
+                padding: 1.5rem;
             }
             
             .stat-number {
                 font-size: 2.5rem;
             }
+            
+            /* Make the grid responsive */
+            .grid-3 {
+                grid-template-columns: 1fr !important;
+                gap: 0.75rem !important;
+            }
+            
+            /* Improve filter button layout */
+            .flex-between {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        /* Fix animation-related issues */
+        .animate-fadeInUp {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease-out;
         }
     </style>
 </head>
@@ -509,12 +552,11 @@
                     <li><a href="/search" class="nav-link" data-page="search">Search Candidates</a></li>
                     <li><a href="/outreach" class="nav-link" data-page="outreach">Personalized Outreach</a></li>
                     <li><a href="/analytics" class="nav-link" data-page="analytics">Analytics</a></li>
-                                     <li><a href="/background_check" class="nav-link" data-page="Background Check">Ai Screening</a></li>
-
+                    <li><a href="/background_check" class="nav-link" data-page="Background Check">AI Screening</a></li>
                 </ul>
                 
-                <!-- Mobile menu toggle -->
-                <button class="navbar-toggle" id="navbar-toggle" style="display: none;">
+                <!-- Mobile menu toggle - removed display:none inline style -->
+                <button class="navbar-toggle" id="navbar-toggle">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -531,15 +573,6 @@
                     <p class="hero-subtitle mb-4">
                         Manage and explore your candidate pool with advanced filtering and search
                     </p>
-                    
-                    <!-- Enhanced Live timestamp -->
-                    <div class="datetime-display">
-                        <i class="fas fa-clock icon"></i>
-                        <span id="currentDateTime">2025-06-01 17:12:37</span> UTC
-                        <span class="text-muted" style="margin-left: 1rem;">
-                            <i class="fas fa-user icon"></i> pranamya-jain
-                        </span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -641,7 +674,7 @@
                         <!-- Candidates List -->
                         <div id="candidates-list">
                             {% for candidate in candidates %}
-                                <div class="candidate-card" data-candidate-id="{{ candidate.id if candidate.id else 'unknown' }}" onclick="viewCandidate('{{ candidate.id if candidate.id else 'unknown' }}')">
+                                <div class="candidate-card" data-candidate-id="{{ candidate.id if candidate.id else 'unknown' }}">
                                     <div class="flex-start">
                                         <div class="candidate-avatar">
                                             {{ (candidate.name|string|first|upper) if candidate.name else 'U' }}
@@ -740,13 +773,6 @@
                     Built with ❤️ by <strong>Team Seeds! 🌱</strong><br>
                     Intelligent candidate management powered by AI
                 </p>
-                <div class="footer-timestamp">
-                    <i class="fas fa-clock icon-only"></i>
-                    <span id="footerDateTime">2025-06-01 17:12:37</span> UTC
-                    <span class="text-muted" style="margin-left: 1rem;">
-                        <i class="fas fa-seedling icon-only"></i> Team Seeds
-                    </span>
-                </div>
             </div>
         </footer>
     </div>
@@ -785,7 +811,7 @@
                 if (homeLink) homeLink.classList.add('active');
             }
             
-            // Mobile menu toggle functionality
+            // Mobile menu toggle functionality - fixed to show mobile menu button
             const navbarToggle = document.getElementById('navbar-toggle');
             const navbarNav = document.querySelector('.navbar-nav');
             
@@ -842,14 +868,6 @@
             console.error('Error loading candidates data:', error);
             allCandidates = [];
             filteredCandidates = [];
-        }
-        
-        // Update live datetime to UTC
-        function updateDateTime() {
-            const now = new Date();
-            const utcString = now.toISOString().slice(0, 19).replace('T', ' ');
-            document.getElementById('currentDateTime').textContent = utcString;
-            document.getElementById('footerDateTime').textContent = utcString;
         }
 
         // Calculate and display statistics with safe null checking
@@ -1086,7 +1104,7 @@
                 };
                 
                 return `
-                    <div class="candidate-card" data-candidate-id="${safeCandidate.id}" onclick="viewCandidate('${safeCandidate.id}')">
+                    <div class="candidate-card" data-candidate-id="${safeCandidate.id}">
                         <div class="flex-start">
                             <div class="candidate-avatar">
                                 ${safeCandidate.name.charAt(0).toUpperCase()}
@@ -1124,15 +1142,6 @@
                     </div>
                 `;
             }).join('');
-        }
-
-        // Navigation functions
-        function viewCandidate(candidateId) {
-            if (candidateId && candidateId !== 'unknown') {
-                window.location.href = `/candidate/${candidateId}`;
-            } else {
-                console.warn('Invalid candidate ID:', candidateId);
-            }
         }
 
         function exportCandidates() {
@@ -1183,44 +1192,13 @@
             });
         }
 
-        // Scroll animations
-        function addScrollAnimations() {
-            const animateElements = document.querySelectorAll('.animate-fadeInUp');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            animateElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'all 0.6s ease-out';
-                observer.observe(el);
-            });
-        }
-
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Set current time with provided timestamp
-            document.getElementById('currentDateTime').textContent = '2025-06-01 17:12:37';
-            document.getElementById('footerDateTime').textContent = '2025-06-01 17:12:37';
-            
-            // Start live updates
-            updateDateTime();
-            setInterval(updateDateTime, 1000);
-            
             // Initialize page
             calculateStats();
-            addScrollAnimations();
             
             console.log('HireAI Candidates Page initialized for user: pranamya-jain');
             console.log('Total candidates loaded:', allCandidates.length);
-            console.log('Current time: 2025-06-01 17:12:37 UTC');
         });
     </script>
 </body>

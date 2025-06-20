@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HireAI - AI-powered insights into your talent pipeline">
     <title>Analytics Dashboard - HireAI</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,24 +14,71 @@
     <!-- Custom Styles -->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <style>
-        /* Page-specific styles for analytics.html */
+        /* Enhanced aesthetic styles for analytics.html */
+        .analytics-page {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+        
+        .analytics-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 35% 25%, rgba(81, 207, 102, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 65% 75%, rgba(81, 207, 102, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
         .analytics-header {
-            background: linear-gradient(135deg, #333333 0%, #111111 50%, #000000 100%);
-            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 50%, var(--bg-card) 100%);
+            padding: 2rem 0; /* Reduced from 4rem to 2rem */
             border-bottom: 1px solid var(--border-primary);
             position: relative;
+            z-index: 2;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .analytics-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 100%, rgba(81, 207, 102, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-title {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-green) 50%, var(--text-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 1rem;
         }
         
         .stat-card {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
+            border-radius: 16px;
             padding: 2rem;
-            box-shadow: var(--shadow-subtle);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             transition: var(--transition-smooth);
             text-align: center;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
         
         .stat-card::before {
@@ -40,7 +88,19 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.1), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-green), #40c057, var(--accent-green));
+            opacity: 0;
             transition: var(--transition-smooth);
         }
         
@@ -48,9 +108,13 @@
             left: 100%;
         }
         
+        .stat-card:hover::after {
+            opacity: 1;
+        }
+        
         .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-elevated);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(81, 207, 102, 0.2);
             border-color: var(--accent-green);
         }
         
@@ -63,49 +127,98 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 4px 8px rgba(81, 207, 102, 0.3);
         }
         
         .stat-label {
             color: var(--text-secondary);
             font-size: 1.1rem;
             margin: 0.5rem 0;
+            font-weight: 500;
+        }
+        
+        .trend-up { 
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+        .trend-down { 
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+        .trend-neutral { 
+            color: var(--text-muted);
+            font-weight: 600;
         }
         
         .chart-container {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: var(--shadow-subtle);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0;
             transition: var(--transition-smooth);
         }
         
+        .chart-container:hover::before {
+            opacity: 1;
+        }
+        
         .chart-container:hover {
-            box-shadow: var(--shadow-card);
+            box-shadow: 0 12px 48px rgba(81, 207, 102, 0.15);
         }
         
         .chart-container h4 {
             margin-bottom: 1.5rem;
             color: var(--text-primary);
+            font-weight: 600;
         }
         
-        .trend-up { color: var(--accent-green); }
-        .trend-down { color: var(--accent-red); }
-        .trend-neutral { color: var(--text-muted); }
-        
         .insight-card {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow-subtle);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border-left: 4px solid var(--text-primary);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.05), transparent);
             transition: var(--transition-smooth);
         }
         
+        .insight-card:hover::before {
+            left: 100%;
+        }
+        
         .insight-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-card);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
         
         .ai-insight {
@@ -113,47 +226,61 @@
         }
         
         .action-insight {
-            border-left-color: var(--accent-yellow);
+            border-left-color: #ffc107;
         }
         
-        .user-info {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
+        .enhanced-btn {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #40c057 100%);
+            box-shadow: 0 4px 15px rgba(81, 207, 102, 0.3);
+            position: relative;
+            overflow: hidden;
         }
         
-        .datetime-display {
-            font-family: 'Inter', monospace;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.75rem 1.5rem;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
+        .enhanced-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .enhanced-btn:hover::before {
+            left: 100%;
+        }
+        
+        .enhanced-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(81, 207, 102, 0.4);
         }
         
         .dashboard-metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
             margin: 2rem 0;
+            position: relative;
+            z-index: 2;
         }
         
         .charts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
             margin: 2rem 0;
+            position: relative;
+            z-index: 2;
         }
         
         .insights-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
             margin: 2rem 0;
+            position: relative;
+            z-index: 2;
         }
         
         .list-group {
@@ -161,21 +288,39 @@
         }
         
         .list-group-item {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             border: 1px solid var(--border-primary);
             color: var(--text-primary);
-            border-radius: 6px !important;
-            margin-bottom: 0.5rem;
-            transition: var(--transition-fast);
+            border-radius: 12px !important;
+            margin-bottom: 0.75rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .list-group-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.1), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .list-group-item:hover::before {
+            left: 100%;
         }
         
         .list-group-item:hover {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             transform: translateX(5px);
+            border-color: var(--accent-green);
         }
         
         .list-group-item:last-child {
-            border-radius: 6px !important;
+            border-radius: 12px !important;
         }
         
         .list-group-item h5, .list-group-item h6 {
@@ -183,9 +328,25 @@
         }
         
         .modal-content {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
             color: var(--text-primary);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-green), #40c057, var(--accent-green));
+            opacity: 1;
         }
         
         .modal-header {
@@ -197,32 +358,60 @@
         }
         
         .alert {
-            border-radius: 6px;
+            border-radius: 12px;
             border: 1px solid;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
         }
         
         .alert-info {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             border-color: var(--accent-green);
             color: var(--text-primary);
         }
         
+        .alert-info::before {
+            background: var(--accent-green);
+        }
+        
         .alert-light {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border-color: var(--border-primary);
             color: var(--text-secondary);
         }
         
+        .alert-light::before {
+            background: var(--border-primary);
+        }
+        
         .alert-success {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.1), rgba(81, 207, 102, 0.05));
             border-color: var(--accent-green);
             color: var(--accent-green);
         }
+        
+        .alert-success::before {
+            background: var(--accent-green);
+        }
 
         .alert-warning {
-            background: rgba(255, 193, 7, 0.1);
-            border-color: var(--accent-yellow);
-            color: var(--accent-yellow);
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
+            border-color: #ffc107;
+            color: #ffc107;
+        }
+        
+        .alert-warning::before {
+            background: #ffc107;
         }
         
         .btn-outline-primary,
@@ -231,17 +420,52 @@
         .btn-outline-danger {
             border-color: var(--border-primary);
             color: var(--text-secondary);
-            background: var(--bg-secondary);
-            transition: var(--transition-fast);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
         }
         
-        .btn-outline-primary:hover { background: var(--accent-green); color: var(--bg-primary); }
-        .btn-outline-success:hover { background: var(--accent-green); color: var(--bg-primary); }
-        .btn-outline-info:hover { background: var(--accent-green); color: var(--bg-primary); }
-        .btn-outline-danger:hover { background: var(--accent-red); color: var(--bg-primary); }
+        .btn-outline-primary::before,
+        .btn-outline-success::before,
+        .btn-outline-info::before,
+        .btn-outline-danger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: var(--transition-smooth);
+        }
         
-        .navbar-text {
-            color: var(--text-secondary) !important;
+        .btn-outline-primary:hover::before,
+        .btn-outline-success:hover::before,
+        .btn-outline-info:hover::before,
+        .btn-outline-danger:hover::before {
+            left: 100%;
+        }
+        
+        .btn-outline-primary:hover { 
+            background: linear-gradient(135deg, var(--accent-green), #40c057); 
+            color: var(--bg-primary); 
+            transform: translateY(-2px);
+        }
+        .btn-outline-success:hover { 
+            background: linear-gradient(135deg, var(--accent-green), #40c057); 
+            color: var(--bg-primary); 
+            transform: translateY(-2px);
+        }
+        .btn-outline-info:hover { 
+            background: linear-gradient(135deg, var(--accent-green), #40c057); 
+            color: var(--bg-primary); 
+            transform: translateY(-2px);
+        }
+        .btn-outline-danger:hover { 
+            background: linear-gradient(135deg, #ff6b6b, #e03131); 
+            color: var(--bg-primary); 
+            transform: translateY(-2px);
         }
         
         .header-actions {
@@ -250,87 +474,205 @@
             gap: 1rem;
             align-items: stretch;
         }
-
-        /* Navigation styling for consistency */
-        .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-primary);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 1rem 0;
-        }
-
-        .navbar-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar-nav {
-            display: flex;
-            list-style: none;
-            gap: 1rem;
-        }
-
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition-fast);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: var(--accent-green);
-            background: rgba(81, 207, 102, 0.1);
-        }
-
-        .navbar-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Loading state */
+        
         .loading-message {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             color: var(--text-secondary);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border-radius: 16px;
+            border: 1px solid var(--border-primary);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .loading-spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(81, 207, 102, 0.3);
+            width: 3rem;
+            height: 3rem;
+            border: 4px solid rgba(81, 207, 102, 0.3);
             border-radius: 50%;
             border-top-color: var(--accent-green);
-            animation: spin 1s ease-in-out infinite;
+            animation: enhanced-spin 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(81, 207, 102, 0.3));
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes enhanced-spin {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg); }
         }
         
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-dot {
+            position: absolute;
+            background: var(--accent-green);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float-analytics 18s ease-in-out infinite;
+        }
+        
+        .floating-dot:nth-child(1) {
+            width: 10px;
+            height: 10px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-dot:nth-child(2) {
+            width: 14px;
+            height: 14px;
+            top: 70%;
+            right: 15%;
+            animation-delay: 6s;
+        }
+        
+        .floating-dot:nth-child(3) {
+            width: 8px;
+            height: 8px;
+            bottom: 25%;
+            left: 75%;
+            animation-delay: 12s;
+        }
+        
+        .floating-dot:nth-child(4) {
+            width: 12px;
+            height: 12px;
+            top: 50%;
+            right: 70%;
+            animation-delay: 9s;
+        }
+        
+        @keyframes float-analytics {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-45px) rotate(180deg); opacity: 0.3; }
+        }
+
+        /* Auto-refresh indicator */
+        .refresh-indicator {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .refresh-indicator.visible {
+            opacity: 1;
+        }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 350px;
+            padding: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.1), rgba(81, 207, 102, 0.05));
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
+            border: 1px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .notification .close-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            float: right;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            padding: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .notification .close-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .empty-state-icon {
+            font-size: 5rem;
+            background: linear-gradient(135deg, var(--text-muted), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 8px rgba(81, 207, 102, 0.2));
+        }
+        
+        /* Fixed navbar for mobile */
         @media (max-width: 768px) {
+            .navbar-toggle {
+                display: block !important; /* Override inline style */
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+                background: transparent;
+                border: none;
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 100;
+            }
+            
+            .navbar-nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--bg-primary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 99;
+            }
+            
+            .navbar-nav.active {
+                display: flex;
+            }
+            
+            .navbar-nav .nav-link {
+                font-size: 1.25rem;
+                margin: 0.5rem 0;
+            }
+            
             .analytics-header {
                 padding: 2rem 0;
             }
@@ -341,33 +683,61 @@
             
             .charts-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
             
             .dashboard-metrics {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+            
+            .insights-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
             
             .header-actions {
                 margin-top: 2rem;
             }
-
-            .navbar-nav {
-                display: none;
+            
+            .chart-container {
+                padding: 1.5rem;
             }
             
-            .navbar-container {
-                padding: 0 1rem;
+            .stat-card {
+                padding: 1.5rem;
             }
 
-            .navbar-toggle {
-                display: block !important;
+            .notification {
+                max-width: 90%;
+                right: 5%;
             }
+
+            .refresh-indicator {
+                right: 10px;
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+        
+        /* Fix animation-related issues */
+        .animate-fadeInUp {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease-out;
         }
     </style>
 </head>
 <body>
-    <div class="main-wrapper">
-        <!-- Navigation -->
+    <div class="main-wrapper analytics-page">
+        <div class="floating-elements">
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+        </div>
+        
+        <!-- STANDARDIZED NAVIGATION -->
         <nav class="navbar">
             <div class="navbar-container">
                 <a href="/" class="navbar-brand">
@@ -380,51 +750,38 @@
                     <li><a href="/search" class="nav-link" data-page="search">Search Candidates</a></li>
                     <li><a href="/outreach" class="nav-link" data-page="outreach">Personalized Outreach</a></li>
                     <li><a href="/analytics" class="nav-link" data-page="analytics">Analytics</a></li>
-                    <li><a href="/background_check" class="nav-link" data-page="Background Check">Ai Screening</a></li>
+                    <li><a href="/background_check" class="nav-link" data-page="Background Check">AI Screening</a></li>
                 </ul>
                 
                 <!-- Mobile menu toggle -->
-                <button class="navbar-toggle" id="navbar-toggle" style="display: none;">
+                <button class="navbar-toggle" id="navbar-toggle">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </nav>
 
-        <!-- Analytics Header -->
+        <!-- Auto-refresh indicator -->
+        <div id="refreshIndicator" class="refresh-indicator">
+            <i class="fas fa-sync-alt icon"></i> Auto-refresh in <span id="refreshCountdown">300</span>s
+        </div>
+
+        <!-- Enhanced Analytics Header -->
         <div class="analytics-header">
             <div class="main-container">
                 <div class="flex-between" style="align-items: flex-start;">
                     <div style="flex: 1;">
-                        <h1 class="hero-title mb-3">
-                            <i class="fas fa-chart-line icon-large"></i> Analytics Dashboard
-                        </h1>
-                        <p class="hero-subtitle mb-4">AI-powered insights into your talent pipeline</p>
-                        
-                        <!-- Live Date/Time Display -->
-                        <div class="datetime-display">
-                            <i class="fas fa-clock icon"></i>
-                            <span id="currentDateTime">2025-06-01 17:58:57</span> UTC
-                        </div>
-                        
-                        <!-- User Info Section -->
-                        <div class="user-info">
-                            <div class="grid grid-2">
-                                <div>
-                                    <small class="text-light" style="opacity: 0.75;">Dashboard Generated By:</small><br>
-                                    <strong><i class="fas fa-user icon"></i><span id="dashboardUser">pranamya-jain</span></strong>
-                                </div>
-                                <div>
-                                    <small class="text-light" style="opacity: 0.75;">Last Updated:</small><br>
-                                    <strong><i class="fas fa-sync-alt icon"></i><span id="lastUpdated">Loading...</span></strong>
-                                </div>
-                            </div>
+                        <div class="centered-content">
+                            <h1 class="hero-title mb-3">
+                                <i class="fas fa-chart-line icon-large"></i> Analytics Dashboard
+                            </h1>
+                            <p class="hero-subtitle mb-4">AI-powered insights into your talent pipeline</p>
                         </div>
                     </div>
                     <div class="header-actions">
-                        <button class="btn btn-success btn-large" onclick="showExportModal()">
+                        <button class="btn btn-success btn-large enhanced-btn" onclick="showExportModal()">
                             <i class="fas fa-download icon"></i> Export Report
                         </button>
-                        <button class="btn btn-large" onclick="refreshAnalytics()">
+                        <button class="btn btn-large enhanced-btn" onclick="refreshAnalytics()">
                             <i class="fas fa-sync-alt icon"></i> Refresh Data
                         </button>
                     </div>
@@ -433,24 +790,27 @@
         </div>
 
         <div class="main-container">
-            <!-- Loading State -->
+            <!-- Enhanced Loading State -->
             <div id="loadingState" class="loading-message" style="display: none;">
                 <div class="loading-spinner"></div>
-                <p>Loading analytics data from parsed resumes...</p>
+                <p style="margin-top: 1rem; font-size: 1.1rem;">Loading analytics data from parsed resumes...</p>
             </div>
 
-            <!-- Error State -->
+            <!-- Enhanced Error State -->
             <div id="errorState" style="display: none;">
-                <div class="alert alert-warning">
-                    <h4><i class="fas fa-exclamation-triangle icon"></i> No Data Available</h4>
-                    <p>No resume data found. Upload some resumes first to see analytics.</p>
-                    <a href="/upload" class="btn btn-success">
+                <div class="centered-content" style="min-height: 400px;">
+                    <i class="fas fa-chart-line empty-state-icon"></i>
+                    <h3 class="text-secondary mb-3">No Data Available</h3>
+                    <p class="text-secondary mb-4">
+                        No resume data found. Upload some resumes first to see analytics.
+                    </p>
+                    <a href="/upload" class="btn btn-success enhanced-btn btn-large">
                         <i class="fas fa-upload icon"></i> Upload Resumes
                     </a>
                 </div>
             </div>
 
-            <!-- Key Metrics -->
+            <!-- Enhanced Key Metrics -->
             <div class="dashboard-metrics animate-fadeInUp" id="metricsSection">
                 <div class="stat-card">
                     <p class="stat-number" id="totalCandidates">--</p>
@@ -483,7 +843,7 @@
                 </div>
             </div>
 
-            <!-- Charts -->
+            <!-- Enhanced Charts -->
             <div class="charts-grid animate-fadeInUp" id="chartsSection">
                 <div class="chart-container">
                     <h4><i class="fas fa-code icon"></i> Top Skills Distribution</h4>
@@ -506,7 +866,7 @@
                 </div>
             </div>
 
-            <!-- AI Insights Section -->
+            <!-- Enhanced AI Insights Section -->
             <div class="mt-4 animate-fadeInUp" id="insightsSection">
                 <div class="centered-content mb-4">
                     <h2><i class="fas fa-brain icon"></i> AI-Powered Insights</h2>
@@ -518,12 +878,12 @@
                 <!-- Insights will be loaded here -->
             </div>
 
-            <!-- Recent Activity -->
+            <!-- Enhanced Recent Activity -->
             <div class="chart-container mt-4 animate-fadeInUp" id="activitySection">
                 <div class="flex-between mb-4">
                     <h4><i class="fas fa-clock icon"></i> Recent Activity</h4>
                     <small class="text-muted">
-                        <i class="fas fa-sync-alt icon"></i> Auto-refreshes every 30 seconds
+                        <i class="fas fa-sync-alt icon"></i> Auto-refreshes every 5 minutes
                     </small>
                 </div>
                 <div id="recentActivity">
@@ -542,18 +902,11 @@
                     Built with ❤️ by <strong>Team Seeds! 🌱</strong><br>
                     Advanced analytics for intelligent recruitment
                 </p>
-                <div class="footer-timestamp">
-                    <i class="fas fa-clock icon-only"></i>
-                    <span id="footerDateTime">2025-06-01 17:58:57</span> UTC
-                    <span class="text-muted" style="margin-left: 1rem;">
-                        <i class="fas fa-seedling icon-only"></i> Team Seeds
-                    </span>
-                </div>
             </div>
         </footer>
     </div>
 
-    <!-- Export Modal -->
+    <!-- Enhanced Export Modal -->
     <div class="modal fade" id="exportModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -593,14 +946,6 @@
                         <i class="fas fa-info-circle icon"></i>
                         <strong>Report includes:</strong> Summary metrics, skills distribution, experience analysis, location data, AI insights, and metadata.
                     </div>
-                    
-                    <!-- Export Preview Info -->
-                    <div class="alert alert-light mt-2">
-                        <small>
-                            <strong>Generated by:</strong> <span id="exportUser">pranamya-jain</span> (Team Seeds! 🌱)<br>
-                            <strong>Export timestamp:</strong> <span id="exportTimestamp">2025-06-01 17:58:57 UTC</span>
-                        </small>
-                    </div>
                 </div>
             </div>
         </div>
@@ -611,9 +956,11 @@
     <script>
         let analyticsData = null;
         let charts = {};
-        let currentUser = 'pranamya-jain';
+        let autoRefreshTimer = null;
+        let countdownTimer = null;
+        let refreshCountdown = 300; // 5 minutes in seconds
 
-        // Standardized navbar active state management
+        // STANDARDIZED NAVBAR ACTIVE STATE MANAGEMENT
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
             const navLinks = document.querySelectorAll('.nav-link');
@@ -633,7 +980,8 @@
                     (currentPath.includes('/candidates') && page === 'candidates') ||
                     (currentPath.includes('/search') && page === 'search') ||
                     (currentPath.includes('/outreach') && page === 'outreach') ||
-                    (currentPath.includes('/analytics') && page === 'analytics')) {
+                    (currentPath.includes('/analytics') && page === 'analytics') ||
+                    (currentPath.includes('/background_check') && page === 'Background Check')) {
                     link.classList.add('active');
                     activeSet = true;
                 }
@@ -668,19 +1016,31 @@
             }
         });
 
-        // Update date/time to UTC
-        function updateDateTime() {
-            const now = new Date();
-            const utcString = now.toISOString().slice(0, 19).replace('T', ' ');
-            document.getElementById('currentDateTime').textContent = utcString;
-            document.getElementById('footerDateTime').textContent = utcString;
-            document.getElementById('exportTimestamp').textContent = utcString + ' UTC';
-        }
-
-        // Set user information
-        function setUserInfo() {
-            document.getElementById('dashboardUser').textContent = currentUser;
-            document.getElementById('exportUser').textContent = currentUser;
+        // Auto-refresh countdown
+        function startRefreshCountdown() {
+            refreshCountdown = 300; // Reset to 5 minutes
+            
+            countdownTimer = setInterval(() => {
+                refreshCountdown--;
+                const indicator = document.getElementById('refreshIndicator');
+                const countdown = document.getElementById('refreshCountdown');
+                
+                if (countdown) {
+                    countdown.textContent = refreshCountdown;
+                }
+                
+                // Show indicator when less than 30 seconds remain
+                if (refreshCountdown <= 30) {
+                    indicator.classList.add('visible');
+                } else {
+                    indicator.classList.remove('visible');
+                }
+                
+                if (refreshCountdown <= 0) {
+                    clearInterval(countdownTimer);
+                    loadAnalytics();
+                }
+            }, 1000);
         }
 
         // Show/hide sections based on data availability
@@ -711,6 +1071,34 @@
             document.getElementById('activitySection').style.display = 'block';
         }
 
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div>
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} icon"></i>
+                    ${message}
+                </div>
+                <button class="close-btn" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Trigger animation
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
         // Load analytics data from your resume parser
         async function loadAnalytics() {
             try {
@@ -737,12 +1125,11 @@
                         generateInsights(analyticsData);
                         displayRecentActivity(analyticsData);
                         
-                        // Update last updated time
-                        const now = new Date();
-                        const utcString = now.toISOString().slice(0, 19).replace('T', ' ');
-                        document.getElementById('lastUpdated').textContent = utcString + ' UTC';
-                        
                         console.log('✅ Analytics dashboard loaded successfully');
+                        showNotification('Analytics data loaded successfully!');
+                        
+                        // Start countdown for next refresh
+                        startRefreshCountdown();
                     } else {
                         showErrorState();
                         console.log('⚠️ No candidate data available');
@@ -755,7 +1142,7 @@
             } catch (error) {
                 console.error('❌ Error loading analytics:', error);
                 showErrorState();
-                showError('Failed to load analytics: ' + error.message);
+                showNotification('Failed to load analytics: ' + error.message, 'error');
             }
         }
 
@@ -868,10 +1255,12 @@
             if (charts.skills) charts.skills.destroy();
             
             if (skills.length === 0) {
-                ctx.getContext('2d').font = '16px Inter';
-                ctx.getContext('2d').fillStyle = '#ffffff';
-                ctx.getContext('2d').textAlign = 'center';
-                ctx.getContext('2d').fillText('No skills data available', ctx.width/2, ctx.height/2);
+                const context = ctx.getContext('2d');
+                context.clearRect(0, 0, ctx.width, ctx.height);
+                context.font = '16px Inter';
+                context.fillStyle = '#ffffff';
+                context.textAlign = 'center';
+                context.fillText('No skills data available', ctx.width/2, ctx.height/2);
                 return;
             }
             
@@ -926,10 +1315,12 @@
             
             const expEntries = Object.entries(expData);
             if (expEntries.length === 0) {
-                ctx.getContext('2d').font = '16px Inter';
-                ctx.getContext('2d').fillStyle = '#ffffff';
-                ctx.getContext('2d').textAlign = 'center';
-                ctx.getContext('2d').fillText('No experience data available', ctx.width/2, ctx.height/2);
+                const context = ctx.getContext('2d');
+                context.clearRect(0, 0, ctx.width, ctx.height);
+                context.font = '16px Inter';
+                context.fillStyle = '#ffffff';
+                context.textAlign = 'center';
+                context.fillText('No experience data available', ctx.width/2, ctx.height/2);
                 return;
             }
             
@@ -968,10 +1359,12 @@
             if (charts.location) charts.location.destroy();
             
             if (locations.length === 0) {
-                ctx.getContext('2d').font = '16px Inter';
-                ctx.getContext('2d').fillStyle = '#ffffff';
-                ctx.getContext('2d').textAlign = 'center';
-                ctx.getContext('2d').fillText('No location data available', ctx.width/2, ctx.height/2);
+                const context = ctx.getContext('2d');
+                context.clearRect(0, 0, ctx.width, ctx.height);
+                context.font = '16px Inter';
+                context.fillStyle = '#ffffff';
+                context.textAlign = 'center';
+                context.fillText('No location data available', ctx.width/2, ctx.height/2);
                 return;
             }
             
@@ -1154,7 +1547,7 @@
                 { 
                     time: '3 hours ago', 
                     action: 'Analytics updated', 
-                    details: `Dashboard refreshed with ${data.total_candidates} candidate profiles by ${currentUser}` 
+                    details: `Dashboard refreshed with ${data.total_candidates} candidate profiles` 
                 },
                 { 
                     time: '6 hours ago', 
@@ -1192,7 +1585,7 @@
             container.innerHTML = html;
         }
 
-        // Refresh analytics
+         // Refresh analytics
         function refreshAnalytics() {
             console.log('🔄 Refreshing analytics data...');
             loadAnalytics();

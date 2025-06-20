@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HireAI - PeopleGPT natural language candidate search powered by AI">
     <title>PeopleGPT Search - HireAI</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -11,288 +12,276 @@
     <!-- Custom Styles -->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <style>
-        /* COMPLETE SELF-CONTAINED CSS - GUARANTEED TO WORK */
-        :root {
-            --bg-primary: #000000;
-            --bg-secondary: #1a1a1a;
-            --bg-card: #2c2e33;
-            --text-primary: #ffffff;
-            --text-secondary: #c1c2c5;
-            --text-muted: #8c92ac;
-            --accent-green: #51cf66;
-            --accent-yellow: #ffc107;
-            --accent-red: #ff6b6b;
-            --border-primary: #343a40;
-            --shadow-subtle: 0 2px 4px rgba(0,0,0,0.1);
-            --shadow-elevated: 0 10px 25px rgba(0,0,0,0.3);
-            --transition-fast: all 0.2s ease;
-            --transition-smooth: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Navigation Styles */
-        .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-primary);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 1rem 0;
-        }
-
-        .navbar-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar-nav {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition-fast);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: var(--accent-green);
-            background: rgba(81, 207, 102, 0.1);
-        }
-
-        .navbar-text {
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .navbar-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Main Layout */
-        .main-wrapper {
+        /* Enhanced aesthetic styles for PeopleGPT */
+        .peoplegpt-page {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            position: relative;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
-
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            flex: 1;
-        }
-
-        .centered-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        /* HERO STYLES - GUARANTEED TO WORK */
-        .hero-title {
-            font-size: 3.5rem !important;
-            font-weight: 700 !important;
-            margin-bottom: 1rem !important;
-            background: linear-gradient(135deg, #ffffff 0%, #51cf66 100%) !important;
-            -webkit-background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            background-clip: text !important;
-            text-align: center !important;
-            display: block !important;
-            line-height: 1.2 !important;
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem !important;
-            color: rgba(255, 255, 255, 0.8) !important;
-            text-align: center !important;
-            font-weight: 400 !important;
-            line-height: 1.6 !important;
-            display: block !important;
-        }
-
-        .icon-large {
-            font-size: 1.2em !important;
-            margin-right: 0.5rem !important;
-        }
-
-        .datetime-display {
-            font-family: 'Inter', monospace !important;
-            background: rgba(255, 255, 255, 0.1) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            padding: 0.75rem 1.5rem !important;
-            border-radius: 20px !important;
-            display: inline-block !important;
-            font-weight: 500 !important;
-            color: rgba(255, 255, 255, 0.9) !important;
-        }
-
-        .footer-timestamp {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        /* Utility Classes */
-        .mb-3 { margin-bottom: 1rem !important; }
-        .mb-4 { margin-bottom: 1.5rem !important; }
-        .mt-3 { margin-top: 1rem !important; }
-        .mt-2 { margin-top: 0.5rem !important; }
-        .text-muted { color: var(--text-muted) !important; }
-        .text-secondary { color: var(--text-secondary) !important; }
-        .flex-between { display: flex; justify-content: space-between; align-items: center; }
-        .flex-center { display: flex; align-items: center; }
-        .icon { margin-right: 0.5rem; }
-        .icon-only { margin-right: 0; }
         
-        /* PeopleGPT Container */
-        .peoplegpt-container {
-            background: linear-gradient(135deg, #333333 0%, #111111 50%, #000000 100%);
-            padding: 4rem 0;
+        .peoplegpt-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(81, 207, 102, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(81, 207, 102, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .peoplegpt-header {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 50%, var(--bg-card) 100%);
+            padding: 2rem 0; /* Reduced from 4rem to 2rem */
             border-bottom: 1px solid var(--border-primary);
-            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
-        /* Chat Input */
-        .chat-input-container {
-            background: var(--bg-card);
-            border: 2px solid var(--border-primary);
+        .peoplegpt-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 100%, rgba(81, 207, 102, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-title {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-green) 50%, var(--text-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .datetime-display {
+            font-family: 'Inter', monospace;
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.2), rgba(81, 207, 102, 0.1));
+            border: 1px solid var(--accent-green);
+            padding: 1rem 2rem;
             border-radius: 25px;
-            padding: 1rem;
-            box-shadow: var(--shadow-elevated);
-            transition: var(--transition-smooth);
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            box-shadow: 0 4px 16px rgba(81, 207, 102, 0.2);
+        }
+        
+        .search-mode-toggle {
+            display: flex;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border-radius: 25px;
+            padding: 0.25rem;
+            margin: 2rem auto;
+            width: fit-content;
+            border: 1px solid var(--border-primary);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
-            max-width: 800px;
-            margin: 2rem auto;
-        }
-
-        .chat-input-container:hover {
-            border-color: var(--accent-green);
-            box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.1);
         }
         
-        .chat-input {
-            width: 100%;
+        .search-mode-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .search-mode-toggle:hover::before {
+            opacity: 1;
+        }
+        
+        .mode-btn {
+            padding: 0.75rem 1.5rem;
             border: none;
             background: transparent;
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            padding: 0.5rem 4rem 0.5rem 1rem;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-            min-height: 50px;
-            resize: none;
-        }
-        
-        .chat-input::placeholder {
-            color: var(--text-muted);
-            font-style: italic;
-        }
-        
-        .chat-send-btn {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--accent-green);
-            color: var(--bg-primary);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            color: var(--text-secondary);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-weight: 500;
             display: flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            box-shadow: var(--shadow-subtle);
-        }
-        
-        .chat-send-btn:hover {
-            background: #40c057;
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: var(--shadow-elevated);
-        }
-        
-        .chat-send-btn:disabled {
-            background: var(--text-muted);
-            cursor: not-allowed;
-            transform: translateY(-50%) scale(1);
-            box-shadow: none;
-        }
-        
-        /* Suggestion Chips */
-        .query-suggestions {
-            display: flex;
-            flex-wrap: wrap;
             gap: 0.5rem;
-            margin-top: 1.5rem;
-            justify-content: center;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.1), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+        
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
+            color: var(--bg-primary);
+            box-shadow: 0 4px 12px rgba(81, 207, 102, 0.3);
+        }
+
+        .mode-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+        
+.chat-input-container {
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+    border: 2px solid var(--border-primary);
+    border-radius: 25px;
+    padding: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    max-width: 800px;
+    margin: 2rem auto;
+    backdrop-filter: blur(10px);
+    display: flex; /* Add flex display */
+    align-items: center; /* Center items vertically */
+    gap: 0.75rem; /* Add space between input and button */
+}
+
+.chat-input-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.1), transparent);
+    transition: var(--transition-smooth);
+    z-index: 1; /* Ensure it's below the input and button */
+}
+
+.chat-input-container:focus-within::before {
+    left: 100%;
+}
+
+.chat-input-container:focus-within {
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.15);
+}
+
+.chat-input {
+    flex: 1; /* Take up all available space */
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    padding: 0.5rem 0; /* Remove horizontal padding since container handles spacing */
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    min-height: 50px;
+    resize: none;
+    position: relative;
+    z-index: 2; /* Ensure it's above the shimmer effect */
+}
+
+.chat-input::placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.chat-send-btn {
+    background: linear-gradient(135deg, var(--accent-green), #40c057);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 16px rgba(81, 207, 102, 0.3);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0; /* Prevent button from shrinking */
+    z-index: 2; /* Ensure it's above the shimmer effect */
+}
+
+.chat-send-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: var(--transition-smooth);
+}
+
+.chat-send-btn:hover::before {
+    left: 100%;
+}
+
+.chat-send-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(81, 207, 102, 0.4);
+}
+
+.chat-send-btn:disabled {
+    background: var(--text-muted);
+    cursor: not-allowed;
+    transform: scale(1);
+    box-shadow: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .chat-input-container {
+        margin: 1rem;
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+    
+    .chat-input {
+        font-size: 1rem;
+        min-height: 40px;
+    }
+    
+    .chat-send-btn {
+        width: 36px;
+        height: 36px;
+    }
+}
         
         .suggestion-chip {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             color: var(--text-secondary);
             border: 1px solid var(--border-primary);
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: var(--transition-fast);
+            transition: var(--transition-smooth);
             display: flex;
             align-items: center;
             gap: 0.5rem;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
 
         .suggestion-chip::before {
@@ -311,73 +300,66 @@
         }
         
         .suggestion-chip:hover {
-            background: var(--accent-green);
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
             color: var(--bg-primary);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-elevated);
-        }
-
-        /* Mode Toggle */
-        .search-mode-toggle {
-            display: flex;
-            background: var(--bg-secondary);
-            border-radius: 25px;
-            padding: 0.25rem;
-            margin: 2rem auto;
-            width: fit-content;
-            border: 1px solid var(--border-primary);
-            box-shadow: var(--shadow-subtle);
+            box-shadow: 0 8px 25px rgba(81, 207, 102, 0.4);
+            border-color: var(--accent-green);
         }
         
-        .mode-btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .mode-btn.active {
-            background: var(--accent-green);
-            color: var(--bg-primary);
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .mode-btn:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-        }
-
-        /* Parsing Feedback */
         .parsing-feedback {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 1rem;
+            border-radius: 16px;
+            padding: 1.5rem;
             margin: 1rem auto;
             display: none;
             max-width: 800px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .parsing-feedback::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .parsing-success::before {
+            background: linear-gradient(180deg, var(--accent-green), #40c057);
+            opacity: 1;
+        }
+        
+        .parsing-warning::before {
+            background: linear-gradient(180deg, #ffc107, #e68900);
+            opacity: 1;
+        }
+        
+        .parsing-error::before {
+            background: linear-gradient(180deg, #ff6b6b, #e03131);
+            opacity: 1;
         }
         
         .parsing-success {
             border-color: var(--accent-green);
-            background: rgba(81, 207, 102, 0.1);
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.1), rgba(81, 207, 102, 0.05));
         }
         
         .parsing-warning {
-            border-color: var(--accent-yellow);
-            background: rgba(255, 193, 7, 0.1);
+            border-color: #ffc107;
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
         }
 
         .parsing-error {
-            border-color: var(--accent-red);
-            background: rgba(255, 107, 107, 0.1);
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
         }
 
         .confidence-bar {
@@ -387,15 +369,16 @@
             border-radius: 3px;
             overflow: hidden;
             margin: 0.5rem 0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .confidence-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-red), var(--accent-yellow), var(--accent-green));
+            background: linear-gradient(90deg, #ff6b6b, #ffc107, var(--accent-green));
             transition: var(--transition-smooth);
+            box-shadow: 0 0 8px rgba(81, 207, 102, 0.5);
         }
 
-        /* Typing Indicator */
         .typing-indicator {
             display: none;
             align-items: center;
@@ -404,6 +387,11 @@
             font-style: italic;
             margin: 1rem auto;
             justify-content: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border-radius: 12px;
+            max-width: 300px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
         
         .typing-dots {
@@ -416,60 +404,106 @@
             height: 6px;
             background: var(--accent-green);
             border-radius: 50%;
-            animation: typing 1.5s infinite;
+            animation: enhanced-typing 1.5s infinite;
+            box-shadow: 0 0 4px rgba(81, 207, 102, 0.5);
         }
         
         .typing-dot:nth-child(2) { animation-delay: 0.2s; }
         .typing-dot:nth-child(3) { animation-delay: 0.4s; }
         
-        @keyframes typing {
-            0%, 60%, 100% { opacity: 0.3; }
-            30% { opacity: 1; }
+        @keyframes enhanced-typing {
+            0%, 60%, 100% { opacity: 0.3; transform: scale(1); }
+            30% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* Results */
         .results-header {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .results-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-green), #40c057);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .results-header:hover::before {
+            opacity: 1;
         }
 
         .alert {
             padding: 1rem;
-            border-radius: 6px;
+            border-radius: 12px;
             border: 1px solid;
             margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
         }
         
         .alert-success {
-            background: rgba(81, 207, 102, 0.1);
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.1), rgba(81, 207, 102, 0.05));
             border-color: var(--accent-green);
             color: var(--accent-green);
         }
         
+        .alert-success::before {
+            background: var(--accent-green);
+        }
+        
         .alert-info {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             border-color: var(--text-primary);
             color: var(--text-primary);
         }
-
-        .alert-warning {
-            background: rgba(255, 193, 7, 0.1);
-            border-color: var(--accent-yellow);
-            color: var(--accent-yellow);
+        
+        .alert-info::before {
+            background: var(--text-primary);
         }
 
-        /* Candidate Cards with Enhanced Styling */
+        .alert-warning {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
+            border-color: #ffc107;
+            color: #ffc107;
+        }
+        
+        .alert-warning::before {
+            background: #ffc107;
+        }
+
         .candidate-card {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
             transition: var(--transition-smooth);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .candidate-card::before {
@@ -479,7 +513,19 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.1), transparent);
+            transition: var(--transition-smooth);
+        }
+
+        .candidate-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-green), #40c057, var(--accent-green));
+            opacity: 0;
             transition: var(--transition-smooth);
         }
 
@@ -487,82 +533,180 @@
             left: 100%;
         }
 
+        .candidate-card:hover::after {
+            opacity: 1;
+        }
+
         .candidate-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-elevated);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(81, 207, 102, 0.2);
             border-color: var(--accent-green);
         }
 
         .match-score {
-            background: var(--accent-green);
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
             color: var(--bg-primary);
-            padding: 0.25rem 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 12px;
             font-weight: bold;
             font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(81, 207, 102, 0.3);
         }
 
-        /* Empty State */
         .empty-state-icon {
-            font-size: 4rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
+            font-size: 5rem;
+            background: linear-gradient(135deg, var(--text-muted), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 8px rgba(81, 207, 102, 0.2));
         }
-
-        /* Footer */
-        .footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-primary);
-            padding: 2rem 0;
-            margin-top: auto;
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
         }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            text-align: center;
+        
+        .floating-dot {
+            position: absolute;
+            background: var(--accent-green);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float-peoplegpt 15s ease-in-out infinite;
         }
-
-        .footer-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        
+        .floating-dot:nth-child(1) {
+            width: 14px;
+            height: 14px;
+            top: 20%;
+            left: 15%;
+            animation-delay: 0s;
         }
-
-        .footer-text {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
+        
+        .floating-dot:nth-child(2) {
+            width: 10px;
+            height: 10px;
+            top: 60%;
+            right: 20%;
+            animation-delay: 5s;
         }
-
-        /* Responsive */
-       
-        /* Animation Classes */
-        .animate-fadeInUp {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
+        
+        .floating-dot:nth-child(3) {
+            width: 12px;
+            height: 12px;
+            bottom: 30%;
+            left: 75%;
+            animation-delay: 10s;
         }
-
-        .animate-fadeInLeft {
-            opacity: 0;
-            transform: translateX(-30px);
-            transition: all 0.6s ease-out;
+        
+        .floating-dot:nth-child(4) {
+            width: 8px;
+            height: 8px;
+            top: 40%;
+            right: 80%;
+            animation-delay: 7s;
         }
-
-        .animate-fadeInUp.visible,
-        .animate-fadeInLeft.visible {
+        
+        @keyframes float-peoplegpt {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-35px) rotate(180deg); opacity: 0.3; }
+        }
+        
+        /* Fixed navbar for mobile */
+        @media (max-width: 768px) {
+            .navbar-toggle {
+                display: block !important; /* Override inline style */
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+                background: transparent;
+                border: none;
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 100;
+            }
+            
+            .navbar-nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--bg-primary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 99;
+            }
+            
+            .navbar-nav.active {
+                display: flex;
+            }
+            
+            .navbar-nav .nav-link {
+                font-size: 1.25rem;
+                margin: 0.5rem 0;
+            }
+            
+            .peoplegpt-header {
+                padding: 2rem 0;
+            }
+            
+            .chat-input-container {
+                margin: 1rem;
+                padding: 0.75rem;
+            }
+            
+            .query-suggestions {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+                margin: 1rem;
+            }
+            
+            .suggestion-chip {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .search-mode-toggle {
+                margin: 1rem auto;
+                width: 90%;
+                max-width: 400px;
+            }
+            
+            .mode-btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+        
+        /* Fix animation-related issues */
+        .animate-fadeInUp, .animate-fadeInLeft {
             opacity: 1;
-            transform: translateY(0) translateX(0);
+            transform: translateY(0);
+            transition: all 0.6s ease-out;
         }
     </style>
 </head>
 <body>
-    <div class="main-wrapper">
-        <!-- ENHANCED NAVIGATION WITH USER DISPLAY -->
+    <div class="main-wrapper peoplegpt-page">
+        <div class="floating-elements">
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+        </div>
+        
+        <!-- STANDARDIZED NAVIGATION -->
         <nav class="navbar">
             <div class="navbar-container">
                 <a href="/" class="navbar-brand">
@@ -575,44 +719,31 @@
                     <li><a href="/search" class="nav-link" data-page="search">Search Candidates</a></li>
                     <li><a href="/outreach" class="nav-link" data-page="outreach">Personalized Outreach</a></li>
                     <li><a href="/analytics" class="nav-link" data-page="analytics">Analytics</a></li>
-                                                         <li><a href="/background_check" class="nav-link" data-page="Background Check">Ai Screening</a></li>
-
+                    <li><a href="/background_check" class="nav-link" data-page="Background Check">AI Screening</a></li>
                 </ul>
                 
-                <!-- User Display + Mobile Toggle -->
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                   
-                    
-                    <!-- Mobile menu toggle -->
-                    <button class="navbar-toggle" id="navbar-toggle" style="display: none;">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+                <!-- Mobile menu toggle -->
+                <button class="navbar-toggle" id="navbar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </nav>
 
-        <!-- PeopleGPT Interface -->
-        <div class="peoplegpt-container">
+        <!-- Enhanced PeopleGPT Header -->
+        <div class="peoplegpt-header">
             <div class="main-container">
                 <div class="centered-content animate-fadeInUp">
                     <h1 class="hero-title mb-3">
                         <i class="fas fa-comments icon-large"></i> PeopleGPT
                     </h1>
                     <p class="hero-subtitle mb-4">
-                        Search candidates using natural language - just describe who you're looking for
+                        Search candidates using Natural Language - just describe who you're looking for in few words!
                     </p>
                     
-                    <!-- Live timestamp - Updated to current UTC time -->
-                    <div class="datetime-display mb-4">
-                        <i class="fas fa-clock icon"></i>
-                        <span id="currentDateTime">2025-06-01 18:41:33</span> UTC
-                        <span class="text-muted" style="margin-left: 1rem;">
-                            <i class="fas fa-user icon"></i> pranamya-jain (Team Seeds! 🌱)
-                        </span>
-                    </div>
+                
                 </div>
                 
-                <!-- Search Mode Toggle -->
+                <!-- Enhanced Search Mode Toggle -->
                 <div class="search-mode-toggle animate-fadeInUp">
                     <button class="mode-btn active" id="nlpMode" onclick="switchMode('nlp')">
                         <i class="fas fa-comments icon"></i> Natural Language
@@ -622,7 +753,7 @@
                     </button>
                 </div>
                 
-                <!-- Chat Interface -->
+                <!-- Enhanced Chat Interface -->
                 <div id="nlpSearchPanel" class="animate-fadeInUp">
                     <div class="chat-input-container">
                         <textarea 
@@ -636,7 +767,7 @@
                         </button>
                     </div>
                     
-                    <!-- Typing Indicator -->
+                    <!-- Enhanced Typing Indicator -->
                     <div id="typingIndicator" class="typing-indicator">
                         <span>PeopleGPT is thinking</span>
                         <div class="typing-dots">
@@ -646,29 +777,29 @@
                         </div>
                     </div>
                     
-                    <!-- Parsing Feedback -->
+                    <!-- Enhanced Parsing Feedback -->
                     <div id="parsingFeedback" class="parsing-feedback">
                         <!-- Parsing results will be shown here -->
                     </div>
                     
-                    <!-- Query Suggestions -->
+                    <!-- Enhanced Query Suggestions -->
                     <div class="query-suggestions animate-fadeInUp">
-                        <div class="suggestion-chip" onclick="useQuery('Find senior Python developers in San Francisco')">
-                            <i class="fas fa-code"></i> Senior Python devs in SF
+                        <div class="suggestion-chip" onclick="useQuery('Find senior Python developers in Bengaluru')">
+                            <i class="fas fa-code"></i> Senior Python devs in Bengaluru
                         </div>
                         <div class="suggestion-chip" onclick="useQuery('Show me React engineers with 3+ years, remote OK')">
                             <i class="fas fa-laptop-code"></i> React engineers, 3+ years
                         </div>
-                        <div class="suggestion-chip" onclick="useQuery('Looking for ML engineers in NYC or remote')">
-                            <i class="fas fa-brain"></i> ML engineers NYC/remote
+                        <div class="suggestion-chip" onclick="useQuery('Looking for ML engineers in remote')">
+                            <i class="fas fa-brain"></i> ML engineers remote
                         </div>
                         <div class="suggestion-chip" onclick="useQuery('DevOps engineers with AWS experience')">
                             <i class="fas fa-cloud"></i> DevOps + AWS
                         </div>
-                        <div class="suggestion-chip" onclick="useQuery('Junior Java developers in Seattle')">
-                            <i class="fas fa-coffee"></i> Junior Java Seattle
+                        <div class="suggestion-chip" onclick="useQuery('Junior Java developers in Mumbai')">
+                            <i class="fas fa-coffee"></i> Junior Java Mumbai
                         </div>
-                        <div class="suggestion-chip" onclick="testBackend()" style="background: var(--accent-yellow); color: var(--bg-primary);">
+                        <div class="suggestion-chip" onclick="testBackend()" style="background: linear-gradient(135deg, #ffc107, #e68900); color: var(--bg-primary);">
                             <i class="fas fa-wrench"></i> Test Backend
                         </div>
                     </div>
@@ -677,7 +808,7 @@
         </div>
 
         <div class="main-container">
-            <!-- Results Section -->
+            <!-- Enhanced Results Section -->
             <div id="searchResults" class="animate-fadeInUp">
                 <!-- Results Header -->
                 <div id="results-header" style="display: none;">
@@ -689,7 +820,7 @@
                     <!-- Results list will be populated -->
                 </div>
                 
-                <!-- Empty State -->
+                <!-- Enhanced Empty State -->
                 <div id="empty-state" class="centered-content" style="min-height: 400px;">
                     <i class="fas fa-comments empty-state-icon"></i>
                     <h3 class="text-secondary mb-3">Ready to Search with PeopleGPT</h3>
@@ -708,13 +839,6 @@
                     Built with ❤️ by <strong>Team Seeds! 🌱</strong><br>
                     PeopleGPT - Natural language candidate search powered by AI
                 </p>
-                <div class="footer-timestamp">
-                    <i class="fas fa-clock icon-only"></i>
-                    <span id="footerDateTime">2025-06-01 18:41:33</span> UTC
-                    <span class="text-muted" style="margin-left: 1rem;">
-                        <i class="fas fa-seedling icon-only"></i> Team Seeds
-                    </span>
-                </div>
             </div>
         </footer>
     </div>
@@ -745,7 +869,8 @@
                     (currentPath.includes('/candidates') && page === 'candidates') ||
                     (currentPath.includes('/search') && page === 'search') ||
                     (currentPath.includes('/outreach') && page === 'outreach') ||
-                    (currentPath.includes('/analytics') && page === 'analytics')) {
+                    (currentPath.includes('/analytics') && page === 'analytics') ||
+                    (currentPath.includes('/background_check') && page === 'Background Check')) {
                     link.classList.add('active');
                     activeSet = true;
                 }
@@ -1008,7 +1133,7 @@
             `;
             resultsHeader.style.display = 'block';
             
-            // Display candidates (using the simplified inline styling approach)
+            // Display candidates with enhanced styling
             const resultsList = document.getElementById('results-list');
             
             if (candidates.length === 0) {
@@ -1047,7 +1172,7 @@
                                 <strong style="color: var(--text-primary);">Skills:</strong>
                                 <div style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.25rem;">
                                     ${(candidate.skills || []).map(skill => 
-                                        `<span style="background: var(--bg-secondary); color: var(--text-secondary); padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">${skill}</span>`
+                                        `<span style="background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card)); color: var(--text-secondary); padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem; border: 1px solid var(--border-primary);">${skill}</span>`
                                     ).join('')}
                                 </div>
                             </div>
@@ -1076,12 +1201,20 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0) translateX(0)';
                     }
                 });
             }, { threshold: 0.1 });
             
             animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transition = 'all 0.6s ease-out';
+                if (el.classList.contains('animate-fadeInUp')) {
+                    el.style.transform = 'translateY(30px)';
+                } else if (el.classList.contains('animate-fadeInLeft')) {
+                    el.style.transform = 'translateX(-30px)';
+                }
                 observer.observe(el);
             });
         }
@@ -1107,9 +1240,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 PeopleGPT Frontend Initialized');
             console.log('👤 User:', currentUser);
-            console.log('🕐 Current Time:', '2025-06-01 18:41:33 UTC');
+            console.log('🕐 Current Time:', '2025-06-19 09:15:35 UTC');
             
             // Set initial time and start live updates
+            document.getElementById('currentDateTime').textContent = '2025-06-19 09:15:35';
+            document.getElementById('footerDateTime').textContent = '2025-06-19 09:15:35';
             updateDateTime();
             setInterval(updateDateTime, 1000);
             

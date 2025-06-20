@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personalized Out - HireAI</title>
+    <meta name="description" content="HireAI - Create and send AI-powered personalized emails to candidates">
+    <title>Personalized Outreach - HireAI</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
@@ -11,25 +12,118 @@
     <!-- Custom Styles -->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <style>
-        /* Page-specific styles for outreach.html */
+        /* Enhanced aesthetic styles for outreach.html */
+        .outreach-page {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+        
+        .outreach-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(81, 207, 102, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(81, 207, 102, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .outreach-header {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 50%, var(--bg-card) 100%);
+            padding: 2rem 0; /* Reduced from 4rem to 2rem */
+            border-bottom: 1px solid var(--border-primary);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .outreach-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 100%, rgba(81, 207, 102, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-title {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-green) 50%, var(--text-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
         .outreach-container {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-primary);
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: var(--shadow-subtle);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             position: sticky;
             top: 100px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .outreach-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .outreach-container:hover::before {
+            opacity: 1;
+        }
+        
+        .outreach-container:hover {
+            box-shadow: 0 12px 48px rgba(81, 207, 102, 0.15);
+        }
+        
+        .form-input {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            border: 1px solid var(--border-primary);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+        
+        .form-input:focus {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.15);
+            background: var(--bg-card);
         }
         
         .candidate-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-primary);
+            border-radius: 16px;
             transition: var(--transition-smooth);
             cursor: pointer;
-            background: var(--bg-card);
-            border: 1px solid var(--border-primary);
             position: relative;
             overflow: hidden;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
         .candidate-card::before {
@@ -39,7 +133,19 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.1), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .candidate-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-green), #40c057, var(--accent-green));
+            opacity: 0;
             transition: var(--transition-smooth);
         }
         
@@ -47,54 +153,144 @@
             left: 100%;
         }
         
+        .candidate-card:hover::after {
+            opacity: 1;
+        }
+        
         .candidate-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-elevated);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(81, 207, 102, 0.2);
             border-color: var(--accent-green);
         }
         
         .email-preview {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             border: 1px solid var(--border-primary);
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             margin: 1rem 0;
             white-space: pre-wrap;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
         
         .skill-tag {
             display: inline-block;
-            background-color: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             color: var(--text-primary);
             border: 1px solid var(--border-primary);
-            padding: 0.25rem 0.75rem;
-            margin: 0.25rem;
+            padding: 0.4rem 0.8rem;
+            margin: 0.25rem 0.25rem 0.25rem 0;
             border-radius: 12px;
             font-size: 0.75rem;
-            transition: var(--transition-fast);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(81, 207, 102, 0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .skill-tag:hover::before {
+            left: 100%;
+        }
+        
+        .skill-tag:hover {
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
+            color: var(--bg-primary);
+            border-color: var(--accent-green);
+            transform: translateY(-1px);
         }
         
         .contacted-badge {
-            background: rgba(81, 207, 102, 0.1);
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.2), rgba(81, 207, 102, 0.1));
             border: 1px solid var(--accent-green);
             color: var(--accent-green);
-            padding: 0.25rem 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 12px;
             font-size: 0.75rem;
             font-weight: 600;
+            box-shadow: 0 4px 12px rgba(81, 207, 102, 0.2);
+        }
+        
+        .match-score {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 4px rgba(81, 207, 102, 0.3);
+        }
+        
+        .score-excellent { 
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .score-good { 
+            background: linear-gradient(135deg, #ffc107, #e68900);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .score-fair { 
+            background: linear-gradient(135deg, #ff6b6b, #e03131);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .outreach-layout {
             display: grid;
             grid-template-columns: 400px 1fr;
-            gap: 2rem;
+            gap: 3rem;
             align-items: start;
+            position: relative;
+            z-index: 2;
         }
         
         .header-section {
             text-align: center;
             margin-bottom: 2rem;
-            padding: 2px;
+            padding: 2rem 0;
+        }
+        
+        .results-header {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-primary);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .results-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-green), #40c057);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .results-header:hover::before {
+            opacity: 1;
         }
         
         .modal {
@@ -104,21 +300,37 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1000;
+            backdrop-filter: blur(5px);
         }
         
         .modal-content {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             margin: 5% auto;
-            padding: 2rem;
+            padding: 2.5rem;
             width: 90%;
             max-width: 700px;
-            border-radius: 12px;
+            border-radius: 16px;
             border: 1px solid var(--border-primary);
             color: var(--text-primary);
             max-height: 80vh;
             overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-green), #40c057, var(--accent-green));
+            opacity: 1;
         }
         
         .close {
@@ -126,124 +338,288 @@
             font-size: 28px;
             cursor: pointer;
             color: var(--text-secondary);
-            transition: var(--transition-fast);
+            transition: var(--transition-smooth);
+            position: relative;
+            z-index: 10;
         }
         
         .close:hover {
-            color: var(--accent-red);
+            color: #ff6b6b;
+            transform: scale(1.1);
         }
         
         .empty-state-icon {
-            font-size: 4rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
+            font-size: 5rem;
+            background: linear-gradient(135deg, var(--text-muted), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 8px rgba(81, 207, 102, 0.2));
         }
         
         .template-select {
             width: 100%;
-            padding: 0.5rem;
+            padding: 0.75rem;
             border: 1px solid var(--border-primary);
-            border-radius: 6px;
-            background: var(--bg-secondary);
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             color: var(--text-primary);
             margin-bottom: 1rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .template-select:focus {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.15);
         }
         
         .btn-preview {
-            background: var(--accent-green);
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
             color: var(--bg-primary);
             border: 1px solid var(--accent-green);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .btn-preview:hover::before {
+            left: 100%;
         }
         
         .btn-preview:hover {
-            background: #40c057;
-            border-color: #40c057;
+            background: linear-gradient(135deg, #40c057, #2b8a3e);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(81, 207, 102, 0.4);
         }
         
         .btn-send {
-            background: var(--accent-green);
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
             color: var(--bg-primary);
             border: 1px solid var(--accent-green);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-send::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+        
+        .btn-send:hover::before {
+            left: 100%;
         }
         
         .btn-send:hover {
-            background: #40c057;
-            border-color: #40c057;
+            background: linear-gradient(135deg, #40c057, #2b8a3e);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(81, 207, 102, 0.4);
         }
         
         .btn-cancel {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             color: var(--text-secondary);
             border: 1px solid var(--border-primary);
+            transition: var(--transition-smooth);
         }
         
         .btn-cancel:hover {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             color: var(--text-primary);
+            transform: translateY(-2px);
         }
         
-        .match-score {
-            font-size: 1.25rem;
-            font-weight: 600;
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
         }
         
-        .score-excellent { color: var(--accent-green); }
-        .score-good { color: var(--accent-yellow); }
-        .score-fair { color: var(--accent-red); }
+        .floating-dot {
+            position: absolute;
+            background: var(--accent-green);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float-outreach 16s ease-in-out infinite;
+        }
         
+        .floating-dot:nth-child(1) {
+            width: 12px;
+            height: 12px;
+            top: 25%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .floating-dot:nth-child(2) {
+            width: 16px;
+            height: 16px;
+            top: 65%;
+            right: 25%;
+            animation-delay: 5s;
+        }
+        
+        .floating-dot:nth-child(3) {
+            width: 10px;
+            height: 10px;
+            bottom: 35%;
+            left: 70%;
+            animation-delay: 10s;
+        }
+        
+        .floating-dot:nth-child(4) {
+            width: 8px;
+            height: 8px;
+            top: 45%;
+            left: 85%;
+            animation-delay: 7s;
+        }
+        
+        @keyframes float-outreach {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-40px) rotate(180deg); opacity: 0.3; }
+        }
+        
+        /* Fixed navbar for mobile */
         @media (max-width: 768px) {
+            .navbar-toggle {
+                display: block !important; /* Override inline style */
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+                background: transparent;
+                border: none;
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 100;
+            }
+            
+            .navbar-nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--bg-primary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 99;
+            }
+            
+            .navbar-nav.active {
+                display: flex;
+            }
+            
+            .navbar-nav .nav-link {
+                font-size: 1.25rem;
+                margin: 0.5rem 0;
+            }
+            
             .outreach-layout {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 2rem;
             }
             
             .outreach-container {
                 position: static;
+                top: auto;
+                padding: 1.5rem;
             }
+            
+            .outreach-header {
+                padding: 2rem 0;
+            }
+            
+            .candidate-card {
+                padding: 1.5rem;
+            }
+            
+            .modal-content {
+                margin: 2% auto;
+                padding: 1.5rem;
+                width: 95%;
+            }
+        }
+        
+        /* Fix animation-related issues */
+        .animate-fadeInUp, .animate-fadeInLeft {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease-out;
         }
     </style>
 </head>
 <body>
-    <div class="main-wrapper">
-        <!-- Navigation -->
+    <div class="main-wrapper outreach-page">
+        <div class="floating-elements">
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+            <div class="floating-dot"></div>
+        </div>
+        
+        <!-- STANDARDIZED NAVIGATION -->
         <nav class="navbar">
             <div class="navbar-container">
                 <a href="/" class="navbar-brand">
                     <i class="fas fa-brain icon"></i> HireAI
                 </a>
                 <ul class="navbar-nav">
-                    <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="/upload" class="nav-link">Upload Resume</a></li>
-                    <li><a href="/candidates" class="nav-link">View Candidates</a></li>
-                    <li><a href="/search" class="nav-link">Search Candidates</a></li>
-                    <li><a href="/outreach" class="nav-link active">Personalized Outreach</a></li>
-                    <li><a href="/analytics" class="nav-link">Analytics</a></li>
-                    <li><a href="/background_check" class="nav-link" data-page="Background Check">Ai Screening</a></li>
-
+                    <li><a href="/" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="/upload" class="nav-link" data-page="upload">Upload Resume</a></li>
+                    <li><a href="/candidates" class="nav-link" data-page="candidates">View Candidates</a></li>
+                    <li><a href="/search" class="nav-link" data-page="search">Search Candidates</a></li>
+                    <li><a href="/outreach" class="nav-link" data-page="outreach">Personalized Outreach</a></li>
+                    <li><a href="/analytics" class="nav-link" data-page="analytics">Analytics</a></li>
+                    <li><a href="/background_check" class="nav-link" data-page="Background Check">AI Screening</a></li>
                 </ul>
+                
+                <!-- Mobile menu toggle -->
+                <button class="navbar-toggle" id="navbar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </nav>
 
-        <div class="main-container">
-            <!-- Page Header with Flexbox Centering -->
-            <div class="header-section animate-fadeInUp">
-                <h1 class="hero-title">
-                    <i class="fas fa-envelope icon-large"></i> Personalized Outreach
-                </h1>
-                <p class="hero-subtitle">Create and send AI-powered personalized emails to candidates</p>
-                
-                <!-- Live timestamp -->
-                <div class="footer-timestamp" style="margin-top: 1rem;">
-                    <i class="fas fa-clock icon-only"></i>
-                    <span id="currentDateTime">2025-06-01 14:21:30</span> UTC
-                    <span class="text-muted" style="margin-left: 1rem;">
-                        <i class="fas fa-user icon-only"></i> pranamya-jain
-                    </span>
+        <!-- Enhanced Outreach Header -->
+        <div class="outreach-header">
+            <div class="main-container">
+                <div class="centered-content animate-fadeInUp">
+                    <h1 class="hero-title mb-3">
+                        <i class="fas fa-envelope icon-large"></i> Personalized Outreach
+                    </h1>
+                    <p class="hero-subtitle">
+                        Create and send AI-powered personalized emails to candidates
+                    </p>
                 </div>
             </div>
+        </div>
 
+        <div class="main-container">
             <div class="outreach-layout">
-                <!-- Job Configuration Panel -->
+                <!-- Enhanced Job Configuration Panel -->
                 <div class="animate-fadeInLeft">
                     <div class="outreach-container">
                         <h3 class="mb-4">
@@ -287,7 +663,7 @@
                                 placeholder="your.email@company.com" value="jane@techcorp.com">
                         </div>
 
-                        <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 6px; margin-top: 1.5rem;">
+                        <div style="background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card)); padding: 1rem; border-radius: 12px; margin-top: 1.5rem; border: 1px solid var(--border-primary);">
                             <small class="text-muted">
                                 <i class="fas fa-info-circle icon"></i>
                                 These details will be used to personalize all outreach emails.
@@ -296,10 +672,10 @@
                     </div>
                 </div>
 
-                <!-- Candidates List -->
+                <!-- Enhanced Candidates List -->
                 <div class="animate-fadeInUp">
                     {% if candidates and candidates|length > 0 %}
-                        <div style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="results-header">
                             <div class="flex-between">
                                 <h3 class="mb-0">
                                     <i class="fas fa-users icon"></i> 
@@ -376,14 +752,14 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <!-- Empty State -->
+                        <!-- Enhanced Empty State -->
                         <div class="centered-content" style="min-height: 400px;">
                             <i class="fas fa-users empty-state-icon"></i>
                             <h3 class="text-secondary mb-3">No Candidates Available</h3>
                             <p class="text-secondary mb-4">
                                 Upload some resumes first to start creating personalized outreach campaigns.
                             </p>
-                            <a href="/upload" class="btn btn-primary btn-large">
+                            <a href="/upload" class="btn btn-primary btn-large enhanced-btn">
                                 <i class="fas fa-upload icon"></i> Upload Resumes
                             </a>
                         </div>
@@ -402,18 +778,11 @@
                     Built with ❤️ by <strong>Team Seeds! 🌱</strong><br>
                     Intelligent personalized outreach powered by AI
                 </p>
-                <div class="footer-timestamp">
-                    <i class="fas fa-clock icon-only"></i>
-                    <span id="footerDateTime">2025-06-01 14:21:30</span> UTC
-                    <span class="text-muted" style="margin-left: 1rem;">
-                        <i class="fas fa-seedling icon-only"></i> Team Seeds
-                    </span>
-                </div>
             </div>
         </footer>
     </div>
 
-    <!-- Email Preview Modal -->
+    <!-- Enhanced Email Preview Modal -->
     <div id="emailModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -436,13 +805,64 @@
         let currentCandidateId = null;
         let currentEmailData = null;
 
-        // Update live datetime to UTC
-        function updateDateTime() {
-            const now = new Date();
-            const utcString = now.toISOString().slice(0, 19).replace('T', ' ');
-            document.getElementById('currentDateTime').textContent = utcString;
-            document.getElementById('footerDateTime').textContent = utcString;
-        }
+        // STANDARDIZED NAVBAR ACTIVE STATE MANAGEMENT
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Remove active class from all links
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to current page link
+            let activeSet = false;
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                const page = link.getAttribute('data-page');
+                
+                // Check for exact match or page identifier
+                if (href === currentPath || 
+                    (currentPath === '/' && page === 'home') ||
+                    (currentPath.includes('/upload') && page === 'upload') ||
+                    (currentPath.includes('/candidates') && page === 'candidates') ||
+                    (currentPath.includes('/search') && page === 'search') ||
+                    (currentPath.includes('/outreach') && page === 'outreach') ||
+                    (currentPath.includes('/analytics') && page === 'analytics') ||
+                    (currentPath.includes('/background_check') && page === 'Background Check')) {
+                    link.classList.add('active');
+                    activeSet = true;
+                }
+            });
+            
+            // Fallback: if no active state set, activate home
+            if (!activeSet) {
+                const homeLink = document.querySelector('[data-page="home"]');
+                if (homeLink) homeLink.classList.add('active');
+            }
+            
+            // Mobile menu toggle functionality
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarNav = document.querySelector('.navbar-nav');
+            
+            if (navbarToggle && navbarNav) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarNav.classList.toggle('active');
+                });
+                
+                // Close mobile menu when clicking on a link
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navbarNav.classList.remove('active');
+                    });
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarNav.contains(e.target)) {
+                        navbarNav.classList.remove('active');
+                    }
+                });
+            }
+        });
 
         function previewEmail(candidateId) {
             currentCandidateId = candidateId;
@@ -598,12 +1018,9 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            updateDateTime();
-            setInterval(updateDateTime, 1000);
             addScrollAnimations();
             
-            console.log('HireAI Outreach Page initialized for user: pranamya-jain');
-            console.log('Current time: 2025-06-01 14:21:30 UTC');
+            console.log('HireAI Outreach Page initialized');
         });
     </script>
 </body>

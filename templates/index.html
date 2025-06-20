@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HireAI - Transform your recruitment process with AI-powered candidate matching, resume parsing, and analytics">
     <title>HireAI - AI-Powered Recruitment Platform</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Custom Styles -->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <style>
-        /* Enhanced aesthetics for index.html */
+        /* Enhanced aesthetics for index.html - Original styling preserved */
         .hero-section {
             background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
             position: relative;
@@ -181,29 +182,201 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(81, 207, 102, 0.4);
         }
+
+        /* NEW UX Enhancements - Added without modifying the above */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        .focus-visible:focus {
+            outline: 2px solid var(--accent-green);
+            outline-offset: 2px;
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-green) 0%, #40c057 100%);
+            box-shadow: 0 8px 25px rgba(81, 207, 102, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 999;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 16px 48px rgba(81, 207, 102, 0.4);
+        }
+        
+        .fab i {
+            font-size: 1.5rem;
+        }
+        
+        .fab-menu {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 998;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.75rem;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .fab-menu.show {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+        
+        .fab-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateX(0);
+            transition: transform 0.2s ease;
+        }
+        
+        .fab-item:hover {
+            transform: translateX(-5px);
+        }
+        
+        .fab-item-label {
+            background: var(--bg-card);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .fab-item-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-green);
+            transition: all 0.2s ease;
+        }
+        
+        .fab-item-btn:hover {
+            transform: scale(1.1);
+            background: var(--accent-green);
+            color: white;
+        }
+        
+        /* Focus indicator */
+        .focus-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--accent-green);
+            color: black;
+            text-align: center;
+            padding: 0.5rem;
+            font-weight: 500;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .focus-indicator.visible {
+            transform: translateY(0);
+        }
+
+        /* Keyboard shortcut hints */
+        .keyboard-shortcut {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-left: 0.5rem;
+            opacity: 0.7;
+        }
+        
+        .key {
+            background: rgba(255,255,255,0.1);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Only show keyboard shortcuts on larger screens */
+        @media (max-width: 768px) {
+            .keyboard-shortcut {
+                display: none;
+            }
+            
+            /* Make mobile menu toggle visible */
+            .navbar-toggle {
+                display: block !important;
+            }
+            
+            /* Update mobile menu styles */
+            .navbar-nav.active {
+                animation: fadeIn 0.3s forwards;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Accessibility focus indicator -->
+    <div class="focus-indicator" id="focus-indicator">
+        Keyboard navigation active - Press Tab to navigate, Enter to select, Esc for shortcuts menu
+    </div>
+
     <div class="main-wrapper">
         <!-- STANDARDIZED NAVIGATION -->
         <nav class="navbar">
             <div class="navbar-container">
-                <a href="/" class="navbar-brand">
-                    <i class="fas fa-brain icon"></i> HireAI
+                <a href="/" class="navbar-brand" aria-label="HireAI Homepage">
+                    <i class="fas fa-brain icon" aria-hidden="true"></i> HireAI
                 </a>
                 <ul class="navbar-nav">
-                    <li><a href="/" class="nav-link" data-page="home">Home</a></li>
-                    <li><a href="/upload" class="nav-link" data-page="upload">Upload Resume</a></li>
-                    <li><a href="/candidates" class="nav-link" data-page="candidates">View Candidates</a></li>
-                    <li><a href="/search" class="nav-link" data-page="search">Search Candidates</a></li>
-                    <li><a href="/outreach" class="nav-link" data-page="outreach">Personalized Outreach</a></li>
-                    <li><a href="/analytics" class="nav-link" data-page="analytics">Analytics</a></li>
-                                                         <li><a href="/background_check" class="nav-link" data-page="Background Check">Ai Screening</a></li>
-
+                    <li><a href="/" class="nav-link focus-visible" data-page="home">Home</a></li>
+                    <li><a href="/upload" class="nav-link focus-visible" data-page="upload">Upload Resume</a></li>
+                    <li><a href="/candidates" class="nav-link focus-visible" data-page="candidates">View Candidates</a></li>
+                    <li><a href="/search" class="nav-link focus-visible" data-page="search">Search Candidates</a></li>
+                    <li><a href="/outreach" class="nav-link focus-visible" data-page="outreach">Personalized Outreach</a></li>
+                    <li><a href="/analytics" class="nav-link focus-visible" data-page="analytics">Analytics</a></li>
+                    <li><a href="/background_check" class="nav-link focus-visible" data-page="Background Check">AI Screening</a></li>
                 </ul>
                 
                 <!-- Mobile menu toggle -->
-                <button class="navbar-toggle" id="navbar-toggle" style="display: none;">
+                <button class="navbar-toggle focus-visible" id="navbar-toggle" style="display: none;" aria-expanded="false" aria-controls="navbar-nav" aria-label="Toggle navigation menu">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -221,7 +394,7 @@
                 <div class="main-container">
                     <div class="hero-content centered-content animate-fadeInUp">
                         <h1 class="hero-title">
-                            <i class="fas fa-brain icon-large"></i>
+                            <i class="fas fa-brain icon-large" aria-hidden="true"></i>
                             Smart Recruitment with AI
                         </h1>
                         <p class="hero-subtitle">
@@ -230,14 +403,17 @@
                         </p>
                         
                         <div class="flex-center" style="gap: 1rem; margin-bottom: 3rem;">
-                            <a href="/upload" class="btn btn-primary btn-large enhanced-btn animate-fadeInLeft">
-                                <i class="fas fa-upload icon"></i> Upload Resumes
+                            <a href="/upload" class="btn btn-primary btn-large enhanced-btn animate-fadeInLeft focus-visible" aria-label="Upload Resumes">
+                                <i class="fas fa-upload icon" aria-hidden="true"></i> Upload Resumes
+                                <span class="keyboard-shortcut"><span class="key">Alt</span>+<span class="key">U</span></span>
                             </a>
-                            <a href="/candidates" class="btn btn-large animate-fadeInLeft">
-                                <i class="fas fa-users icon"></i> View Candidates
+                            <a href="/candidates" class="btn btn-large animate-fadeInLeft focus-visible" aria-label="View Candidates">
+                                <i class="fas fa-users icon" aria-hidden="true"></i> View Candidates
+                                <span class="keyboard-shortcut"><span class="key">Alt</span>+<span class="key">C</span></span>
                             </a>
-                            <a href="/search" class="btn btn-large animate-fadeInLeft">
-                                <i class="fas fa-search icon"></i> Search Candidates
+                            <a href="/search" class="btn btn-large animate-fadeInLeft focus-visible" aria-label="Search Candidates">
+                                <i class="fas fa-search icon" aria-hidden="true"></i> Search Candidates
+                                <span class="keyboard-shortcut"><span class="key">Alt</span>+<span class="key">S</span></span>
                             </a>
                         </div>
                     </div>
@@ -248,13 +424,13 @@
         <!-- Enhanced Features Section -->
         <div class="main-container">
             <div class="content-wrapper">
-                <h2 class="section-title">Powerful Features</h2>
+                <h2 class="section-title" id="features-heading">Powerful Features</h2>
                 
                 <div class="grid grid-3">
-                    <div class="card feature-card animate-fadeInUp">
+                    <div class="card feature-card animate-fadeInUp focus-visible" tabindex="0">
                         <div class="card-body text-center">
                             <div class="feature-icon">
-                                <i class="fas fa-file-alt text-success" style="font-size: 2rem;"></i>
+                                <i class="fas fa-file-alt text-success" style="font-size: 2rem;" aria-hidden="true"></i>
                             </div>
                             <h3>Smart Resume Parsing</h3>
                             <p class="text-secondary">
@@ -264,10 +440,10 @@
                         </div>
                     </div>
 
-                    <div class="card feature-card animate-fadeInUp">
+                    <div class="card feature-card animate-fadeInUp focus-visible" tabindex="0">
                         <div class="card-body text-center">
                             <div class="feature-icon">
-                                <i class="fas fa-users text-success" style="font-size: 2rem;"></i>
+                                <i class="fas fa-users text-success" style="font-size: 2rem;" aria-hidden="true"></i>
                             </div>
                             <h3>Candidate Management</h3>
                             <p class="text-secondary">
@@ -277,10 +453,10 @@
                         </div>
                     </div>
 
-                    <div class="card feature-card animate-fadeInUp">
+                    <div class="card feature-card animate-fadeInUp focus-visible" tabindex="0">
                         <div class="card-body text-center">
                             <div class="feature-icon">
-                                <i class="fas fa-search text-success" style="font-size: 2rem;"></i>
+                                <i class="fas fa-search text-success" style="font-size: 2rem;" aria-hidden="true"></i>
                             </div>
                             <h3>AI-Powered Matching</h3>
                             <p class="text-secondary">
@@ -290,10 +466,10 @@
                         </div>
                     </div>
 
-                    <div class="card feature-card animate-fadeInUp">
+                    <div class="card feature-card animate-fadeInUp focus-visible" tabindex="0">
                         <div class="card-body text-center">
                             <div class="feature-icon">
-                                <i class="fas fa-chart-bar text-success" style="font-size: 2rem;"></i>
+                                <i class="fas fa-chart-bar text-success" style="font-size: 2rem;" aria-hidden="true"></i>
                             </div>
                             <h3>Analytics Dashboard</h3>
                             <p class="text-secondary">
@@ -303,10 +479,10 @@
                         </div>
                     </div>
 
-                    <div class="card feature-card animate-fadeInUp">
+                    <div class="card feature-card animate-fadeInUp focus-visible" tabindex="0">
                         <div class="card-body text-center">
                             <div class="feature-icon">
-                                <i class="fas fa-shield-alt text-success" style="font-size: 2rem;"></i>
+                                <i class="fas fa-shield-alt text-success" style="font-size: 2rem;" aria-hidden="true"></i>
                             </div>
                             <h3>Secure & Private</h3>
                             <p class="text-secondary">
@@ -316,10 +492,10 @@
                         </div>
                     </div>
 
-                    <div class="card feature-card animate-fadeInUp">
+                    <div class="card feature-card animate-fadeInUp focus-visible" tabindex="0">
                         <div class="card-body text-center">
                             <div class="feature-icon">
-                                <i class="fas fa-download text-success" style="font-size: 2rem;"></i>
+                                <i class="fas fa-download text-success" style="font-size: 2rem;" aria-hidden="true"></i>
                             </div>
                             <h3>Export & Integration</h3>
                             <p class="text-secondary">
@@ -335,7 +511,7 @@
         <!-- Enhanced How It Works Section -->
         <div style="background: var(--bg-secondary); padding: 4rem 0; position: relative;">
             <div class="main-container">
-                <h2 class="section-title">How It Works</h2>
+                <h2 class="section-title" id="how-it-works">How It Works</h2>
                 
                 <div class="grid grid-3">
                     <div class="flex-center-column animate-fadeInUp">
@@ -385,14 +561,14 @@
                         </p>
                         
                         <div class="flex-center" style="gap: 1rem;">
-                            <a href="/upload" class="btn btn-primary btn-large enhanced-btn">
-                                <i class="fas fa-rocket icon"></i> Get Started Now
+                            <a href="/upload" class="btn btn-primary btn-large enhanced-btn focus-visible">
+                                <i class="fas fa-rocket icon" aria-hidden="true"></i> Get Started Now
                             </a>
-                            <a href="/candidates" class="btn btn-large">
-                                <i class="fas fa-users icon"></i> Browse Candidates
+                            <a href="/candidates" class="btn btn-large focus-visible">
+                                <i class="fas fa-users icon" aria-hidden="true"></i> Browse Candidates
                             </a>
-                            <a href="/analytics" class="btn btn-large">
-                                <i class="fas fa-chart-line icon"></i> View Demo
+                            <a href="/analytics" class="btn btn-large focus-visible">
+                                <i class="fas fa-chart-line icon" aria-hidden="true"></i> View Demo
                             </a>
                         </div>
                     </div>
@@ -404,21 +580,41 @@
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <i class="fas fa-brain icon"></i> HireAI
+                    <i class="fas fa-brain icon" aria-hidden="true"></i> HireAI
                 </div>
                 <p class="footer-text">
                     Built with ❤️ by <strong>Team Seeds! 🌱</strong><br>
-                    Revolutionizing recruitment with artificial intelligence
+                    Revolutionizing Recruitment with AI
                 </p>
-                <div class="footer-timestamp">
-                    <i class="fas fa-clock icon-only"></i>
-                    <span id="currentDateTime">2025-06-01 15:02:23</span> UTC
-                    <span class="text-muted" style="margin-left: 1rem;">
-                        <i class="fas fa-user icon-only"></i> pranamya-jain
-                    </span>
-                </div>
+        
             </div>
         </footer>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab focus-visible" id="fab" role="button" aria-label="Quick actions" aria-haspopup="true" aria-expanded="false" tabindex="0">
+        <i class="fas fa-plus" aria-hidden="true"></i>
+    </div>
+    
+    <div class="fab-menu" id="fab-menu">
+        <div class="fab-item">
+            <div class="fab-item-label">Upload Resumes</div>
+            <a href="/upload" class="fab-item-btn focus-visible" aria-label="Upload Resumes">
+                <i class="fas fa-upload" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="fab-item">
+            <div class="fab-item-label">Search Candidates</div>
+            <a href="/search" class="fab-item-btn focus-visible" aria-label="Search Candidates">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="fab-item">
+            <div class="fab-item-label">View Analytics</div>
+            <a href="/analytics" class="fab-item-btn focus-visible" aria-label="View Analytics">
+                <i class="fas fa-chart-pie" aria-hidden="true"></i>
+            </a>
+        </div>
     </div>
 
     <!-- STANDARDIZED NAVBAR ACTIVE STATE MANAGEMENT -->
@@ -462,13 +658,16 @@
             
             if (navbarToggle && navbarNav) {
                 navbarToggle.addEventListener('click', function() {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true' || 'false';
                     navbarNav.classList.toggle('active');
+                    this.setAttribute('aria-expanded', isExpanded === 'false' ? 'true' : 'false');
                 });
                 
                 // Close mobile menu when clicking on a link
                 navLinks.forEach(link => {
                     link.addEventListener('click', function() {
                         navbarNav.classList.remove('active');
+                        navbarToggle.setAttribute('aria-expanded', 'false');
                     });
                 });
                 
@@ -476,6 +675,7 @@
                 document.addEventListener('click', function(e) {
                     if (!navbarToggle.contains(e.target) && !navbarNav.contains(e.target)) {
                         navbarNav.classList.remove('active');
+                        navbarToggle.setAttribute('aria-expanded', 'false');
                     }
                 });
             }
@@ -489,7 +689,7 @@
             if (currentElement) currentElement.textContent = utcString;
         }
 
-        // Add smooth animations on scroll
+        // Add smooth animations on scroll - fixed the syntax error
         function addScrollAnimations() {
             const animateElements = document.querySelectorAll('.animate-fadeInUp, .animate-fadeInLeft');
             
@@ -508,17 +708,113 @@
                 if (el.classList.contains('animate-fadeInUp')) {
                     el.style.transform = 'translateY(30px)';
                 } else if (el.classList.contains('animate-fadeInLeft')) {
-                    el.style.transform = translateX(-30px)';
+                    el.style.transform = 'translateX(-30px)';
                 }
                 observer.observe(el);
             });
         }
 
+        // Setup floating action button
+        function setupFAB() {
+            const fab = document.getElementById('fab');
+            const fabMenu = document.getElementById('fab-menu');
+            
+            if (fab && fabMenu) {
+                fab.addEventListener('click', function() {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    fabMenu.classList.toggle('show');
+                    this.setAttribute('aria-expanded', !isExpanded);
+                    
+                    // Toggle icon
+                    const icon = this.querySelector('i');
+                    if (isExpanded) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-plus');
+                    } else {
+                        icon.classList.remove('fa-plus');
+                        icon.classList.add('fa-times');
+                    }
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!fab.contains(e.target) && !fabMenu.contains(e.target)) {
+                        fabMenu.classList.remove('show');
+                        fab.setAttribute('aria-expanded', 'false');
+                        const icon = fab.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-plus');
+                    }
+                });
+            }
+        }
+
+        // Setup keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            const shortcuts = {
+                'Alt+H': () => window.location.href = '/',
+                'Alt+U': () => window.location.href = '/upload',
+                'Alt+C': () => window.location.href = '/candidates',
+                'Alt+S': () => window.location.href = '/search',
+                'Alt+A': () => window.location.href = '/analytics',
+                'Alt+Q': () => document.getElementById('fab').click(),
+                'Escape': () => {
+                    // Close any open menus
+                    const fabMenu = document.getElementById('fab-menu');
+                    const fab = document.getElementById('fab');
+                    if (fabMenu && fabMenu.classList.contains('show')) {
+                        fabMenu.classList.remove('show');
+                        fab.setAttribute('aria-expanded', 'false');
+                        const icon = fab.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-plus');
+                    }
+                }
+            };
+            
+            document.addEventListener('keydown', function(e) {
+                // Check for Alt combinations
+                if (e.altKey) {
+                    const key = 'Alt+' + e.key.toUpperCase();
+                    if (shortcuts[key]) {
+                        e.preventDefault();
+                        shortcuts[key]();
+                    }
+                } else if (e.key === 'Escape' && shortcuts['Escape']) {
+                    shortcuts['Escape']();
+                }
+                
+                // Show keyboard focus indicator when using Tab
+                if (e.key === 'Tab') {
+                    const indicator = document.getElementById('focus-indicator');
+                    if (indicator) {
+                        indicator.classList.add('visible');
+                        setTimeout(() => {
+                            indicator.classList.remove('visible');
+                        }, 3000);
+                    }
+                }
+            });
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            updateDateTime();
-            setInterval(updateDateTime, 1000);
+            // Set fixed datetime
+            document.getElementById('currentDateTime').textContent = "2025-06-13 07:11:38";
+            
+            // Call the animation function with the fix
             addScrollAnimations();
+            
+            // Setup new UX features
+            setupFAB();
+            setupKeyboardShortcuts();
+            
+            // Add aria-labels to all interactive elements
+            document.querySelectorAll('a:not([aria-label]), button:not([aria-label])').forEach(el => {
+                if (el.textContent.trim()) {
+                    el.setAttribute('aria-label', el.textContent.trim());
+                }
+            });
         });
     </script>
 </body>
