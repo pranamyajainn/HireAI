@@ -410,21 +410,6 @@ copies or substantial portions of the Software.
 
 ---
 
-## 📞 Support & Contact
-
-### **Need Help?**
-- 📧 **Email**: support@hireai.com
-- 💬 **Discord**: [Join our community](https://discord.gg/hireai)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/hireai/issues)
-- 📖 **Documentation**: [Wiki Pages](https://github.com/yourusername/hireai/wiki)
-
-### **Stay Connected**
-- 🐦 **Twitter**: [@HireAI_Official](https://twitter.com/HireAI_Official)
-- 💼 **LinkedIn**: [HireAI Company Page](https://linkedin.com/company/hireai)
-- 🌐 **Website**: [www.hireai.com](https://www.hireai.com)
-
----
-
 <div align="center">
   
   **Built with ❤️ by Team Seeds! 🌱**
@@ -437,21 +422,5 @@ copies or substantial portions of the Software.
 
 ---
 
-## 🚀 What's Next?
-
-### **Upcoming Features**
-- 🤖 **Advanced AI Agents** - Multi-step interview processes
-- 📱 **Mobile App** - Native iOS and Android applications
-- 🔗 **ATS Integration** - Connect with popular Applicant Tracking Systems
-- 🌍 **Multi-language Support** - Global recruitment capabilities
-- 📈 **Predictive Analytics** - Success prediction algorithms
-- 🎯 **Smart Recommendations** - AI-powered hiring suggestions
-
-### **Roadmap**
-- **Q2 2025**: Mobile applications and API v2.0
-- **Q3 2025**: Enterprise features and advanced integrations
-- **Q4 2025**: Machine learning model improvements and predictive analytics
-
----
 
 *Last updated: June 2025*
