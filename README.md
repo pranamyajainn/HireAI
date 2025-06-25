@@ -1,4 +1,4 @@
-# 🎯 HireAI - AI-Powered Recruitment Platform
+# 🎯 HireAI - AI-Powered Smart Recruitment 
 
 <div align="center">
   
